@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <header>
+    <div>
+      <img src="#">
+      <nav>
+        <!-- could be button -->
+        <a href="#">Home</a>
+        <a href="#">Mock Examination</a>
+        <a href="#">Results</a>
+      </nav>
+    </div>
+
+    <!-- if not logged in -->
+    <div>
+      <button>signup</button>
+      <button>help</button>
+    </div>
+
+    <!-- if logged in -->
+    <div>
+      <button>search icon</button>
+      <button>settings icon</button>
+      <button>notification icon</button>
+      <button>profile</button>
+    </div>
+
+  </header>
+  <!-- content -->
+<hr>
+  <div style="height: 700px;">
+    <!-- content-->
+    {% block content %}{% endblock %}
+  </div>
+
+  <footer>
+    <div>
+      <img src="#">
+      <div>
+        <button>Pricing</button>
+        <button>About us</button>
+        <button>Features</button>
+        <button>Help Center</button>
+        <button>Contact Us</button>
+        <button>FAQs</button>
+        <button>Careers</button>
+      </div>
+    </div>
+
+    <div>
+      <select name="language">
+        <option value="English" selected>English</option>
+        <option value="Filipino">Filipino</option>
+      </select>
+      <p>© 2024 Brand Inc. • <a>Privacy</a> • <a>Terms</a> • <a>Sitemap</a></p>
+      <div>
+        <a href="#">Twitter_icon</a>
+        <a href="#">Facebook_icon</a>
+        <a href="#">Linked_icon</a>
+        <a href="#">YouTube_icon</a>
+      </div>
+    </div>
+
+  </footer>
+
+</body>
+</html>
