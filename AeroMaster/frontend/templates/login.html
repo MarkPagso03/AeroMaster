@@ -3,8 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <div class="Aero"><h1>Aero Master</h1></div>
 </head>
 <body>
-    hello, world!
+
+    <div class = "Login" >
+        <form action="">
+            <div class="header-class">
+                <h1>Welcome back Masters <i class='bx bxs-hand'></i></h1>
+            </div>
+            <div class = "input-box">
+                <label for="first">ID Number</label>
+                <input type="text" placeholder="example.AV 2023-066" required>
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class = "input-box">
+                <label for="password">Password</label>
+                <input type="password" placeholder="Enter your password" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+            <div class = "keep-log">
+                
+            </div>
+            <div class = "forgot-password">
+                <label for="check"><input type="checkbox" id="check">Keep me Logged in</label>
+                <a href="#">Forgot password?</a>
+            </div>
+            <button type="submit" class="submit-button">Sign In</button>
+            <p>--------------OR---------------</p>
+            <div class="social-icons">
+                <a href="#"><i class='bx bxl-google'></i></a>
+                <a href="#"><i class='bx bxl-facebook-circle' ></i></a>
+                <a href="#"><i class='bx bxl-apple'></i></a>
+            </div>
+        </form>
+    </div>   
 </body>
 </html>
