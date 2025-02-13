@@ -1,4 +1,4 @@
 from django.shortcuts import render
 
 def login_view(request):
-    return render(request, 'admin_base.html')
+    return render(request, 'base.html')
