@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+      <link rel="stylesheet" type="text/css" href="{% static 'styles/base.css' %}?v={{ timestamp }}">
     <title>Title</title>
 </head>
 <body>
   <header>
     <div>
-      <img>
+      <img alt="brand_logo">
       <nav>
         <!-- could be button -->
         <a href="#">Home</a>
@@ -18,14 +20,14 @@
     </div>
 
     <!-- if not logged in -->
-    <div>
+    <div style="display: none;">
       <button>signup</button>
-      <button>help</button>
+      <button>? help</button>
     </div>
 
     <!-- if logged in -->
-    <div>
-      <button>search icon</button>
+    <div >
+      <button><img src="{% static 'icons/search_icon.svg' %"></button>
       <button>settings icon</button>
       <button>notification icon</button>
       <button>profile</button>

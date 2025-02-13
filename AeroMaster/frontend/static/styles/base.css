@@ -1,0 +1,65 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Sans-serif;
+}
+
+html{
+    font-size: 16px;
+}
+
+header{
+    height: clamp(50px, 4rem, 10vh);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+
+}
+
+header > div:first-child{
+    display: flex;
+    gap: 25px;
+}
+
+img{
+    height: 80%;
+    width: auto;
+}
+
+header nav{
+    display: flex;
+    gap: 25px;
+}
+
+header nav a{
+    text-decoration: none;
+    color: gray;
+}
+
+header > div:nth-child(2) {
+    display: flex;
+    gap: 10px;
+}
+
+header > div:nth-child(2) button{
+    padding: .4rem 2.5rem;
+    border: 1px solid darkblue;
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+header > div:nth-child(2) button:first-child{
+    color: darkblue;
+}
+
+header > div:nth-child(2) button:last-child{
+    color: white;
+    background: darkblue;
+}
+
+header > div:last-child{
+    display: flex;
+    gap: 10px;
+}
