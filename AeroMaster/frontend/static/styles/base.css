@@ -2,19 +2,27 @@
     padding: 0;
     margin: 0;
     font-family: Sans-serif;
+    font-weight: 500;
 }
 
 html{
-    font-size: 16px;
+    font-size: 18px;
 }
 
+body{
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+}
+
+/* header -------------------------------------*/
 header{
     height: clamp(50px, 4rem, 10vh);
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 30px;
 
 }
 
@@ -23,19 +31,19 @@ header > div:first-child{
     gap: 25px;
 }
 
-img{
+header > div:first-child img{
     height: 80%;
     width: auto;
 }
 
 header nav{
     display: flex;
-    gap: 25px;
+    gap: 30px;
 }
 
 header nav a{
     text-decoration: none;
-    color: gray;
+    color: #696969;
 }
 
 header > div:nth-child(2) {
@@ -61,5 +69,78 @@ header > div:nth-child(2) button:last-child{
 
 header > div:last-child{
     display: flex;
-    gap: 10px;
+    gap: 20px;
+}
+
+header > div:last-child button{
+    border: none;
+    background: transparent;
+}
+
+/* end header -------------------------------------*/
+body > div{
+    flex-grow: 1;
+}
+/* footer -------------------------------------*/
+footer{
+    height: max(70px, 22vh);
+    background: #202020;
+    color: #D0D0D0;
+}
+
+.footer_div {
+    width: max(650px, 80vw);
+    padding: 15px;
+    margin: auto auto;
+}
+
+.footer_div div:first-child{
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    align-items: center;
+}
+
+.footer_div div:first-child img{
+    height: 30%;
+    width: auto;
+    padding-right: 50px;
+}
+
+.footer_div div:first-child div{
+    display: flex;
+    justify-content: space-between;
+    min-width: 500px;
+    width: 800px;
+}
+
+.footer_div div:first-child button{
+    font-size: .9rem;
+    border: none;
+    background: transparent;
+    white-space: nowrap;
+    color: #D0D0D0;
+}
+
+.footer_div div:last-child{
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    align-items: center;
+}
+
+.footer_div div:last-child select{
+    border: 2px solid #D0D0D0;
+    background: transparent;
+    padding: 8px;
+    border-radius: 10px;
+    color: #D0D0D0;
+}
+
+.footer_div div:last-child p{
+    font-size: 0.8rem;
+}
+
+.footer_div div:last-child a{
+    margin-left: 8px;
 }
