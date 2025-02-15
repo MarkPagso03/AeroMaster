@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="signup.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="signup-form">
+        <div class="title">Sign up</div>
+        <form action="#">
+            <div class="input-name">
+                <div class="firstname">
+                    <label for="firstname">First Name</label>
+                    <input type="text" placeholder="Enter your firstname" required>
+                </div>
+                <div class="lastname">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" placeholder="Enter your lastname" required>
+                </div>
+            </div>
+            <div class="input-box">
+                <div class="id">
+                    <label for="idnumber">ID Number</label>
+                    <input type="text" placeholder="example.AV 2023-066" required>
+                </div>
+                <div class="password">
+                    <label for="password">Password</label>
+                    <input type="text" placeholder="Enter atleast 8+ characters" required>
+                </div>
+            </div>
+            <div class="terms">
+                <label for="check">
+                    <input type="checkbox" id="check">By signing up, I agree to the Terms of Use and Privacy Policy
+                </label>
+            </div>
+            <button type="submit" class="submit-button">Sign Up</button>
+            <p class="signin-text">Already have an account? <a href="#">Log In</a></p>
+            <p>--------------OR---------------</p>
+            <div class="social-icons">
+                <a href="#"><i class='bx bxl-google'></i></a>
+                <a href="#"><i class='bx bxl-facebook-circle' ></i></a>
+                <a href="#"><i class='bx bxl-apple'></i></a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
