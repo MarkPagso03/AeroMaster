@@ -114,16 +114,16 @@ body > div:first-child > img{
 .submit-button {
     width: 100%;
     padding: 15px;
-    font-size: 17px;
+    font-size: 1rem;
     font-family: 'Arial';
     letter-spacing: 1px;
-    font-weight: 600;
+    font-weight: 500;
     color: white;
     background: darkblue;
     border-radius: 13px;
     border: none;
     outline: none;
-    cursor: pointer;;
+    cursor: pointer;
 }
 
 .or{
@@ -131,10 +131,11 @@ body > div:first-child > img{
     flex-direction: column;
     align-items: center;
     width: 100%;
+    color: #555;
 }
 
 .Login p {
-    font-size: 14px;
+    font-size: .75rem;
     margin: 15px 0;
     text-align: center;
 }
