@@ -24,13 +24,13 @@ body{
 body > div:first-child {
     text-align: left;
     position: fixed;
-    top: 50px;
-    left: 50px;
+    top: 30px;
+    left: 30px;
     padding: 0;
     margin: 0;
     display: flex;
     align-items: center;
-    height: 60px;
+    height: 50px;
 }
 
 body > div:first-child > img{
@@ -106,7 +106,7 @@ body > div:first-child > img{
 }
 .forgot-password a {
     text-decoration: none;
-    color: blue;
+    color: darkblue;
 }
 .forgot-password a:hover{
     text-decoration: underline;
@@ -125,11 +125,31 @@ body > div:first-child > img{
     outline: none;
     cursor: pointer;;
 }
+
+.or{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
 .Login p {
     font-size: 14px;
     margin: 15px 0;
     text-align: center;
 }
+
+.or p{
+    background: white;
+    z-index: 1;
+    position: relative;
+    width: 40px;
+}
+
+.or hr{
+    margin: -25px 0 25px 0; width: 100%;
+}
+
 .social-icons {
     display: flex;
     justify-content: center;
