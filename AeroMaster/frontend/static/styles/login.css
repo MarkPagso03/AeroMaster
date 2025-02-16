@@ -1,4 +1,12 @@
 /*style.css*/
+*{
+    font-family: "Poppins", serif;
+}
+
+html{
+    font-size: 18px;
+}
+
 body{
     display: flex;
     align-items: center;
@@ -10,44 +18,66 @@ body{
     background: #f3f3f3;
     flex-direction: column;
     margin: 0;
+    width: 100vw;
+}
+
+body > div:first-child {
+    text-align: left;
+    position: fixed;
+    top: 50px;
+    left: 50px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    height: 60px;
+}
+
+body > div:first-child > img{
+    height: 90%;
+    width: auto;
 }
 
 .Login {
-    width: 630px;
-    height: 530px;
-    padding: 40px 30px;
+    width: min( calc(90vw - 200px), 500px);
+    padding: 40px 80px;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-
 }
+
 .header-class {
     display: grid;
     place-items: center;
+    font-size: .8rem;
     height: clamp(50px,4rem,10vh);
     color:black;
-    font-family: 'Courier New', Courier, monospace;
+    margin-bottom: 20px;
+    line-height: 30px;
 }
-
 
 .input-box {
     position: relative;
     width: 100%;
     height: 50px;
     margin: 30px 0;
+    padding: 0;
 
 }
 .input-box input {
     width: 100%;
-    height: 100%;
+    height: 80%;
     background: #eee;
-    border-radius: 10px;
+    border-radius: 13px;
     border: none;
     outline: none;
-    font-size: 16px;
+    font-size: .75rem;
     letter-spacing: 1px;
     color: black;
+    padding: 0 15px;
+    box-sizing: border-box;
 }
+
 .input-box input::placeholder{
     color: #555;
 }
@@ -63,7 +93,7 @@ body{
 .input-box label {
     position: left;
     color: #555;
-    font-weight: bold;
+    font-weight: 500;
 
 }
 
@@ -90,7 +120,7 @@ body{
     font-weight: 600;
     color: white;
     background: darkblue;
-    border-radius: 45px;
+    border-radius: 13px;
     border: none;
     outline: none;
     cursor: pointer;;
@@ -104,6 +134,7 @@ body{
     display: flex;
     justify-content: center;
     gap: 15px;
+    margin-bottom: 30px;
 }
 
 .social-icons a {
