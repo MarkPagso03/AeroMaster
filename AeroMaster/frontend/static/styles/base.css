@@ -28,11 +28,20 @@ header{
 
 header > div:first-child{
     display: flex;
+    align-items: center;
     gap: 25px;
+    height: 100%;
+}
+
+header > div:first-child h2{
+    font-weight: bold;
+    font-family: "Open Sans", San serif;
+    transform: translateX(-20px);
+    font-size: 1.6rem;
 }
 
 header > div:first-child img{
-    height: 80%;
+    height: 70%;
     width: auto;
 }
 
@@ -81,6 +90,13 @@ header > div:last-child button{
 body > div{
     flex-grow: 1;
 }
+
+.container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 /* footer -------------------------------------*/
 footer{
     height: max(70px, 22vh);
@@ -94,6 +110,21 @@ footer{
     margin: auto auto;
 }
 
+.footer_div .brand{
+    margin-right: 50px;
+}
+
+.footer_div .brand h2{
+    font-weight: bold;
+    font-family: "Open Sans", San serif;
+    font-size: 2rem;
+}
+
+.footer_div .brand img{
+    height: 70%;
+    width: auto;
+}
+
 .footer_div div:first-child{
     display: flex;
     justify-content: space-between;
@@ -101,13 +132,7 @@ footer{
     align-items: center;
 }
 
-.footer_div div:first-child img{
-    height: 30%;
-    width: auto;
-    padding-right: 30px;
-}
-
-.footer_div div:first-child div{
+.footer_div div:first-child div:last-child{
     display: flex;
     justify-content: space-between;
     min-width: 500px;
@@ -135,6 +160,11 @@ footer{
     padding: 8px;
     border-radius: 10px;
     color: #D0D0D0;
+}
+
+.footer_div div:last-child option{
+    color: white;
+    background: black;
 }
 
 .footer_div div:last-child p{
