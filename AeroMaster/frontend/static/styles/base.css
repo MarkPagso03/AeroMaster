@@ -1,8 +1,13 @@
 * {
     padding: 0;
     margin: 0;
-    font-family: Sans-serif;
+    font-family: "Poppins", Sans-serif;
     font-weight: 500;
+}
+
+
+a, button{
+    cursor: pointer;
 }
 
 html{

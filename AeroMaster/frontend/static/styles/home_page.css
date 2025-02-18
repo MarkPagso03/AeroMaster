@@ -1,0 +1,66 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "Open Sans", San serif;
+    box-sizing: border-box;
+}
+
+.home{
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    background: linear-gradient(to bottom, white 70%, #202020 30%);
+}
+
+.home h1{
+    margin: 10px;
+    font-weight: 700;
+    font-size: 2.8rem;
+}
+
+.progress{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 max(90px, 8%);
+}
+
+.progress_card{
+    display: flex;
+    flex-direction: column;
+    width: max(200px, 25%);
+    min-height: 400px;
+    padding: 15px;
+    background: rgb(0,0,80);
+    border: 1px solid #DDD;
+    border-radius: 15px;
+    color: white;
+}
+
+.progress_card div{
+    flex: 1;
+    margin: 10px;
+}
+
+b{
+    font-weight: bold;
+}
+
+.progress_card h4{
+    margin: 5px 0;
+}
+
+.progress_card p{
+    font-size: .7rem;
+}
+
+.progress_card button{
+    padding: 8px;
+    margin-top: 15px;
+    background: #0066cc;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    color: white;
+}

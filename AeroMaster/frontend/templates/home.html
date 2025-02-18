@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block link %}
+    <link rel="stylesheet" href="{% static 'styles/home_page.css' %}?v={{ timestamp }}">
+{% endblock %}
+
+{% block content %}
+    <div class="home">
+        <h1>Examination Progress</h1>
+        <div class="progress">
+            <div class="progress_card">
+                <h4><b>day 1</b></h4>
+                <div>
+                    <h5><b>AERODYNAMICS</b> 20%</h5>
+                    <p>Fundamentals of Low-High Speed
+                        Aerodynamics Application of Aerodynamics to
+                        Fixed/ Rotary Wiring Aircraft Configurations,
+                        Performance, Stability and Control; Wind Tunnels and Application
+                    </p>
+                </div>
+                <div>
+                    <h5><b>Mathematics</b></h5>
+                    <p>Algebra, Trigonometry, Analytical Geometry,
+                        Calculus and Differential Equation with
+                        Aeronautical Engineering Applications
+                    </p>
+                </div>
+                <button>START</button>
+            </div>
+
+            <div class="progress_card">
+                <h4><b>day 2</b></h4>
+                <div>
+                    <h5><b>AIRCRAFT STRUCTURES AND DESIGN</b> 20%</h5>
+                    <p>Aircraft Design Fundamentals; Structural Loading Conditions;
+                        Structural Analysis and Design of Airframe Components;
+                        Landing Gears, Engine Mounts and Other Structural
+                    </p>
+                </div>
+                <div>
+                    <h5><b>Mathematics</b></h5>
+                    <p>Algebra, Trigonometry, Analytical Geometry,
+                        Calculus and Differential Equation with
+                        Aeronautical Engineering Applications
+                    </p>
+                </div>
+                <button>START</button>
+            </div>
+
+            <div class="progress_card">
+                <h4><b>day1</b></h4>
+                <div>
+                    <h5><b>Aerodynamics</b> 20%</h5>
+                    <p>Fundamentals of Low-High Speed
+                        Aerodynamics Application of Aerodynamics to
+                        Fixed/ Rotary Wiring Aircraft Configurations,
+                        Performance, Stability and Control; Wind Tunnels and Application
+                    </p>
+                </div>
+                <div>
+                    <h5><b>Mathematics</b></h5>
+                    <p>Algebra, Trigonometry, Analytical Geometry,
+                        Calculus and Differential Equation with
+                        Aeronautical Engineering Applications
+                    </p>
+                </div>
+                <button>START</button>
+            </div>
+
+
+
+        </div>
+    </div>
+
+{% endblock %}

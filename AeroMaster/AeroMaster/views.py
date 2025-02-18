@@ -11,3 +11,6 @@ def signup_view(request):
 
 def landing_view(request):
     return render(request, 'landing_page.html')
+
+def home_view(request):
+    return render(request, 'home.html')
