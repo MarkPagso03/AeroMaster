@@ -1,0 +1,132 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Poppins", Sans-serif;
+    font-weight: 500;
+    box-sizing: border-box;
+}
+
+hr{
+    margin: 30px 0;
+}
+
+body{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.brand{
+    margin-right: 50px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.brand h2{
+    font-weight: bold;
+    font-family: "Open Sans", San serif;
+    font-size: 1.7rem;
+}
+
+.brand img{
+    height: 70%;
+    width: auto;
+}
+
+aside {
+    height: 100%;s
+    width: 280px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+aside nav{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    color: #555;
+}
+
+aside nav a{
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+aside nav a:hover{
+    background: #000050;
+    color: white;
+}
+
+aside button{
+    padding: 10px;
+    border: 1px solid #003090;
+    color: #003090;
+    border-radius: 15px;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+body > div{
+    flex: 1;
+    padding: 20px 30px;
+}
+
+header button{
+    color: #444;
+    border: none;
+    background: transparent;
+}
+
+header input{
+    color: #222;
+    border: none;
+    background: #DDD;
+    padding: 10px;
+    width: 400px;
+    border-radius: 30px;
+}
+
+header input::placeholder {
+  color: #333;
+  opacity: 1;
+}
+
+header input:focus {
+  border: none;
+  outline: none;
+}
+
+header div button{
+    margin: 6px;
+}
+
+.section{
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section button{
+    height: 90%;
+    border: none;
+    padding: 8px;
+    color: #555;
+    border-radius: 10px;
+}
+
+

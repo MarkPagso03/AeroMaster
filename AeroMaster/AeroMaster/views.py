@@ -3,6 +3,9 @@ from django.shortcuts import render
 def base_view(request):
     return render(request, 'base.html')
 
+def dashboard_view(request):
+    return render(request, 'admin_base.html')
+
 def login_view(request):
     return render(request, 'login.html')
 
