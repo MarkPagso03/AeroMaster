@@ -52,7 +52,7 @@ b{
 }
 
 .progress_card p{
-    font-size: .7rem;
+    font-size: min(.95vw, .7rem);
 }
 
 .progress_card button{
