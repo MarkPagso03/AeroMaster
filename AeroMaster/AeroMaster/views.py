@@ -20,6 +20,8 @@ def landing_view(request):
 def home_view(request):
     return render(request, 'home.html')
 
+def mock_view(request):
+    return render(request, 'mock_exam_page.html')
 
 def signup_acc(request):
     if request.method == "POST":
