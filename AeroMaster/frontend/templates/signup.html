@@ -41,12 +41,12 @@
                 </div>
                 <div class="password">
                     <label for="c_password">Confirm Password</label>
-                    <input id="c_password" name="c_password" type="password" placeholder="Enter atleast 8+ characters" required>
+                    <input id="c_password" name="confirm_password" type="password" placeholder="Enter atleast 8+ characters" required>
                 </div>
             </div>
             <div class="terms">
                 <label for="check">
-                    <input type="checkbox" id="check">By signing up, I agree to the Terms of Use and Privacy Policy
+                    <input type="checkbox" id="check" required>By signing up, I agree to the Terms of Use and Privacy Policy
                 </label>
             </div>
             <button type="submit" class="submit-button">Sign Up</button>
@@ -61,7 +61,7 @@
             </div>
         </form>
         {% if form.errors %}
-            <div class="error-messages">
+            <div class="error_messages">
                 <ul>
                     {% for field, errors in form.errors.items %}
                         {% for error in errors %}
