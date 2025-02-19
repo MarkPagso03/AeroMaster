@@ -90,7 +90,7 @@ header input{
     border: none;
     background: #DDD;
     padding: 10px;
-    width: 400px;
+    width: max(100px, 20vw);
     border-radius: 30px;
 }
 
