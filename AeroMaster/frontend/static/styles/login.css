@@ -52,7 +52,7 @@ body > div:first-child > img{
     font-size: .8rem;
     height: clamp(50px,4rem,10vh);
     color:black;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     line-height: 30px;
 }
 

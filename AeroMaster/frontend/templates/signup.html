@@ -14,25 +14,34 @@
     </div>
     <div class="signup-form">
         <div class="title">Sign up</div>
-        <form action="#">
+        <form method="POST" action="{% url 'signup_acc' %}">
+            {% csrf_token %}
             <div class="input-name">
                 <div class="firstname">
                     <label for="firstname">First Name</label>
-                    <input type="text" placeholder="Enter your firstname" required>
+                    <input id="firstname" name="first_name" type="text" placeholder="Enter your firstname" required>
                 </div>
                 <div class="lastname">
                     <label for="lastname">Last Name</label>
-                    <input type="text" placeholder="Enter your lastname" required>
+                    <input id="lastname" name="last_name" type="text" placeholder="Enter your lastname" required>
                 </div>
             </div>
             <div class="input-box">
                 <div class="id">
                     <label for="idnumber">ID Number</label>
-                    <input type="text" placeholder="example.AV 2023-066" required>
+                    <input id="idnumber" name="id_number" type="text" placeholder="example.AV 2023-066" required>
+                </div>
+                <div class="email">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" placeholder="example@gmail.com" required>
                 </div>
                 <div class="password">
                     <label for="password">Password</label>
-                    <input type="password" placeholder="Enter atleast 8+ characters" required>
+                    <input id="password" name="password" type="password" placeholder="Enter atleast 8+ characters" required>
+                </div>
+                <div class="password">
+                    <label for="c_password">Confirm Password</label>
+                    <input id="c_password" name="c_password" type="password" placeholder="Enter atleast 8+ characters" required>
                 </div>
             </div>
             <div class="terms">
@@ -41,7 +50,7 @@
                 </label>
             </div>
             <button type="submit" class="submit-button">Sign Up</button>
-            <p class="signin-text">Already have an account? <a href="#">Log In</a></p>
+            <p class="signin-text">Already have an account? <a href="/login">Log In</a></p>
             <div class="or-divider">
                 <span>OR</span>
             </div>
@@ -51,6 +60,18 @@
                 <a href="#"><i class='bx bxl-apple'></i></a>
             </div>
         </form>
+        {% if form.errors %}
+            <div class="error-messages">
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ field|title }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
     </div>
 </body>
 
