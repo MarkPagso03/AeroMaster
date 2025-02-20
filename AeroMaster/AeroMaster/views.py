@@ -23,6 +23,7 @@ def home_view(request):
 def mock_view(request):
     return render(request, 'mock_exam_page.html')
 
+
 def signup_acc(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
@@ -41,3 +42,16 @@ def signup_acc(request):
 
     print("sign_up!")
     return render(request, 'signup.html', {'form': form})
+
+def login_acc(request):
+    if request.method == "POST":
+        id_number = request.POST['id_number']
+        password = request.POST['password']
+
+        user = auth.authenticate(id_number=id_number,password=password)
+
+        if user is not None:
+            auth.login_acc(request,user)
+            return redirect("/")
+    else:
+    return render(request,'login.html', {'form': form} )
