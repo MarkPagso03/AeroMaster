@@ -4,7 +4,7 @@ from .models import User
 
 
 class SignUpForm(forms.ModelForm):
-    c_password = forms.CharField(
+    confirm_password = forms.CharField(
         max_length=100,
         required=True,
         widget=forms.PasswordInput(),
@@ -27,15 +27,16 @@ class SignUpForm(forms.ModelForm):
             raise forms.ValidationError("This email is already registered.")
         return email
 
-    def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data.get("password")
-        confirm_password = cleaned_data.get("confirm_password")
+
+    def clean_confirm_password(self):
+        """ Validate that c_password matches password """
+        password = self.cleaned_data.get("password")
+        confirm_password = self.cleaned_data.get("confirm_password")
 
         if password and confirm_password and password != confirm_password:
-            raise forms.ValidationError("Passwords do not match!")
+            raise forms.ValidationError("Passwords do not match!")  # Error assigned to c_password
 
-        return cleaned_data
+        return confirm_password
 
     def save(self, commit=True):
         """ Hash the password before saving the user """
