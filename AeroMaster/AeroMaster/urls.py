@@ -28,5 +28,6 @@ urlpatterns = [
     path('signup_acc/', views.signup_acc, name='signup_acc'),
     path('landing/', views.landing_view, name="landing"),
     path('home/', views.home_view, name="home"),
-    path('mock_exam/',views.mock_view, name="mock_exam")
+    path('mock_exam/',views.mock_view, name="mock_exam"),
+    path('login_acc',views.login_acc, name='login_acc')
 ]
