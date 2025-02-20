@@ -7,17 +7,18 @@
         {% load static %}
         <link rel="stylesheet" href="{% static 'styles/mock_exam.css' %}?v={{ timestamp }}">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="{% static 'styles/master.css' %}?v={{ timestamp }}">
         <title>mock_exam</title>
     </head>
-    <body>
+    <body class="mock">
         <header>
             <div>
                 <img src="{% static 'icons/aeromaster_logo.png' %}" alt="brand_logo">
                 <h2>AeroMaster</h2>
               <nav>
                 <!-- could be button -->
-                <a href="#">Home</a>
-                <a href="#">Mock Examination</a>
+                <a href="/landing">Home</a>
+                <a href="/mock_exam">Mock Examination</a>
                 <a href="#">Results</a>
               </nav>
             </div>
