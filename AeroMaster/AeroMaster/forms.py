@@ -45,3 +45,22 @@ class SignUpForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+class LoginForm(forms.ModelForm):
+    id_number = forms.CharField(
+        widget= forms.TextInput(
+            attrs={
+                "class" : "form-control"
+            }
+        )
+    )
+    password = forms.CharField(
+        widget= forms.PasswordInput(
+            attrs={
+                "class" : "form-control"
+            }
+        )
+    )
+    class Meta:
+        model = User
+        fields = [ 'id_number', 'password']
