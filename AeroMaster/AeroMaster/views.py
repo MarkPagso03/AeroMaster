@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from .forms import SignUpForm
 from .forms import LoginForm
-from django.db import models
 from django.contrib.auth import authenticate, login
+from .models import User
 
 def base_view(request):
     return render(request, 'base.html')
@@ -47,18 +47,18 @@ def signup_acc(request):
     return render(request, 'signup.html', {'form': form})
 
 def login_acc(request):
-    form = LoginForm(request.POST or None)
-    msg = None
     if request.method == 'POST':
+        form = LoginForm(request.POST)
         if form.is_valid():
-            id_number = form.cleaned_data.get('id_number')
-            password = form.cleaned_data.get('password')
-            user = authenticate(id_number = id_number, password = password)
+            id_number = form.cleaned_data['id_number']
+            password = form.cleaned_data['password']
+
+            user = authenticate(request, id_number = id_number, password = password)
             if user is not None:
                 login(request,user)
                 return redirect('home')
-            else :
-                msg = 'invalid credentials'
-        else:
-            msg = 'error validating form'
-    return render(request,'login.html',{form: form, 'msg': msg})
+            else:
+                return render(request,'login.html', {'forms': form, 'error': 'Invalid credentials'})
+    else:
+        form = LoginForm()
+    return render(request,'login.html',{'form': form})
