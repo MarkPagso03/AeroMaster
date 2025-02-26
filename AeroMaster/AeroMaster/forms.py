@@ -46,21 +46,8 @@ class SignUpForm(forms.ModelForm):
             user.save()
         return user
 
-class LoginForm(forms.ModelForm):
-    id_number = forms.CharField(
-        widget= forms.TextInput(
-            attrs={
-                "class" : "form-control"
-            }
-        )
-    )
+class LoginForm(forms.Form):
+    id_number = forms.CharField()
     password = forms.CharField(
-        widget= forms.PasswordInput(
-            attrs={
-                "class" : "form-control"
-            }
-        )
+        widget=forms.PasswordInput
     )
-    class Meta:
-        model = User
-        fields = [ 'id_number', 'password']
