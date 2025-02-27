@@ -22,12 +22,12 @@
             </div>
              
             <div class = "input-box">
-                <label for="first">ID Number</label>
-                <input id="id_number" type="text" placeholder="example.AV 2023-066" required>
+                <label for="id_number">ID Number</label>
+                <input id="id_number" name="id_number" type="text" placeholder="example.AV 2023-066" required>
             </div>
             <div class = "input-box">
                 <label for="password">Password</label>
-                <input id="password" type="password" placeholder="Enter your password" required>
+                <input id="password" name="password" type="password" placeholder="Enter your password" required>
             </div>
             <div class = "keep-log">
                 
@@ -50,6 +50,17 @@
 
             <p>Not a member yet? <a href="/signup">Register now</a> </p>
         </form>
+        {% if form.errors %}
+            <div class="error_messages">
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ field|title }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
     </div>   
 </body>
 </html>

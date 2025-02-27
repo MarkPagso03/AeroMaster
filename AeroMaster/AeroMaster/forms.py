@@ -27,7 +27,6 @@ class SignUpForm(forms.ModelForm):
             raise forms.ValidationError("This email is already registered.")
         return email
 
-
     def clean_confirm_password(self):
         """ Validate that c_password matches password """
         password = self.cleaned_data.get("password")
@@ -46,8 +45,9 @@ class SignUpForm(forms.ModelForm):
             user.save()
         return user
 
-class LoginForm(forms.Form):
-    id_number = forms.CharField()
-    password = forms.CharField(
-        widget=forms.PasswordInput
-    )
+
+class LoginForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['id_number', 'password']
+

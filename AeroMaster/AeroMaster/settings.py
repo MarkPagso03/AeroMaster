@@ -50,6 +50,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'AeroMaster.authentication.UserBackend',
+    'django.contrib.auth.backends.ModelBackend',  # Default authentication
+]
+
+
 ROOT_URLCONF = 'AeroMaster.urls'
 
 TEMPLATES = [
