@@ -203,17 +203,19 @@ p {
     margin: 3px;
     padding: 10px;
     border-radius: 6px;
-    opacity: 1;
-    animation: fadeOut .5s ease-in-out forwards;
-    }
+    opacity: 0;
+    animation: fadeInOut 6s ease-in-out forwards; /* Adjust duration as needed */
+}
 
-    .error_messages li:nth-last-child(1) { animation-delay: 2.5s; }
-    .error_messages li:nth-last-child(2) { animation-delay: 5s; }
-    .error_messages li:nth-last-child(3) { animation-delay: 7.5s; }
-    .error_messages li:nth-last-child(4) { animation-delay: 10s; }
-    .error_messages li:nth-last-child(5) { animation-delay: 12.5s; }
+    .error_messages li:nth-last-child(1) { animation-delay: 0s; }
+    .error_messages li:nth-last-child(2) { animation-delay: 2s; }
+    .error_messages li:nth-last-child(3) { animation-delay: 4s; }
+    .error_messages li:nth-last-child(4) { animation-delay: 6s; }
+    .error_messages li:nth-last-child(5) { animation-delay: 8s; }
 
-    @keyframes fadeOut {
-        0% { opacity: 1; }
-        100% { opacity: 0; visibility: hidden; display: none;}
+    @keyframes fadeInOut {
+        0% { opacity: 0; transform: translateY(-10px); } /* Start hidden & slightly above */
+        5% { opacity: 1; transform: translateY(0); }   /* Fade in */
+        80% { opacity: 1; transform: translateY(0); }   /* Stay visible */
+        100% { opacity: 0; transform: translateY(10px); visibility: hidden; display: none; } /* Fade out */
     }
