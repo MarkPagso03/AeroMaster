@@ -41,7 +41,7 @@ def signup_acc(request):
             print("valid")
             user = form.save(commit=False)  # Prevent immediate save
             user.save()
-            login(request, user)  # Auto login
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')  # Auto login
             print("saved!")
             return redirect('home')  # Redirect to homepage
         print("not saved!2")
