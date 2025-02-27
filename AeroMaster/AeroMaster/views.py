@@ -4,11 +4,11 @@ from .forms import SignUpForm
 from .forms import LoginForm
 from django.contrib.auth import authenticate, login
 from .models import User
+from django.contrib.auth.decorators import login_required
 
 
 def base_view(request):
     return render(request, 'base.html')
-
 
 def dashboard_view(request):
     return render(request, 'admin_base.html')
@@ -21,7 +21,7 @@ def login_view(request):
 def signup_view(request):
     return render(request, 'signup.html')
 
-
+@login_required(login_url = '/login')
 def landing_view(request):
     return render(request, 'landing_page.html')
 
