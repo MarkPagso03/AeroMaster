@@ -20,5 +20,16 @@ class User(models.Model):
 
     last_login = models.DateTimeField(default=now, blank=True, null=True)
 
+
+    @property
+    def is_authenticated(self):
+        """ ✅ Required for Django authentication """
+        return True
+
+    @property
+    def is_anonymous(self):
+        """ ✅ Required to avoid 'is_anonymous' error """
+        return False  # Custom users are never anonymous
+
     def __str__(self):
         return f"{self.first_name} + {self.last_name}"

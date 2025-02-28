@@ -33,6 +33,13 @@ body > div:first-child {
     height: 50px;
 }
 
+body > div:first-child a{
+    position: fixed;
+    top: 30px;
+    right: 30px;
+}
+
+
 body > div:first-child > img{
     height: 90%;
     width: auto;

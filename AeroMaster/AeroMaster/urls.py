@@ -22,12 +22,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', views.dashboard_view, name='dashboard'),
     path('base/', views.base_view, name='base'),
-    path('', views.base_view, name='base'),
+    #path('', views.base_view, name='base'),
     path('login/', views.login_view, name='login'),
     path('signup/', views.signup_view, name='signup'),
     path('signup_acc/', views.signup_acc, name='signup_acc'),
-    path('landing/', views.landing_view, name="landing"),
+    path('', views.landing_view, name="landing"),
     path('home/', views.home_view, name="home"),
     path('mock_exam/',views.mock_view, name="mock_exam"),
-    path('login_acc/',views.login_acc, name='login_acc')
+    path('login_acc/',views.login_acc, name='login_acc'),
+    path('logout/', views.logout_view, name='logout'),
 ]

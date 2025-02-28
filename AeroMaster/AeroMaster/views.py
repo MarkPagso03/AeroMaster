@@ -5,6 +5,7 @@ from .forms import LoginForm
 from django.contrib.auth import authenticate, login
 from .models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
 
 def base_view(request):
@@ -21,11 +22,10 @@ def login_view(request):
 def signup_view(request):
     return render(request, 'signup.html')
 
-@login_required(login_url = '/login')
 def landing_view(request):
     return render(request, 'landing_page.html')
 
-
+@login_required(login_url = '/login')
 def home_view(request):
     return render(request, 'home.html')
 
@@ -75,3 +75,9 @@ def login_acc(request):
         print("method is not post")
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
+
+
+def logout_view(request):
+    """ Logs out the user and redirects to the login page """
+    logout(request)
+    return redirect('/')  # Change to your login/home page

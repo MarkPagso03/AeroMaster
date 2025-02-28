@@ -33,6 +33,13 @@ body > div:first-child > img{
     width: auto;
 }
 
+body > div:first-child a{
+    position: fixed;
+    top: 30px;
+    right: 30px;
+}
+
+
 .title {
     text-align: center;
     font-size: 35px;
