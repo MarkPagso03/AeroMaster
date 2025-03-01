@@ -31,4 +31,6 @@ urlpatterns = [
     path('mock_exam/',views.mock_view, name="mock_exam"),
     path('login_acc/',views.login_acc, name='login_acc'),
     path('logout/', views.logout_view, name='logout'),
+    path('unavailable_page/', views.unavailable_view, name='unavailable'),
+    path('back/', views.back_view, name='back'),
 ]

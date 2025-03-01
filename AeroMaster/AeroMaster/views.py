@@ -11,6 +11,14 @@ from django.contrib.auth import logout
 def base_view(request):
     return render(request, 'base.html')
 
+
+def unavailable_view(request):
+    return render(request, 'curr_unavailable.html')
+
+@login_required(login_url='/')
+def back_view(request):
+    return render(request, 'home.html')
+
 def dashboard_view(request):
     return render(request, 'admin_base.html')
 
@@ -22,10 +30,12 @@ def login_view(request):
 def signup_view(request):
     return render(request, 'signup.html')
 
+
 def landing_view(request):
     return render(request, 'landing_page.html')
 
-@login_required(login_url = '/login')
+
+@login_required(login_url='/login')
 def home_view(request):
     return render(request, 'home.html')
 
