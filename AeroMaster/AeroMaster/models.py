@@ -20,7 +20,6 @@ class User(models.Model):
 
     last_login = models.DateTimeField(default=now, blank=True, null=True)
 
-
     @property
     def is_authenticated(self):
         """ ✅ Required for Django authentication """
@@ -32,4 +31,17 @@ class User(models.Model):
         return False  # Custom users are never anonymous
 
     def __str__(self):
-        return f"{self.first_name} + {self.last_name}"
+        return f"{self.first_name} {self.last_name}"
+
+
+class Question(models.Model):
+    text = models.TextField(blank=False, null=False, unique=True)
+    option_a = models.CharField(max_length=255, blank=False, null=False)
+    option_b = models.CharField(max_length=255, blank=False, null=False)
+    option_c = models.CharField(max_length=255, blank=True, null=True)
+    option_d = models.CharField(max_length=255, blank=True, null=True)
+    correct_answer = models.CharField(max_length=1, blank=False, null=False)
+    subject = models.CharField(max_length=50, blank=True, null=False)
+
+    def __str__(self):
+        return self.text
