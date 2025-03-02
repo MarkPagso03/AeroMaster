@@ -35,7 +35,7 @@ class User(models.Model):
 
 
 class Question(models.Model):
-    text = models.TextField(blank=False, null=False, unique=True)
+    text = models.CharField(max_length=500, unique=True)
     option_a = models.CharField(max_length=255, blank=False, null=False)
     option_b = models.CharField(max_length=255, blank=False, null=False)
     option_c = models.CharField(max_length=255, blank=True, null=True)

@@ -51,7 +51,7 @@ if maxlen != minlen or len(question) != len(ans_s):
 
 confirmation = input("would you like to proceed?[y/n]: ")
 if confirmation == 'y':
-    subject = input("Subject name? ")
+    subject = input("Subject name? [aero, acrm, asd, eemle, math, power]: ")
     for index, items in enumerate(question):
         item = re.split(r"\s*[A-Z]\.\s*", items)
         q1 = Question.objects.create(

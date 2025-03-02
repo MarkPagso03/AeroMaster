@@ -51,7 +51,8 @@ def signup_acc(request):
             print("valid")
             user = form.save(commit=False)  # Prevent immediate save
             user.save()
-            login(request, user, backend='django.contrib.auth.backends.ModelBackend')  # Auto login
+            login(request, user, backend='AeroMaster.authentication.UserBackend')  # Auto login
+            print("User authenticated?", request.user.is_authenticated)
             print("saved!")
             return redirect('home')  # Redirect to homepage
         print("not saved!2")
