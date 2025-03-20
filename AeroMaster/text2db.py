@@ -52,14 +52,24 @@ if maxlen != minlen or len(question) != len(ans_s):
 confirmation = input("would you like to proceed?[y/n]: ")
 if confirmation == 'y':
     subject = input("Subject name? [aero, acrm, asd, eemle, math, power]: ")
+    done = 0
+    exist = 0
     for index, items in enumerate(question):
         item = re.split(r"\s*[A-Z]\.\s*", items)
-        q1 = Question.objects.create(
-            text=item[0],
-            option_a=item[1],
-            option_b=item[2],
-            option_c=item[3],
-            option_d=item[4],
-            correct_answer=ans_s[index],
-            subject=subject
-        )
+        if not Question.objects.filter(text=item[0]).exists():
+            q1 = Question.objects.create(
+                text=item[0],
+                option_a=item[1],
+                option_b=item[2],
+                option_c=item[3],
+                option_d=item[4],
+                correct_answer=ans_s[index],
+                subject=subject
+            )
+            done = done + 1
+        else:
+            print(f"{item[0]} is already existed! ")
+            exist = exist + 1
+
+    print(f"Done query: {done}")
+    print(f"already exist: {exist}")

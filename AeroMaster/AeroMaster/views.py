@@ -4,7 +4,7 @@ from .forms import SignUpForm
 from .forms import LoginForm
 from django.contrib.auth import authenticate, login
 from .models import User
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout
 
 
@@ -15,22 +15,27 @@ def base_view(request):
 def unavailable_view(request):
     return render(request, 'curr_unavailable.html')
 
+
 @login_required(login_url='/')
 def back_view(request):
     return render(request, 'home.html')
+
 
 def dashboard_view(request):
     return render(request, 'admin_base.html')
 
 
+@user_passes_test(lambda user: not user.is_authenticated, login_url='/home')
 def login_view(request):
     return render(request, 'login.html')
 
 
+@user_passes_test(lambda user: not user.is_authenticated, login_url='/home')
 def signup_view(request):
     return render(request, 'signup.html')
 
 
+@user_passes_test(lambda user: not user.is_authenticated, login_url='/home')
 def landing_view(request):
     return render(request, 'landing_page.html')
 
