@@ -1,0 +1,39 @@
+{% extends 'admin.html' %}
+{% block content %}
+<script>
+    function goToEditPage(empId) {
+        window.location.href = `edit/${empId}/`;
+    }
+</script>
+<script>
+    function add_page() {
+        window.location.href = `add`;
+    }
+</script>
+            <div id="view">
+                <div>
+                    <h2 class="page_name">View</h2>
+                    <button onclick="add_page()">Add</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Employees ID</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody id="faculty-list">
+                    {% for faculty in faculties %}
+                    <tr onclick="goToEditPage('{{ faculty.emp_id }}')">
+                        <td>{{ faculty.first_name }}</td>
+                        <td>{{ faculty.last_name }}</td>
+                        <td>{{ faculty.emp_id }}</td>
+                        <td>{{ faculty.email }}</td>
+                    </tr>
+                     {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+{% endblock %}

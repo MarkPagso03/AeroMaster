@@ -1,0 +1,16 @@
+{% extends 'admin.html' %}
+{% block content %}
+<script>
+        function cancelEdit() {
+            window.history.back();
+        }
+</script>
+        <h2 class="page_name">Add</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Faculty</button>
+        <button type="button" class="cancel" onclick="window.location.href='{% url 'student_list' %}'">Cancel</button>
+    </form>
+
+{% endblock %}

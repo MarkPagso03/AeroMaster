@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'AeroMaster_admin',
-    'AeroMaster'
+    'AeroMaster',
 ]
 
 MIDDLEWARE = [

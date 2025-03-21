@@ -1,0 +1,46 @@
+{% extends 'admin.html' %}
+{% block content %}
+<script>
+    function goToEditPage(empId) {
+        window.location.href = `edit/${empId}/`;
+    }
+</script>
+<script>
+    function highlight(element){
+        document.querySelectorAll(".highlight_nav").forEach(row => row.classList.remove("highlight_nav"));
+        element.classList.add("highlight_nav");
+        console.log(element);
+    }
+</script>
+<script>
+    function add_page() {
+        window.location.href = `add`;
+    }
+</script>
+            <div id="view">
+                <div>
+                    <h2 class="page_name">View</h2>
+                    <button onclick="add_page()">Add</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>ID Number</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody id="faculty-list">
+                    {% for student in students %}
+                    <tr onclick="goToEditPage('{{ student.id_number }}')">
+                        <td>{{ student.first_name }}</td>
+                        <td>{{ student.last_name }}</td>
+                        <td>{{ student.id_number }}</td>
+                        <td>{{ student.email }}</td>
+                    </tr>
+                     {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+{% endblock %}
