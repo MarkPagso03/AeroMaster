@@ -14,10 +14,10 @@ def current_time_utc_plus_8():
 class User(models.Model):
     first_name = models.CharField(max_length=50, blank=False, null=False)
     last_name = models.CharField(max_length=50, blank=False, null=False)
-    id_number = models.CharField(max_length=50, blank=False, null=False, primary_key=True, unique=True)
+    id_number = models.CharField(max_length=50, blank=False, null=False, primary_key=True)
     email = models.EmailField(max_length=100, blank=False, null=False, unique=True)
     password = models.CharField(max_length=100, blank=False, null=False)
-
+    role = models.CharField(max_length=20, editable=False, default='user')
     last_login = models.DateTimeField(default=now, blank=True, null=True)
 
     @property

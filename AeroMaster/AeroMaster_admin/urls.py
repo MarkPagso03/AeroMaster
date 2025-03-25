@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (admin_view, faculty_list, edit_faculty, archive_faculty, add_faculty,
-                    student_list, edit_student, archive_student, add_student)
+                    student_list, edit_student, archive_student, add_student,
+                    login_admin_view)
 
 urlpatterns = [
     path('', admin_view, name='AeroMaster_admin'),
@@ -12,4 +13,6 @@ urlpatterns = [
     path('student/add/', add_student, name='add_student'),
     path('student/edit/<str:student_id>/', edit_student, name='edit_student'),
     path('student/delete/<str:student_id>/', archive_student, name='archive_student'),
+    path('login/', login_admin_view, name='login_admin'),
+    path('login/', views.login_view, name='login'),
 ]

@@ -9,7 +9,7 @@ class AeroMaster_admin(models.Model):
     username = models.CharField(max_length=50, blank=False, null=False, primary_key=True, unique=True)
     email = models.EmailField(max_length=100, blank=False, null=False, unique=True)
     password = models.CharField(max_length=100, blank=False, null=False)
-
+    role = models.CharField(max_length=20, editable=False, default='aeromaster_admin')
     last_login = models.DateTimeField(default=now, blank=True, null=True)
 
     @property
@@ -40,6 +40,7 @@ class faculty(models.Model):
     emp_id = models.CharField(max_length=50, blank=False, null=False, primary_key=True, unique=True)
     email = models.EmailField(max_length=100, blank=False, null=False, unique=True)
     password = models.CharField(max_length=100, blank=False, null=False)
+    role = models.CharField(max_length=20, editable=False, default='faculty')
 
     last_login = models.DateTimeField(default=now, blank=True, null=True)
 
@@ -71,15 +72,18 @@ class faculty(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+
 class ArchiveFaculty(models.Model):
     first_name = models.CharField(max_length=50, null=False)
     last_name = models.CharField(max_length=50, null=False)
     emp_id = models.CharField(max_length=50, unique=True, null=False)
     email = models.EmailField(max_length=100, null=False)
     archived_at = models.DateTimeField(auto_now_add=True, null=False)
+    role = models.CharField(max_length=20, editable=False, default='faculty')
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
 
 class ArchiveStudent(models.Model):
     first_name = models.CharField(max_length=50, null=False)
@@ -87,9 +91,7 @@ class ArchiveStudent(models.Model):
     id_number = models.CharField(max_length=50, unique=True, null=False)
     email = models.EmailField(max_length=100, null=False)
     archived_at = models.DateTimeField(auto_now_add=True, null=False)
+    role = models.CharField(max_length=20, editable=False, default='user')
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
-
-
-

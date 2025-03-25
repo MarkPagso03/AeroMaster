@@ -4,6 +4,10 @@ from django.contrib import admin
 from .models import faculty, AeroMaster_admin, ArchiveFaculty
 
 
-admin.site.register(faculty)
-admin.site.register(AeroMaster_admin)
-admin.site.register(ArchiveFaculty)
+class Role(admin.ModelAdmin):
+    readonly_fields = ('role',)
+
+
+admin.site.register(faculty, Role)
+admin.site.register(AeroMaster_admin, Role)
+admin.site.register(ArchiveFaculty, Role)

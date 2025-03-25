@@ -4,9 +4,15 @@ from .models import faculty, ArchiveFaculty, ArchiveStudent
 from .forms import FacultyForm, StudentForm
 from AeroMaster.models import User
 
+from AeroMaster.decorators import role_required
+
 
 # Create your views here.
+def login_admin_view(request):
+    return render(request, 'login_admin.html')
 
+
+@role_required('aeromaster_admin')
 def admin_view(request):
     return render(request, 'admin.html')
 

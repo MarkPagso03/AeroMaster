@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
+
+from . import settings
 from .forms import SignUpForm
 from .forms import LoginForm
 from django.contrib.auth import authenticate, login
@@ -72,25 +74,28 @@ def signup_acc(request):
 
 def login_acc(request):
     if request.method == 'POST':
-        print("methos==post")
         form = LoginForm(request.POST)
         if form.is_valid():
-            print("form is valid")
             id_number = form.cleaned_data['id_number']
             password = form.cleaned_data['password']
+            keep_logged_in = form.cleaned_data.get('keep_logged_in')
 
             user = authenticate(request, id_number=id_number, password=password)
             if user is not None:
-                print("user is not none")
                 login(request, user)
+
+                # Set session expiry based on "Keep me logged in"
+                if keep_logged_in:
+                    request.session.set_expiry(settings.SESSION_COOKIE_AGE)  # Default expiry (e.g., 2 hours)
+                else:
+                    request.session.set_expiry(0)  # Expires when the browser closes
+
                 return redirect('home')
             else:
-                print("user is none")
-                return render(request, 'login.html', {'forms': form, 'error': 'Invalid credentials'})
+                return render(request, 'landing_page.html', {'form': form, 'error': 'Invalid credentials'})
     else:
-        print("method is not post")
         form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'landing_page.html', {'form': form})
 
 
 def logout_view(request):

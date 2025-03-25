@@ -130,3 +130,12 @@ STATICFILES_DIRS = [BASE_DIR / 'frontend/static']
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Set the session expiration (e.g., 2 hours)
+SESSION_COOKIE_AGE = 2 * 60 * 60  # 2 hours in seconds
+
+# Set session to expire when the browser is closed (optional)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Enforce session to expire after inactivity
+SESSION_SAVE_EVERY_REQUEST = False

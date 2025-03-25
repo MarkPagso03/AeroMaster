@@ -46,8 +46,8 @@ class SignUpForm(forms.ModelForm):
         return user
 
 
-class LoginForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['id_number', 'password']
+class LoginForm(forms.Form):
+    id_number = forms.CharField(max_length=50, required=True)
+    password = forms.CharField(max_length=100, required=True, widget=forms.PasswordInput)
+    keep_logged_in = forms.BooleanField(required=False)  # Optional checkbox
 
