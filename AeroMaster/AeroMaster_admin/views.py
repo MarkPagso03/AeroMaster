@@ -37,14 +37,15 @@ def login_acc(request):
 
 
 def admin_required(view_func):
-    """ Custom decorator to restrict access to AeroMaster Admins only. """
+    """ Custom decorator to restrict access to AeroMaster Admins and Faculty only. """
 
     def wrapper(request, *args, **kwargs):
-        if not request.user.is_authenticated or request.user.role != 'aeromaster_admin':
+        if not request.user.is_authenticated or request.user.role not in ['aeromaster_admin', 'faculty']:
             return render(request, 'login_admin.html')
         return view_func(request, *args, **kwargs)
 
     return wrapper
+
 
 
 @admin_required

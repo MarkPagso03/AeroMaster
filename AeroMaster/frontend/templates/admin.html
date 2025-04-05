@@ -54,6 +54,7 @@
                     Welcome,
                     {% if user.username %}
                         {{ user.username }}
+                        {{ user.role }}
                     {% else %}
                         Pagso!
                     {% endif %}

@@ -2,7 +2,7 @@ from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from .models import User  # Import your custom table model
-from AeroMaster_admin.models import AeroMaster_admin
+from AeroMaster_admin.models import AeroMaster_admin, faculty
 
 
 class UserBackend(BaseBackend):
@@ -26,18 +26,34 @@ class UserBackend(BaseBackend):
 
 class AeroMaster_adminBackend(BaseBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
+        print('authen admin backend')
+        # Try authenticating as admin
         try:
-            # Query the 'students' table for a matching ID
+            print('admin try')
             admin = AeroMaster_admin.objects.get(username=username)
-
-            # Verify the password (assuming it's hashed)
             if check_password(password, admin.password):
-                return admin  # Return the authenticated user
+                return admin
         except AeroMaster_admin.DoesNotExist:
-            return None  # Return None if no user found
+            pass
+
+        # Try authenticating as faculty using emp_id as username
+        try:
+            print('faculty try')
+            faculty_user = faculty.objects.get(emp_id=username)
+            if check_password(password, faculty_user.password):
+                return faculty_user
+        except faculty.DoesNotExist:
+            pass
+
+        return None
 
     def get_user(self, user_id):
         try:
             return AeroMaster_admin.objects.get(pk=user_id)
         except AeroMaster_admin.DoesNotExist:
+            pass
+
+        try:
+            return faculty.objects.get(pk=user_id)
+        except faculty.DoesNotExist:
             return None

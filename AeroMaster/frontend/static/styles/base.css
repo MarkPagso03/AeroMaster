@@ -17,7 +17,7 @@ html{
 body{
     display: flex;
     height: 100vh;
-    flex-direction: column;
+    flex-direction: column; 
 }
 
 /* header -------------------------------------*/
@@ -60,38 +60,19 @@ header nav a{
     color: #696969;
 }
 
-header > div:nth-child(2) {
-    display: flex;
-    gap: 10px;
-}
 a  .button {
     padding: .4rem 2.5rem;
     border: 1px solid darkblue;
     border-radius: 10px;
     background-color: transparent;
 }
-header > div:nth-child(2) button{
-    padding: .4rem 2.5rem;
-    border: 1px solid darkblue;
-    border-radius: 10px;
-    background-color: transparent;
-}
 
-header > div:nth-child(2) button:first-child{
-    color: darkblue;
-}
-
-header > div:nth-child(2) button:last-child{
-    color: white;
-    background: darkblue;
-}
-
-header > div:last-child{
+header .header_buttons{
     display: flex;
     gap: 20px;
 }
 
-header > div:last-child button{
+header .header_buttons button{
     border: none;
     background: transparent;
 }
@@ -109,7 +90,7 @@ body > div{
 
 /* footer -------------------------------------*/
 footer{
-    height: max(70px, 22vh);
+    height: max(70px, 25h);
     background: #202020;
     color: #D0D0D0;
     z-index: 5;
