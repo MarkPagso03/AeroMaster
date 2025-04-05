@@ -1,0 +1,595 @@
+[
+    {
+        "model": "AeroMaster.user",
+        "pk": 1,
+        "fields": {
+            "first_name": "John",
+            "last_name": "Doe",
+            "id_number": "ID123456",
+            "email": "john.doe@example.com",
+            "password": "hashedpassword1",
+            "role": "user",
+            "last_login": "2025-04-05 10:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster.user",
+        "pk": 2,
+        "fields": {
+            "first_name": "Jane",
+            "last_name": "Doe",
+            "id_number": "ID987654",
+            "email": "jane.doe@example.com",
+            "password": "hashedpassword2",
+            "role": "user",
+            "last_login": "2025-04-05 11:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster.user",
+        "pk": 3,
+        "fields": {
+            "first_name": "Alice",
+            "last_name": "Smith",
+            "id_number": "ID112233",
+            "email": "alice.smith@example.com",
+            "password": "hashedpassword3",
+            "role": "user",
+            "last_login": "2025-04-05 12:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster.user",
+        "pk": 4,
+        "fields": {
+            "first_name": "Bob",
+            "last_name": "Johnson",
+            "id_number": "ID445566",
+            "email": "bob.johnson@example.com",
+            "password": "hashedpassword4",
+            "role": "user",
+            "last_login": "2025-04-05 13:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster.user",
+        "pk": 5,
+        "fields": {
+            "first_name": "Charlie",
+            "last_name": "Brown",
+            "id_number": "ID778899",
+            "email": "charlie.brown@example.com",
+            "password": "hashedpassword5",
+            "role": "user",
+            "last_login": "2025-04-05 14:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster.user",
+        "pk": 6,
+        "fields": {
+            "first_name": "David",
+            "last_name": "Miller",
+            "id_number": "ID223344",
+            "email": "david.miller@example.com",
+            "password": "hashedpassword6",
+            "role": "user",
+            "last_login": "2025-04-05 15:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster.user",
+        "pk": 7,
+        "fields": {
+            "first_name": "Eva",
+            "last_name": "Taylor",
+            "id_number": "ID556677",
+            "email": "eva.taylor@example.com",
+            "password": "hashedpassword7",
+            "role": "user",
+            "last_login": "2025-04-05 16:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster.user",
+        "pk": 8,
+        "fields": {
+            "first_name": "Frank",
+            "last_name": "White",
+            "id_number": "ID334455",
+            "email": "frank.white@example.com",
+            "password": "hashedpassword8",
+            "role": "user",
+            "last_login": "2025-04-05 17:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster.user",
+        "pk": 9,
+        "fields": {
+            "first_name": "Grace",
+            "last_name": "Green",
+            "id_number": "ID223355",
+            "email": "grace.green@example.com",
+            "password": "hashedpassword9",
+            "role": "user",
+            "last_login": "2025-04-05 18:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster.user",
+        "pk": 10,
+        "fields": {
+            "first_name": "Henry",
+            "last_name": "King",
+            "id_number": "ID445577",
+            "email": "henry.king@example.com",
+            "password": "hashedpassword10",
+            "role": "user",
+            "last_login": "2025-04-05 19:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.aeromaster_admin",
+        "pk": 1,
+        "fields": {
+            "username": "adminuser",
+            "email": "adminuser@example.com",
+            "password": "hashedpassword1",
+            "role": "aeromaster_admin",
+            "last_login": "2025-04-05 09:00:00",
+            "is_active": true,
+            "is_staff": true
+        }
+    },
+    {
+        "model": "AeroMaster_admin.aeromaster_admin",
+        "pk": 2,
+        "fields": {
+            "username": "superadmin",
+            "email": "superadmin@example.com",
+            "password": "hashedpassword2",
+            "role": "aeromaster_admin",
+            "last_login": "2025-04-05 10:00:00",
+            "is_active": true,
+            "is_staff": true
+        }
+    },
+    {
+        "model": "AeroMaster_admin.aeromaster_admin",
+        "pk": 3,
+        "fields": {
+            "username": "admin1",
+            "email": "admin1@example.com",
+            "password": "hashedpassword3",
+            "role": "aeromaster_admin",
+            "last_login": "2025-04-05 11:00:00",
+            "is_active": true,
+            "is_staff": true
+        }
+    },
+    {
+        "model": "AeroMaster_admin.aeromaster_admin",
+        "pk": 4,
+        "fields": {
+            "username": "admin2",
+            "email": "admin2@example.com",
+            "password": "hashedpassword4",
+            "role": "aeromaster_admin",
+            "last_login": "2025-04-05 12:00:00",
+            "is_active": true,
+            "is_staff": true
+        }
+    },
+    {
+        "model": "AeroMaster_admin.aeromaster_admin",
+        "pk": 5,
+        "fields": {
+            "username": "admin3",
+            "email": "admin3@example.com",
+            "password": "hashedpassword5",
+            "role": "aeromaster_admin",
+            "last_login": "2025-04-05 13:00:00",
+            "is_active": true,
+            "is_staff": true
+        }
+    },
+    {
+        "model": "AeroMaster_admin.aeromaster_admin",
+        "pk": 6,
+        "fields": {
+            "username": "admin4",
+            "email": "admin4@example.com",
+            "password": "hashedpassword6",
+            "role": "aeromaster_admin",
+            "last_login": "2025-04-05 14:00:00",
+            "is_active": true,
+            "is_staff": true
+        }
+    },
+    {
+        "model": "AeroMaster_admin.aeromaster_admin",
+        "pk": 7,
+        "fields": {
+            "username": "admin5",
+            "email": "admin5@example.com",
+            "password": "hashedpassword7",
+            "role": "aeromaster_admin",
+            "last_login": "2025-04-05 15:00:00",
+            "is_active": true,
+            "is_staff": true
+        }
+    },
+    {
+        "model": "AeroMaster_admin.aeromaster_admin",
+        "pk": 8,
+        "fields": {
+            "username": "admin6",
+            "email": "admin6@example.com",
+            "password": "hashedpassword8",
+            "role": "aeromaster_admin",
+            "last_login": "2025-04-05 16:00:00",
+            "is_active": true,
+            "is_staff": true
+        }
+    },
+    {
+        "model": "AeroMaster_admin.aeromaster_admin",
+        "pk": 9,
+        "fields": {
+            "username": "admin7",
+            "email": "admin7@example.com",
+            "password": "hashedpassword9",
+            "role": "aeromaster_admin",
+            "last_login": "2025-04-05 17:00:00",
+            "is_active": true,
+            "is_staff": true
+        }
+    },
+    {
+        "model": "AeroMaster_admin.aeromaster_admin",
+        "pk": 10,
+        "fields": {
+            "username": "admin8",
+            "email": "admin8@example.com",
+            "password": "hashedpassword10",
+            "role": "aeromaster_admin",
+            "last_login": "2025-04-05 18:00:00",
+            "is_active": true,
+            "is_staff": true
+        }
+    },
+
+    {
+        "model": "AeroMaster.question",
+        "pk": 1,
+        "fields": {
+            "text": "What is the capital of France?",
+            "option_a": "Berlin",
+            "option_b": "Madrid",
+            "option_c": "Paris",
+            "option_d": "Rome",
+            "correct_answer": "C",
+            "subject": "Geography"
+        }
+    },
+    {
+        "model": "AeroMaster.question",
+        "pk": 2,
+        "fields": {
+            "text": "Who developed the theory of relativity?",
+            "option_a": "Newton",
+            "option_b": "Einstein",
+            "option_c": "Galileo",
+            "option_d": "Tesla",
+            "correct_answer": "B",
+            "subject": "Science"
+        }
+    },
+    {
+        "model": "AeroMaster.question",
+        "pk": 3,
+        "fields": {
+            "text": "What is 2 + 2?",
+            "option_a": "3",
+            "option_b": "4",
+            "option_c": "5",
+            "option_d": "6",
+            "correct_answer": "B",
+            "subject": "Mathematics"
+        }
+    },
+    {
+        "model": "AeroMaster.question",
+        "pk": 4,
+        "fields": {
+            "text": "Which is the largest ocean in the world?",
+            "option_a": "Atlantic Ocean",
+            "option_b": "Indian Ocean",
+            "option_c": "Arctic Ocean",
+            "option_d": "Pacific Ocean",
+            "correct_answer": "D",
+            "subject": "Geography"
+        }
+    },
+    {
+        "model": "AeroMaster.question",
+        "pk": 5,
+        "fields": {
+            "text": "Who painted the Mona Lisa?",
+            "option_a": "Van Gogh",
+            "option_b": "Da Vinci",
+            "option_c": "Picasso",
+            "option_d": "Michelangelo",
+            "correct_answer": "B",
+            "subject": "Art"
+        }
+    },
+    {
+        "model": "AeroMaster.question",
+        "pk": 6,
+        "fields": {
+            "text": "What is the square root of 16?",
+            "option_a": "2",
+            "option_b": "3",
+            "option_c": "4",
+            "option_d": "5",
+            "correct_answer": "C",
+            "subject": "Mathematics"
+        }
+    },
+    {
+        "model": "AeroMaster.question",
+        "pk": 7,
+        "fields": {
+            "text": "Which planet is known as the Red Planet?",
+            "option_a": "Earth",
+            "option_b": "Mars",
+            "option_c": "Venus",
+            "option_d": "Jupiter",
+            "correct_answer": "B",
+            "subject": "Science"
+        }
+    },
+    {
+        "model": "AeroMaster.question",
+        "pk": 8,
+        "fields": {
+            "text": "What is the largest mammal on Earth?",
+            "option_a": "Elephant",
+            "option_b": "Blue Whale",
+            "option_c": "Giraffe",
+            "option_d": "Shark",
+            "correct_answer": "B",
+            "subject": "Biology"
+        }
+    },
+    {
+        "model": "AeroMaster.question",
+        "pk": 9,
+        "fields": {
+            "text": "What is the boiling point of water?",
+            "option_a": "90°C",
+            "option_b": "95°C",
+            "option_c": "100°C",
+            "option_d": "105°C",
+            "correct_answer": "C",
+            "subject": "Science"
+        }
+    },
+    {
+        "model": "AeroMaster.question",
+        "pk": 10,
+        "fields": {
+            "text": "What is the chemical symbol for water?",
+            "option_a": "CO2",
+            "option_b": "O2",
+            "option_c": "H2O",
+            "option_d": "O3",
+            "correct_answer": "C",
+            "subject": "Chemistry"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.faculty",
+        "pk": 1,
+        "fields": {
+            "first_name": "Dr. Anna",
+            "last_name": "Johnson",
+            "emp_id": "F001",
+            "email": "anna.johnson@aero.edu",
+            "password": "hashedpassword1",
+            "role": "faculty",
+            "last_login": "2025-04-05 09:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.faculty",
+        "pk": 2,
+        "fields": {
+            "first_name": "Prof. Bob",
+            "last_name": "Smith",
+            "emp_id": "F002",
+            "email": "bob.smith@aero.edu",
+            "password": "hashedpassword2",
+            "role": "faculty",
+            "last_login": "2025-04-05 10:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.faculty",
+        "pk": 3,
+        "fields": {
+            "first_name": "Dr. Charlie",
+            "last_name": "Brown",
+            "emp_id": "F003",
+            "email": "charlie.brown@aero.edu",
+            "password": "hashedpassword3",
+            "role": "faculty",
+            "last_login": "2025-04-05 11:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.faculty",
+        "pk": 4,
+        "fields": {
+            "first_name": "Prof. Eva",
+            "last_name": "Taylor",
+            "emp_id": "F004",
+            "email": "eva.taylor@aero.edu",
+            "password": "hashedpassword4",
+            "role": "faculty",
+            "last_login": "2025-04-05 12:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.faculty",
+        "pk": 5,
+        "fields": {
+            "first_name": "Dr. Frank",
+            "last_name": "White",
+            "emp_id": "F005",
+            "email": "frank.white@aero.edu",
+            "password": "hashedpassword5",
+            "role": "faculty",
+            "last_login": "2025-04-05 13:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.faculty",
+        "pk": 6,
+        "fields": {
+            "first_name": "Prof. Grace",
+            "last_name": "Green",
+            "emp_id": "F006",
+            "email": "grace.green@aero.edu",
+            "password": "hashedpassword6",
+            "role": "faculty",
+            "last_login": "2025-04-05 14:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.faculty",
+        "pk": 7,
+        "fields": {
+            "first_name": "Dr. Henry",
+            "last_name": "King",
+            "emp_id": "F007",
+            "email": "henry.king@aero.edu",
+            "password": "hashedpassword7",
+            "role": "faculty",
+            "last_login": "2025-04-05 15:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.faculty",
+        "pk": 8,
+        "fields": {
+            "first_name": "Prof. Isabella",
+            "last_name": "Martinez",
+            "emp_id": "F008",
+            "email": "isabella.martinez@aero.edu",
+            "password": "hashedpassword8",
+            "role": "faculty",
+            "last_login": "2025-04-05 16:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.faculty",
+        "pk": 9,
+        "fields": {
+            "first_name": "Dr. Jack",
+            "last_name": "Lee",
+            "emp_id": "F009",
+            "email": "jack.lee@aero.edu",
+            "password": "hashedpassword9",
+            "role": "faculty",
+            "last_login": "2025-04-05 17:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.faculty",
+        "pk": 10,
+        "fields": {
+            "first_name": "Prof. Kate",
+            "last_name": "Morris",
+            "emp_id": "F010",
+            "email": "kate.morris@aero.edu",
+            "password": "hashedpassword10",
+            "role": "faculty",
+            "last_login": "2025-04-05 18:00:00"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.archivefaculty",
+        "pk": 1,
+        "fields": {
+            "first_name": "Dr. Anna",
+            "last_name": "Johnson",
+            "emp_id": "F001",
+            "email": "anna.johnson@aero.edu",
+            "archived_at": "2025-04-05 09:30:00",
+            "role": "faculty"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.archivefaculty",
+        "pk": 2,
+        "fields": {
+            "first_name": "Prof. Bob",
+            "last_name": "Smith",
+            "emp_id": "F002",
+            "email": "bob.smith@aero.edu",
+            "archived_at": "2025-04-05 10:30:00",
+            "role": "faculty"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.archivefaculty",
+        "pk": 3,
+        "fields": {
+            "first_name": "Dr. Charlie",
+            "last_name": "Brown",
+            "emp_id": "F003",
+            "email": "charlie.brown@aero.edu",
+            "archived_at": "2025-04-05 11:30:00",
+            "role": "faculty"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.archivefaculty",
+        "pk": 4,
+        "fields": {
+            "first_name": "Prof. Eva",
+            "last_name": "Taylor",
+            "emp_id": "F004",
+            "email": "eva.taylor@aero.edu",
+            "archived_at": "2025-04-05 12:30:00",
+            "role": "faculty"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.archivestudent",
+        "pk": 1,
+        "fields": {
+            "first_name": "John",
+            "last_name": "Doe",
+            "id_number": "ID123456",
+            "email": "john.doe@example.com",
+            "archived_at": "2025-04-05 10:00:00",
+            "role": "user"
+        }
+    },
+    {
+        "model": "AeroMaster_admin.archivestudent",
+        "pk": 2,
+        "fields": {
+            "first_name": "Jane",
+            "last_name": "Doe",
+            "id_number": "ID987654",
+            "email": "jane.doe@example.com",
+            "archived_at": "2025-04-05 11:00:00",
+            "role": "user"
+        }
+    }
+]

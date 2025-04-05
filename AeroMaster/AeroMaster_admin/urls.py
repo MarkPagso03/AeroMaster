@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import (admin_view, faculty_list, edit_faculty, archive_faculty, add_faculty,
                     student_list, edit_student, archive_student, add_student,
-                    login_admin_view)
+                    login_admin_view, login_acc, logout_view,
+                    question_list, edit_question, add_question, archive_question)
 
 urlpatterns = [
     path('', admin_view, name='AeroMaster_admin'),
@@ -14,5 +15,10 @@ urlpatterns = [
     path('student/edit/<str:student_id>/', edit_student, name='edit_student'),
     path('student/delete/<str:student_id>/', archive_student, name='archive_student'),
     path('login/', login_admin_view, name='login_admin'),
-    path('login/', views.login_view, name='login'),
+    path('login_acc/', login_acc, name='AeroMasterAdmin_login_acc'),
+    path('logout/', logout_view, name='logout_admin'),
+    path('question/view', question_list, name='question_list'),
+    path('question/add/', add_question, name='add_question'),
+    path('question/edit/<str:id>/', edit_question, name='edit_question'),
+    path('question/delete/<str:id>/', archive_question, name='archive_question'),
 ]

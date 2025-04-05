@@ -1,0 +1,45 @@
+{% extends 'admin.html' %}
+{% block content %}
+<script>
+    function goToEditPage(id) {
+        window.location.href = `edit/${id}/`;
+    }
+</script>
+<script>
+    function add_page() {
+        window.location.href = `add`;
+    }
+</script>
+            <div id="view">
+                <div>
+                    <h2 class="page_name">View</h2>
+                    <button onclick="add_page()">Add</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Option a</th>
+                            <th>Option b</th>
+                            <th>Option c</th>
+                            <th>Option d</th>
+                            <th>Correct Answer</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody id="faculty-list">
+                    {% for question in questions %}
+                    <tr onclick="goToEditPage('{{ question.id }}')">
+                        <td>{{ question.text }}</td>
+                        <td>{{ question.option_a }}</td>
+                        <td>{{ question.option_b }}</td>
+                        <td>{{ question.option_c }}</td>
+                        <td>{{ question.option_d }}</td>
+                        <td>{{ question.correct_answer }}</td>
+                        <td>{{ question.subject }}</td>
+                    </tr>
+                     {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+{% endblock %}

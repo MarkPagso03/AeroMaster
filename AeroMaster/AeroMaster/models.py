@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 import pytz
 from django.utils.timezone import now
+from django.contrib.auth.hashers import make_password, check_password
 
 
 def current_time_utc_plus_8():
@@ -14,11 +15,20 @@ def current_time_utc_plus_8():
 class User(models.Model):
     first_name = models.CharField(max_length=50, blank=False, null=False)
     last_name = models.CharField(max_length=50, blank=False, null=False)
-    id_number = models.CharField(max_length=50, blank=False, null=False, primary_key=True)
+    id_number = models.CharField(max_length=50, blank=False, null=False)
     email = models.EmailField(max_length=100, blank=False, null=False, unique=True)
     password = models.CharField(max_length=100, blank=False, null=False)
     role = models.CharField(max_length=20, editable=False, default='user')
     last_login = models.DateTimeField(default=now, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        existing = User.objects.filter(pk=self.pk).first()
+        if not existing or existing.password != self.password:
+            self.password = make_password(self.password)
+        super().save(*args, **kwargs)
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)
 
     @property
     def is_authenticated(self):

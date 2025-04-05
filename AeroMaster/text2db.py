@@ -51,7 +51,7 @@ if maxlen != minlen or len(question) != len(ans_s):
 
 confirmation = input("would you like to proceed?[y/n]: ")
 if confirmation == 'y':
-    subject = input("Subject name? [aero, acrm, asd, eemle, math, power]: ")
+    subject = input("Subject name? [AeroDy, ACRM, A/C, asd, EEMLE, math, A/C Powerplant]: ")
     done = 0
     exist = 0
     for index, items in enumerate(question):

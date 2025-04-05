@@ -10,6 +10,17 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout
 
 
+def user_required(view_func):
+    """ Custom decorator to restrict access to AeroMaster Admins only. """
+
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated or request.user.role != 'user':
+            return render(request, 'landing_page.html')
+        return view_func(request, *args, **kwargs)
+
+    return wrapper
+
+
 def base_view(request):
     return render(request, 'base.html')
 
@@ -42,7 +53,7 @@ def landing_view(request):
     return render(request, 'landing_page.html')
 
 
-@login_required(login_url='/login')
+@user_required
 def home_view(request):
     return render(request, 'home.html')
 
@@ -75,13 +86,15 @@ def signup_acc(request):
 def login_acc(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
+        print('logged in1')
         if form.is_valid():
             id_number = form.cleaned_data['id_number']
             password = form.cleaned_data['password']
             keep_logged_in = form.cleaned_data.get('keep_logged_in')
-
+            print('logged in2')
             user = authenticate(request, id_number=id_number, password=password)
             if user is not None:
+                print('logged in3')
                 login(request, user)
 
                 # Set session expiry based on "Keep me logged in"
@@ -89,11 +102,13 @@ def login_acc(request):
                     request.session.set_expiry(settings.SESSION_COOKIE_AGE)  # Default expiry (e.g., 2 hours)
                 else:
                     request.session.set_expiry(0)  # Expires when the browser closes
-
+                print('logged in')
                 return redirect('home')
             else:
+                print('logged in4')
                 return render(request, 'landing_page.html', {'form': form, 'error': 'Invalid credentials'})
     else:
+        print('logged in5')
         form = LoginForm()
     return render(request, 'landing_page.html', {'form': form})
 
@@ -101,4 +116,4 @@ def login_acc(request):
 def logout_view(request):
     """ Logs out the user and redirects to the login page """
     logout(request)
-    return redirect('/')  # Change to your login/home page
+    return redirect('landing')

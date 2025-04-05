@@ -53,6 +53,7 @@ MIDDLEWARE = [
 
 AUTHENTICATION_BACKENDS = [
     'AeroMaster.authentication.UserBackend',
+    'AeroMaster.authentication.AeroMaster_adminBackend',
     'django.contrib.auth.backends.ModelBackend',  # Default authentication
 ]
 
