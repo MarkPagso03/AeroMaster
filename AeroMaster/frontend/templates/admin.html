@@ -21,17 +21,13 @@
             <h2>AeroMaster</h2>
             </div>
             <nav class="nav_top">
-                    <a class="dropdown" id="faculty_link" onclick="highlight(this);" href="{% url 'faculty_list' %}"> Faculty
-                    <!-- <a class="nav_select" id="faculty_button" >Faculty</a>
-                        <div class="dropdown-menu" style="display: none;">
-                            <a href="{% url 'faculty_list' %}" onclick="highlight(this);">View</a>
-                            <a href="">Edit</a>
-                            <a href="#">Archive</a>
-                        </div>
-                     -->
-                    </a>
+                {% if user.role == 'aeromaster_admin' %}
+                    <a class="dropdown" id="faculty_link" onclick="highlight(this);" href="{% url 'faculty_list' %}"> Faculty</a>
+                {% endif %}
                     <a class="dropdown" id="student_link" onclick="highlight(this);" href="{% url 'student_list' %}">Student</a>
+                {% if user.role == 'faculty' %}
                     <a class="dropdown" id="question_link" onclick="highlight(this);" href="{% url 'question_list' %}">Questions</a>
+                {% endif %}
                     <a class="dropdown" id="Customize_button" onclick="highlight(this);">Customize</a>
             </nav>
             <hr>
@@ -54,7 +50,6 @@
                     Welcome,
                     {% if user.username %}
                         {{ user.username }}
-                        {{ user.role }}
                     {% else %}
                         Pagso!
                     {% endif %}
