@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'AeroMaster_admin',
     'AeroMaster',
+    'import_export',
 ]
 
 MIDDLEWARE = [

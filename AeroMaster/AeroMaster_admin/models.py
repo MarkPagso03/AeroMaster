@@ -44,6 +44,8 @@ class faculty(models.Model):
     email = models.EmailField(max_length=100, blank=False, null=False, unique=True)
     password = models.CharField(max_length=100, blank=False, null=False)
     role = models.CharField(max_length=20, editable=False, default='faculty')
+    is_active = models.BooleanField(default=True)  # Explicit field for is_active
+    is_staff = models.BooleanField(default=False)  # Explicit field for is_staff
 
     last_login = models.DateTimeField(default=now, blank=True, null=True)
 
