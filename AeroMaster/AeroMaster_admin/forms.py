@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.hashers import make_password
 
-from .models import faculty, AeroMaster_admin
+from .models import faculty, AeroMaster_admin, ExamSetting
 from AeroMaster.models import User, Question
 
 
@@ -56,3 +56,8 @@ class QuestionForm(forms.ModelForm):
 class AeroMasterAdminForm(forms.Form):
     username = forms.CharField(max_length=50, required=True)
     password = forms.CharField(max_length=100, required=True, widget=forms.PasswordInput)
+
+class ExamSettingForm(forms.ModelForm):
+    class Meta:
+        model = ExamSetting
+        fields = ['subject', 'date_time', 'shuffle', 'duration']

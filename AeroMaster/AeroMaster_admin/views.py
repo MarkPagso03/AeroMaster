@@ -1,11 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
+from django.core.serializers.json import DjangoJSONEncoder
 from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import faculty, ArchiveFaculty, ArchiveStudent, ArchiveQuestion, GeneratedQuestions
+from .models import faculty, ArchiveFaculty, ArchiveStudent, ArchiveQuestion, GeneratedQuestions, ExamSetting
 from .forms import FacultyForm, StudentForm, AeroMasterAdminForm, QuestionForm
 from AeroMaster.models import User, Question
 import random
-
+import json
 
 
 # from AeroMaster.decorators import role_required
@@ -48,6 +49,7 @@ def admin_required(view_func):
 
     return wrapper
 
+
 def faculty_required(view_func):
     """ Custom decorator to restrict access to AeroMaster Admins and Faculty only. """
 
@@ -58,6 +60,7 @@ def faculty_required(view_func):
 
     return wrapper
 
+
 def adminfaculty_required(view_func):
     """ Custom decorator to restrict access to AeroMaster Admins and Faculty only. """
 
@@ -67,7 +70,6 @@ def adminfaculty_required(view_func):
         return view_func(request, *args, **kwargs)
 
     return wrapper
-
 
 
 @adminfaculty_required
@@ -172,6 +174,7 @@ def logout_view(request):
     logout(request)
     return redirect('AeroMaster_admin')
 
+
 @adminfaculty_required
 def add_question(request):
     if request.method == 'POST':
@@ -221,9 +224,37 @@ def archive_question(request, id):
     question.delete()
     return redirect('question_list')
 
+
 @faculty_required
 def panel_view(request):
-    return render(request, 'panel.html')
+    questions = list(GeneratedQuestions.objects.values(
+        'id', 'text', 'option_a', 'option_b', 'option_c', 'option_d', 'correct_answer', 'subject'
+    ))
+
+    if request.method == "POST":
+        # For each form in the POST data, check if valid and save
+        for key, value in request.POST.items():
+            if key.startswith('subject_'):
+                exam_id = key.split('_')[1]
+                exam_setting = ExamSetting.objects.get(id=exam_id)
+                exam_setting.subject = value
+                exam_setting.date_time = request.POST.get(f"date_time_{exam_id}")
+                exam_setting.shuffle = request.POST.get(f"shuffle_{exam_id}") == 'on'
+                exam_setting.duration = request.POST.get(f"duration_{exam_id}")
+                exam_setting.save()
+
+        return redirect('panel')  # Redirect after saving
+
+    exam_settings = ExamSetting.objects.all()
+
+    questions_json = json.dumps(questions, cls=DjangoJSONEncoder)
+    context = {
+        'questions_json': questions_json,
+        'exam_settings': exam_settings
+    }
+
+    return render(request, 'panel.html', context)
+
 
 @faculty_required
 def generate_questions(request):

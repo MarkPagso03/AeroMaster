@@ -4,6 +4,49 @@
         <div>
             <h2 class="page_name">Control</h2>
         </div>
+        <div id="setting">
+            <div class="generated-container">
+                <div class="generated-text">
+                    <h2>Setting</h2>
+                </div>
+
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <table id="setting_table">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Date and Time</th>
+                            <th>Shuffle</th>
+                            <th>Duration (minutes)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for exam in exam_settings %}
+                        <tr>
+                            <td>
+                                <input type="text" name="subject_{{ exam.id }}" value="{{ exam.subject }}" required>
+                            </td>
+                            <td>
+                                <input type="datetime-local" name="date_time_{{ exam.id }}" value="{{ exam.date_time|date:"Y-m-d\TH:i" }}" required>
+                            </td>
+                            <td>
+                                <input type="checkbox" name="shuffle_{{ exam.id }}" {% if exam.shuffle %} checked {% endif %}>
+                            </td>
+                            <td>
+                                <input type="number" name="duration_{{ exam.id }}" value="{{ exam.duration }}" required>
+                            </td>
+                            <td>
+                                <button type="submit">Save</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+        </div>
         <div id="generated">
             <div id="preview">
                 <div class="generated-container">
@@ -184,6 +227,41 @@
                             });
                     }
 
+                </script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const questions = {{ questions_json|safe }};
+
+                        function renderTable(subject) {
+                            const tableBody = document.getElementById(subject + '-table-body');
+                            if (!tableBody) {
+                                console.warn(`Table body not found for subject: ${subject}`);
+                                return;
+                            }
+
+                            tableBody.innerHTML = '';
+
+                            questions.forEach(question => {
+                                if (question.subject.toLowerCase() === subject.toLowerCase()) {
+                                    const row = document.createElement('tr');
+                                    row.onclick = function () { goToEditPage(question.id); };
+
+                                    row.innerHTML = `
+                                        <td>${question.text}</td>
+                                        <td>${question.option_a}</td>
+                                        <td>${question.option_b}</td>
+                                        <td>${question.option_c}</td>
+                                        <td>${question.option_d}</td>
+                                        <td>${question.correct_answer}</td>
+                                        <td>${question.subject}</td>
+                                    `;
+                                    tableBody.appendChild(row);
+                                }
+                            });
+                        }
+
+                        ['aero', 'acrm', 'eemle', 'math', 'struc', 'pwrp'].forEach(renderTable);
+                    });
                 </script>
             </div>
         </div>

@@ -24,4 +24,5 @@ urlpatterns = [
     path('question/delete/<str:id>/', archive_question, name='archive_question'),
     path('panel', panel_view, name='panel'),
     path('panel/generate/', generate_questions, name='generate'),
+    #path('panel/setting/', edit_exam_settings, name='exam_settings'),
 ]

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import faculty, AeroMaster_admin, ArchiveFaculty, GeneratedQuestions
+from .models import faculty, AeroMaster_admin, ArchiveFaculty, GeneratedQuestions, ExamSetting
 
 
 class Role(admin.ModelAdmin):
@@ -12,3 +12,4 @@ admin.site.register(faculty, Role)
 admin.site.register(AeroMaster_admin, Role)
 admin.site.register(ArchiveFaculty, Role)
 admin.site.register(GeneratedQuestions)
+admin.site.register(ExamSetting)

@@ -38,14 +38,29 @@ a{
     width: max(200px, 25%);
     min-height: 400px;
     padding: 15px;
-    background: rgb(0,0,80);
-    border: 1px solid #DDD;
+    background: none;
     border-radius: 15px;
+    color: black;
+}
+
+.subject_card{
+    background: rgb(0,0,80);
     color: white;
+    padding: 15px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.subject_card a{
+}
+
+.progress_card > div{
+    height: 50%;
 }
 
 .progress_card div{
-    flex: 1;
     margin: 10px;
 }
 
@@ -65,8 +80,13 @@ b{
     padding: 8px;
     margin-top: 15px;
     background: #0066cc;
-    border-radius: 30px;
+    border-radius: 13px;
     border: none;
     outline: none;
     color: white;
+    width: 100%;
+}
+
+.progress_card button.disable{
+    background: gray;
 }

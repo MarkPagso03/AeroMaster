@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login
 from .models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout
+from AeroMaster_admin.models import ExamSetting
 
 
 def user_required(view_func):
@@ -55,9 +56,10 @@ def landing_view(request):
 
 @user_required
 def home_view(request):
-    return render(request, 'home.html')
+    exam_settings = ExamSetting.objects.all()
+    return render(request, 'home.html', {'exam_settings': exam_settings})
 
-
+@user_required
 def exam_view(request):
     return render(request, 'exam.html')
 
