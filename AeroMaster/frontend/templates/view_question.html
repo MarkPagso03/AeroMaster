@@ -18,7 +18,7 @@
                 <table  >
                     <thead onclick="toggleTable('aero-table-container')">
                         <tr>
-                            <th>Question</th>
+                            <th>Aero Question</th>
                             <th>Option a</th>
                             <th>Option b</th>
                             <th>Option c</th>
@@ -46,7 +46,7 @@
                 <table  >
                     <thead onclick="toggleTable('acrm-table-container')">
                         <tr>
-                            <th>Question</th>
+                            <th>ACRM Question</th>
                             <th>Option a</th>
                             <th>Option b</th>
                             <th>Option c</th>
@@ -55,7 +55,7 @@
                             <th>Subject</th>
                         </tr>
                     </thead>
-                    <tbody id="acrm-table-container" style="display: ;">
+                    <tbody id="acrm-table-container" style="display: none;">
                     {% for question in questions %}
                     {% if question.subject == 'ACRM' %}
                     <tr onclick="goToEditPage('{{ question.id }}')">
@@ -74,7 +74,7 @@
                 <table  >
                     <thead onclick="toggleTable('eemle-table-container')">
                         <tr>
-                            <th>Question</th>
+                            <th>EEMLE Question</th>
                             <th>Option a</th>
                             <th>Option b</th>
                             <th>Option c</th>
@@ -102,7 +102,7 @@
                 <table  >
                     <thead onclick="toggleTable('math-table-container')">
                         <tr>
-                            <th>Question</th>
+                            <th>MATH Question</th>
                             <th>Option a</th>
                             <th>Option b</th>
                             <th>Option c</th>
@@ -130,7 +130,7 @@
                 <table  >
                     <thead onclick="toggleTable('struc-table-container')">
                         <tr>
-                            <th>Question</th>
+                            <th>STRUC Question</th>
                             <th>Option a</th>
                             <th>Option b</th>
                             <th>Option c</th>
@@ -158,7 +158,7 @@
                 <table  >
                     <thead onclick="toggleTable('pwrp-table-container')">
                         <tr>
-                            <th>Question</th>
+                            <th>PWRP Question</th>
                             <th>Option a</th>
                             <th>Option b</th>
                             <th>Option c</th>
