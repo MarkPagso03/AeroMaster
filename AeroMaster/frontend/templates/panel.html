@@ -1,0 +1,191 @@
+{% extends 'admin.html' %}
+{% block content %}
+    <div id="panel">
+        <div>
+            <h2 class="page_name">Control</h2>
+        </div>
+        <div id="generated">
+            <div id="preview">
+                <div class="generated-container">
+                    <div class="generated-text">
+                        <h2>Generated</h2>
+                        <div id="loading-spinner">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                    <button onclick="generate_questions()">Generate Questions</button>
+                </div>
+                <table id="aero-table">
+                    <thead onclick="toggleTable('aero-table-body')">
+                        <tr>
+                            <th>Aero Question</th>
+                            <th>Option a</th>
+                            <th>Option b</th>
+                            <th>Option c</th>
+                            <th>Option d</th>
+                            <th>Answer</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody id="aero-table-body" style="display: ;">
+                        <!-- Rows will be dynamically added here by JavaScript -->
+                    </tbody>
+                </table>
+
+                <table id="acrm-table">
+                    <thead onclick="toggleTable('acrm-table-body')">
+                        <tr>
+                            <th>ACRM Question</th>
+                            <th>Option a</th>
+                            <th>Option b</th>
+                            <th>Option c</th>
+                            <th>Option d</th>
+                            <th>Answer</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody id="acrm-table-body" style="display: none;">
+                        <!-- Rows will be dynamically added here by JavaScript -->
+                    </tbody>
+                </table>
+
+                <table id="eemle-table">
+                    <thead onclick="toggleTable('eemle-table-body')">
+                        <tr>
+                            <th>EEMLE Question</th>
+                            <th>Option a</th>
+                            <th>Option b</th>
+                            <th>Option c</th>
+                            <th>Option d</th>
+                            <th>Answer</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eemle-table-body" style="display: none;">
+                        <!-- Rows will be dynamically added here by JavaScript -->
+                    </tbody>
+                </table>
+
+                <table id="math-table">
+                    <thead onclick="toggleTable('math-table-body')">
+                        <tr>
+                            <th>MATH Question</th>
+                            <th>Option a</th>
+                            <th>Option b</th>
+                            <th>Option c</th>
+                            <th>Option d</th>
+                            <th>Answer</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody id="math-table-body" style="display: none;">
+                        <!-- Rows will be dynamically added here by JavaScript -->
+                    </tbody>
+                </table>
+
+                <table id="struc-table">
+                    <thead onclick="toggleTable('struc-table-body')">
+                        <tr>
+                            <th>STRUC Question</th>
+                            <th>Option a</th>
+                            <th>Option b</th>
+                            <th>Option c</th>
+                            <th>Option d</th>
+                            <th>Answer</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody id="struc-table-body" style="display: none;">
+                        <!-- Rows will be dynamically added here by JavaScript -->
+                    </tbody>
+                </table>
+
+                <table id="pwrp-table">
+                    <thead onclick="toggleTable('pwrp-table-body')">
+                        <tr>
+                            <th>PWRP Question</th>
+                            <th>Option a</th>
+                            <th>Option b</th>
+                            <th>Option c</th>
+                            <th>Option d</th>
+                            <th>Answer</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pwrp-table-body" style="display: none;">
+                        <!-- Rows will be dynamically added here by JavaScript -->
+                    </tbody>
+                </table>
+
+                <script>
+                    function toggleTable(tableId) {
+                        const table = document.getElementById(tableId);
+                        if (table.style.display === 'none') {
+                            table.style.display = '';
+                        } else {
+                            table.style.display = 'none';
+                        }
+                    }
+                </script>
+                 <script>
+                    function showLoading() {
+                        document.getElementById('loading-spinner').style.display = 'block';
+                    }
+
+                    // Hide the loading spinner
+                    function hideLoading() {
+                        document.getElementById('loading-spinner').style.display = 'none';
+                    }
+
+                    function generate_questions() {
+                        showLoading();  // Show the spinner when the process starts
+                        fetch('panel/generate/')  // Replace with your actual API endpoint
+                            .then(response => response.json())
+                            .then(data => {
+                                const questions = data.questions;
+
+                                // Function to render the table rows for each subject
+                                function renderTable(subject) {
+                                    const tableBody = document.getElementById(subject + '-table-body');
+                                    tableBody.innerHTML = '';  // Clear the table body before adding new rows
+
+                                    questions.forEach(question => {
+                                        if (question.subject === subject.toUpperCase()) {
+                                            const row = document.createElement('tr');
+                                            row.onclick = function() { goToEditPage(question.id); };
+
+                                            row.innerHTML = `
+                                                <td>${question.text}</td>
+                                                <td>${question.option_a}</td>
+                                                <td>${question.option_b}</td>
+                                                <td>${question.option_c}</td>
+                                                <td>${question.option_d}</td>
+                                                <td>${question.correct_answer}</td>
+                                                <td>${question.subject}</td>
+                                            `;
+                                            tableBody.appendChild(row);
+                                        }
+                                    });
+                                }
+
+                                // Call renderTable for each subject
+                                renderTable('aero');
+                                renderTable('acrm');
+                                renderTable('eemle');
+                                renderTable('math');
+                                renderTable('struc');
+                                renderTable('pwrp');
+
+                                hideLoading();  // Hide the spinner after data is fetched and tables are rendered
+                            })
+                            .catch(error => {
+                                console.error("Error fetching questions:", error);
+                                hideLoading();  // Hide the spinner even if there's an error
+                            });
+                    }
+
+                </script>
+            </div>
+        </div>
+    </div>
+{% endblock %}

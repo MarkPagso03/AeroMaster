@@ -113,3 +113,16 @@ class ArchiveQuestion(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class GeneratedQuestions(models.Model):
+    text = models.CharField(max_length=500, unique=True)
+    option_a = models.CharField(max_length=255, blank=False, null=False)
+    option_b = models.CharField(max_length=255, blank=False, null=False)
+    option_c = models.CharField(max_length=255, blank=True, null=True)
+    option_d = models.CharField(max_length=255, blank=True, null=True)
+    correct_answer = models.CharField(max_length=1, blank=False, null=False)
+    subject = models.CharField(max_length=50, blank=True, null=False)
+
+    def __str__(self):
+        return self.text

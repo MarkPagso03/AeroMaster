@@ -1,9 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import faculty, ArchiveFaculty, ArchiveStudent, ArchiveQuestion
+from .models import faculty, ArchiveFaculty, ArchiveStudent, ArchiveQuestion, GeneratedQuestions
 from .forms import FacultyForm, StudentForm, AeroMasterAdminForm, QuestionForm
 from AeroMaster.models import User, Question
+import random
+
 
 
 # from AeroMaster.decorators import role_required
@@ -40,6 +42,26 @@ def admin_required(view_func):
     """ Custom decorator to restrict access to AeroMaster Admins and Faculty only. """
 
     def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated or request.user.role not in ['aeromaster_admin']:
+            return render(request, 'login_admin.html')
+        return view_func(request, *args, **kwargs)
+
+    return wrapper
+
+def faculty_required(view_func):
+    """ Custom decorator to restrict access to AeroMaster Admins and Faculty only. """
+
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated or request.user.role not in ['faculty']:
+            return render(request, 'login_admin.html')
+        return view_func(request, *args, **kwargs)
+
+    return wrapper
+
+def adminfaculty_required(view_func):
+    """ Custom decorator to restrict access to AeroMaster Admins and Faculty only. """
+
+    def wrapper(request, *args, **kwargs):
         if not request.user.is_authenticated or request.user.role not in ['aeromaster_admin', 'faculty']:
             return render(request, 'login_admin.html')
         return view_func(request, *args, **kwargs)
@@ -48,11 +70,12 @@ def admin_required(view_func):
 
 
 
-@admin_required
+@adminfaculty_required
 def admin_view(request):
     return render(request, 'admin.html')
 
 
+@admin_required
 def add_faculty(request):
     if request.method == 'POST':
         form = FacultyForm(request.POST)
@@ -64,6 +87,7 @@ def add_faculty(request):
     return render(request, 'add_faculty.html', {'form': form})
 
 
+@admin_required
 def edit_faculty(request, faculty_id):
     faculty_member = get_object_or_404(faculty, emp_id=faculty_id)
     if request.method == 'POST':
@@ -78,11 +102,13 @@ def edit_faculty(request, faculty_id):
                   {'form': form, 'faculty_id': faculty_id, 'faculty_member': faculty_member})
 
 
+@admin_required
 def faculty_list(request):
     faculties = faculty.objects.values('first_name', 'last_name', 'emp_id', 'email')
     return render(request, 'view_faculty.html', {'faculties': faculties})
 
 
+@admin_required
 def archive_faculty(request, faculty_id):
     faculty_member = get_object_or_404(faculty, emp_id=faculty_id)
     ArchiveFaculty.objects.create(
@@ -95,6 +121,7 @@ def archive_faculty(request, faculty_id):
     return redirect('faculty_list')
 
 
+@adminfaculty_required
 def add_student(request):
     if request.method == 'POST':
         form = StudentForm(request.POST)
@@ -106,6 +133,7 @@ def add_student(request):
     return render(request, 'add_student.html', {'form': form})
 
 
+@adminfaculty_required
 def edit_student(request, student_id):
     student_member = get_object_or_404(User, id_number=student_id)
     if request.method == 'POST':
@@ -120,11 +148,13 @@ def edit_student(request, student_id):
                   {'form': form, 'student_id': student_id, 'student_member': student_member})
 
 
+@adminfaculty_required
 def student_list(request):
     students = User.objects.values('first_name', 'last_name', 'id_number', 'email')
     return render(request, 'view_student.html', {'students': students})
 
 
+@adminfaculty_required
 def archive_student(request, student_id):
     student_member = get_object_or_404(User, pk=student_id)
     ArchiveStudent.objects.create(
@@ -142,7 +172,7 @@ def logout_view(request):
     logout(request)
     return redirect('AeroMaster_admin')
 
-
+@adminfaculty_required
 def add_question(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
@@ -154,6 +184,7 @@ def add_question(request):
     return render(request, 'add_question.html', {'form': form})
 
 
+@faculty_required
 def edit_question(request, id):
     question = get_object_or_404(Question, id=id)
     if request.method == 'POST':
@@ -168,12 +199,14 @@ def edit_question(request, id):
                   {'form': form, 'question_id': id, 'question': question})
 
 
+@faculty_required
 def question_list(request):
     questions = Question.objects.values('id', 'text', 'option_a', 'option_b', 'option_c', 'option_d', 'correct_answer',
                                         'subject')
     return render(request, 'view_question.html', {'questions': questions})
 
 
+@faculty_required
 def archive_question(request, id):
     question = get_object_or_404(Question, id=id)
     ArchiveQuestion.objects.create(
@@ -187,3 +220,40 @@ def archive_question(request, id):
     )
     question.delete()
     return redirect('question_list')
+
+@faculty_required
+def panel_view(request):
+    return render(request, 'panel.html')
+
+@faculty_required
+def generate_questions(request):
+    GeneratedQuestions.objects.all().delete()
+
+    subjects = ['AERO', 'MATH', 'STRUC', 'ACRM', 'PWRP', 'EEMLE']
+    selected_questions = {}
+
+    for subject in subjects:
+
+        # Get all questions for the subject
+        questions = list(Question.objects.filter(subject=subject))
+        # Randomly pick 50, or fewer if not enough
+        selected = random.sample(questions, min(len(questions), 50))
+        selected_questions[subject] = []
+
+        for q in selected:
+            # Save each selected question to GeneratedQuestions
+            GeneratedQuestions.objects.create(
+                text=q.text,
+                option_a=q.option_a,
+                option_b=q.option_b,
+                option_c=q.option_c,
+                option_d=q.option_d,
+                correct_answer=q.correct_answer,
+                subject=q.subject,  # optional, if you have a field for this
+            )
+            selected_questions[subject].append(q.text)
+
+    questions_list = list(
+        GeneratedQuestions.objects.all().values('text', 'option_a', 'option_b', 'option_c', 'option_d',
+                                                'correct_answer', 'subject'))
+    return JsonResponse({'questions': questions_list})

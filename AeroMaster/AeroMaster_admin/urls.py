@@ -2,7 +2,8 @@ from django.urls import path
 from .views import (admin_view, faculty_list, edit_faculty, archive_faculty, add_faculty,
                     student_list, edit_student, archive_student, add_student,
                     login_admin_view, login_acc, logout_view,
-                    question_list, edit_question, add_question, archive_question)
+                    question_list, edit_question, add_question, archive_question,
+                    panel_view, generate_questions)
 
 urlpatterns = [
     path('', admin_view, name='AeroMaster_admin'),
@@ -21,4 +22,6 @@ urlpatterns = [
     path('question/add/', add_question, name='add_question'),
     path('question/edit/<str:id>/', edit_question, name='edit_question'),
     path('question/delete/<str:id>/', archive_question, name='archive_question'),
+    path('panel', panel_view, name='panel'),
+    path('panel/generate/', generate_questions, name='generate'),
 ]
