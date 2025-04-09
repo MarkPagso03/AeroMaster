@@ -15,20 +15,21 @@
                     <h2 class="page_name">View</h2>
                     <button onclick="add_page()">Add</button>
                 </div>
-                <table>
-                    <thead>
+                <table  >
+                    <thead onclick="toggleTable('aero-table-container')">
                         <tr>
                             <th>Question</th>
                             <th>Option a</th>
                             <th>Option b</th>
                             <th>Option c</th>
                             <th>Option d</th>
-                            <th>Correct Answer</th>
+                            <th>Answer</th>
                             <th>Subject</th>
                         </tr>
                     </thead>
-                    <tbody id="faculty-list">
+                    <tbody id="aero-table-container" style="display: none;">
                     {% for question in questions %}
+                    {% if question.subject == 'AERO' %}
                     <tr onclick="goToEditPage('{{ question.id }}')">
                         <td>{{ question.text }}</td>
                         <td>{{ question.option_a }}</td>
@@ -38,8 +39,159 @@
                         <td>{{ question.correct_answer }}</td>
                         <td>{{ question.subject }}</td>
                     </tr>
-                     {% endfor %}
+                    {% endif %}
+                    {% endfor %}
                     </tbody>
                 </table>
+                <table  >
+                    <thead onclick="toggleTable('acrm-table-container')">
+                        <tr>
+                            <th>Question</th>
+                            <th>Option a</th>
+                            <th>Option b</th>
+                            <th>Option c</th>
+                            <th>Option d</th>
+                            <th>Answer</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody id="acrm-table-container" style="display: ;">
+                    {% for question in questions %}
+                    {% if question.subject == 'ACRM' %}
+                    <tr onclick="goToEditPage('{{ question.id }}')">
+                        <td>{{ question.text }}</td>
+                        <td>{{ question.option_a }}</td>
+                        <td>{{ question.option_b }}</td>
+                        <td>{{ question.option_c }}</td>
+                        <td>{{ question.option_d }}</td>
+                        <td>{{ question.correct_answer }}</td>
+                        <td>{{ question.subject }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <table  >
+                    <thead onclick="toggleTable('eemle-table-container')">
+                        <tr>
+                            <th>Question</th>
+                            <th>Option a</th>
+                            <th>Option b</th>
+                            <th>Option c</th>
+                            <th>Option d</th>
+                            <th>Answer</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eemle-table-container" style="display: none;">
+                    {% for question in questions %}
+                    {% if question.subject == 'EEMLE' %}
+                    <tr onclick="goToEditPage('{{ question.id }}')">
+                        <td>{{ question.text }}</td>
+                        <td>{{ question.option_a }}</td>
+                        <td>{{ question.option_b }}</td>
+                        <td>{{ question.option_c }}</td>
+                        <td>{{ question.option_d }}</td>
+                        <td>{{ question.correct_answer }}</td>
+                        <td>{{ question.subject }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <table  >
+                    <thead onclick="toggleTable('math-table-container')">
+                        <tr>
+                            <th>Question</th>
+                            <th>Option a</th>
+                            <th>Option b</th>
+                            <th>Option c</th>
+                            <th>Option d</th>
+                            <th>Answer</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody id="math-table-container" style="display: none;">
+                    {% for question in questions %}
+                    {% if question.subject == 'MATH' %}
+                    <tr onclick="goToEditPage('{{ question.id }}')">
+                        <td>{{ question.text }}</td>
+                        <td>{{ question.option_a }}</td>
+                        <td>{{ question.option_b }}</td>
+                        <td>{{ question.option_c }}</td>
+                        <td>{{ question.option_d }}</td>
+                        <td>{{ question.correct_answer }}</td>
+                        <td>{{ question.subject }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <table  >
+                    <thead onclick="toggleTable('struc-table-container')">
+                        <tr>
+                            <th>Question</th>
+                            <th>Option a</th>
+                            <th>Option b</th>
+                            <th>Option c</th>
+                            <th>Option d</th>
+                            <th>Answer</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody id="struc-table-container" style="display: none;">
+                    {% for question in questions %}
+                    {% if question.subject == 'STRUC' %}
+                    <tr onclick="goToEditPage('{{ question.id }}')">
+                        <td>{{ question.text }}</td>
+                        <td>{{ question.option_a }}</td>
+                        <td>{{ question.option_b }}</td>
+                        <td>{{ question.option_c }}</td>
+                        <td>{{ question.option_d }}</td>
+                        <td>{{ question.correct_answer }}</td>
+                        <td>{{ question.subject }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <table  >
+                    <thead onclick="toggleTable('pwrp-table-container')">
+                        <tr>
+                            <th>Question</th>
+                            <th>Option a</th>
+                            <th>Option b</th>
+                            <th>Option c</th>
+                            <th>Option d</th>
+                            <th>Answer</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pwrp-table-container" style="display: none;">
+                    {% for question in questions %}
+                    {% if question.subject == 'PWRP' %}
+                    <tr onclick="goToEditPage('{{ question.id }}')">
+                        <td>{{ question.text }}</td>
+                        <td>{{ question.option_a }}</td>
+                        <td>{{ question.option_b }}</td>
+                        <td>{{ question.option_c }}</td>
+                        <td>{{ question.option_d }}</td>
+                        <td>{{ question.correct_answer }}</td>
+                        <td>{{ question.subject }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <script>
+                    function toggleTable(tableId) {
+                        const table = document.getElementById(tableId);
+                        if (table.style.display === 'none') {
+                            table.style.display = '';
+                        } else {
+                            table.style.display = 'none';
+                        }
+                    }
+                </script>
             </div>
 {% endblock %}
