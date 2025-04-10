@@ -35,8 +35,8 @@ li{
     }
 
     .square-radio:checked {
-        background-color: #4CAF50; /* Green color for checked radio button */
-        border-color: #4CAF50; /* Border color changes on checked */
+        background-color: 	#4c7dae; /* Green color for checked radio button */
+        border-color: 	#4c7dae; /* Border color changes on checked */
     }
 
     .square-radio:checked::after {
