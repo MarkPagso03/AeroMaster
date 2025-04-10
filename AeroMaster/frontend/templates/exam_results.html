@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block link %}
+    <link rel="stylesheet" href="{% static 'styles/landing_page.css' %}?v={{ timestamp }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <h2>Results for {{ subject }}</h2>
+        <p>Your Score: {{ score }} / {{ total }}</p>
+
+        <div style="overflow-y: auto; max-height: 400px;">
+            {% for result in results %}
+                <div>
+                    <p><strong>{{ forloop.counter }}:</strong> {{ result.question.text }}</p>
+                    <p>Your answer: {{ result.user_answer }} -
+                        {% if result.is_correct %}
+                            ✅ Correct
+                        {% else %}
+                            ❌ Incorrect (Correct answer: {{ result.question.correct_answer }})
+                        {% endif %}
+                    </p>
+                    <hr>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

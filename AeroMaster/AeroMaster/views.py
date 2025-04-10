@@ -139,6 +139,29 @@ def logout_view(request):
 def exam_view(request, subject):
     # Query the database to get all questions with the specific subject
     questions = GeneratedQuestions.objects.filter(subject=subject)
+    if request.method == 'POST':
+        score = 0
+        total = questions.count()
+        results = []
+
+        for question in questions:
+            user_answer = request.POST.get(f'question_{question.id}')
+            is_correct = (user_answer == question.correct_answer)
+            if is_correct:
+                score += 1
+
+            results.append({
+                'question': question,
+                'user_answer': user_answer,
+                'is_correct': is_correct,
+            })
+
+        return render(request, 'exam_results.html', {
+            'score': score,
+            'total': total,
+            'results': results,
+            'subject': subject,
+        })
 
     # Render the template and pass the questions data
     return render(request, 'exam.html', {'subject': subject, 'questions': questions})

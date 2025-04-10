@@ -94,4 +94,16 @@
             <button type="submit">Submit Answers</button>
         </form>
     </div>
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector(".exam_form");
+
+            form.addEventListener("submit", function (e) {
+              const confirmed = confirm("Are you sure you want to submit your answers?");
+              if (!confirmed) {
+                e.preventDefault(); // Stop the form from submitting
+              }
+            });
+          });
+        </script>
 </body></html>

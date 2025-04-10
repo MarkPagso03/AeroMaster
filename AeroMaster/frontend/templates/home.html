@@ -16,23 +16,26 @@
                         Aerodynamics Application of Aerodynamics to
                         Fixed/ Rotary Wiring Aircraft Configurations,
                         Performance, Stability and Control; Wind Tunnels and Application
+                        <br><br>
+                        schedule {{ aero_setting.date_time }}
                     </p>
                     {% if aero_setting %}
                         <button id="aero_start" onclick="window.location.href = '{% url 'mock_exam' subject='AERO' %}'">START</button>
 
                         <script>
-                            // Get the current time
-                            const currentTime = new Date();
+                        const currentTime = new Date();
+                        const aeroSchedule = new Date("{{ aero_setting.date_time|date:'c' }}");
 
-                            // Get the exam's schedule time (convert from string to Date object)
-                            const aeroSchedule = new Date("{{ aero_setting.date_time|date:'c' }}");
+                        // Create a time that's 1 hour after the scheduled start
+                        const aeroEndTime = new Date(aeroSchedule.getTime() + 60 * 60 * 1000); // 1 hour = 60 mins × 60 sec × 1000 ms
 
-                            // Compare the current time with the exam's schedule time
-                            if (currentTime < aeroSchedule) {
-                                document.getElementById('aero_start').disabled = true;
-                                document.getElementById('aero_start').classList.add('disable');
-                            }
-                        </script>
+                        // Disable the button if current time is before the start OR after 1 hour has passed
+                        if (currentTime < aeroSchedule || currentTime > aeroEndTime) {
+                            const button = document.getElementById('aero_start');
+                            button.disabled = true;
+                            button.classList.add('disable');
+                        }
+                    </script>
                     {% endif %}
                 </div>
 
@@ -41,23 +44,26 @@
                     <p>Algebra, Trigonometry, Analytical Geometry,
                         Calculus and Differential Equation with
                         Aeronautical Engineering Applications
+                        <br><br>
+                        schedule {{ math_setting.date_time }}
                     </p>
                     {% if math_setting %}
                         <button id="math_start" onclick="window.location.href = '{% url 'mock_exam' subject='MATH' %}'">START</button>
 
                         <script>
-                            // Get the current time
-                            //const currentTime = new Date();
+                        //const currentTime = new Date();
+                        const mathSchedule = new Date("{{ math_setting.date_time|date:'c' }}");
 
-                            // Get the exam's schedule time (convert from string to Date object)
-                            const mathSchedule = new Date("{{ math_setting.date_time|date:'c' }}");
+                        // Create a time that's 1 hour after the scheduled start
+                        const mathEndTime = new Date(mathSchedule.getTime() + 60 * 60 * 1000); // 1 hour = 60 mins × 60 sec × 1000 ms
 
-                            // Compare the current time with the exam's schedule time
-                            if (currentTime < mathSchedule) {
-                                document.getElementById('math_start').disabled = true;
-                                document.getElementById('math_start').classList.add('disable');
-                            }
-                        </script>
+                        // Disable the button if current time is before the start OR after 1 hour has passed
+                        if (currentTime < mathSchedule || currentTime > mathEndTime) {
+                            const button = document.getElementById('math_start');
+                            button.disabled = true;
+                            button.classList.add('disable');
+                        }
+                    </script>
                     {% endif %}
                 </div>
             </div>
@@ -70,23 +76,26 @@
                         Structural Analysis and Design of Airframe Components;
                         Landing Gears, Engine Mounts and Other Structural Parts;
                         Non-Structural Components Design
+                        <br><br>
+                        schedule {{ struc_setting.date_time }}
                     </p>
                     {% if struc_setting %}
                         <button id="struc_start" onclick="window.location.href = '{% url 'mock_exam' subject='STRUC' %}'">START</button>
 
                         <script>
-                            // Get the current time
-                            //const currentTime = new Date();
+                        //const currentTime = new Date();
+                        const strucSchedule = new Date("{{ struc_setting.date_time|date:'c' }}");
 
-                            // Get the exam's schedule time (convert from string to Date object)
-                            const strucSchedule = new Date("{{ struc_setting.date_time|date:'c' }}");
+                        // Create a time that's 1 hour after the scheduled start
+                        const strucEndTime = new Date(strucSchedule.getTime() + 60 * 60 * 1000); // 1 hour = 60 mins × 60 sec × 1000 ms
 
-                            // Compare the current time with the exam's schedule time
-                            if (currentTime < strucSchedule) {
-                                document.getElementById('struc_start').disabled = true;
-                                document.getElementById('struc_start').classList.add('disable');
-                            }
-                        </script>
+                        // Disable the button if current time is before the start OR after 1 hour has passed
+                        if (currentTime < strucSchedule || currentTime > strucEndTime) {
+                            const button = document.getElementById('struc_start');
+                            button.disabled = true;
+                            button.classList.add('disable');
+                        }
+                    </script>
                     {% endif %}
                 </div>
                 <div class="subject_card">
@@ -95,23 +104,26 @@
                         in Repair and Modification in accordance with Civil
                         Airworthiness Regulations; Manufacturing/Production
                         Processes and Quality Assurance
+                        <br><br>
+                        schedule {{ acrm_setting.date_time }}
                     </p>
                     {% if acrm_setting %}
                         <button id="acrm_start" onclick="window.location.href = '{% url 'mock_exam' subject='ACRM' %}'">START</button>
 
                         <script>
-                            // Get the current time
-                            //const currentTime = new Date();
+                        //const currentTime = new Date();
+                        const acrmSchedule = new Date("{{ acrm_setting.date_time|date:'c' }}");
 
-                            // Get the exam's schedule time (convert from string to Date object)
-                            const acrmSchedule = new Date("{{ acrm_setting.date_time|date:'c' }}");
+                        // Create a time that's 1 hour after the scheduled start
+                        const acrmEndTime = new Date(acrmSchedule.getTime() + 60 * 60 * 1000); // 1 hour = 60 mins × 60 sec × 1000 ms
 
-                            // Compare the current time with the exam's schedule time
-                            if (currentTime < acrmSchedule) {
-                                document.getElementById('acrm_start').disabled = true;
-                                document.getElementById('acrm_start').classList.add('disable');
-                            }
-                        </script>
+                        // Disable the button if current time is before the start OR after 1 hour has passed
+                        if (currentTime < acrmSchedule || currentTime > acrmEndTime) {
+                            const button = document.getElementById('acrm_start');
+                            button.disabled = true;
+                            button.classList.add('disable');
+                        }
+                    </script>
                     {% endif %}
                 </div>
             </div>
@@ -132,19 +144,20 @@
                     {% if pwrp_setting %}
                         <button id="pwrp_start" onclick="window.location.href = '{% url 'mock_exam' subject='PWRP' %}'">START</button>
 
-                        <script>
-                            // Get the current time
-                            //const currentTime = new Date();
+                    <script>
+                        //const currentTime = new Date();
+                        const pwrpSchedule = new Date("{{ pwrp_setting.date_time|date:'c' }}");
 
-                            // Get the exam's schedule time (convert from string to Date object)
-                            const pwrpSchedule = new Date("{{ pwrp_setting.date_time|date:'c' }}");
+                        // Create a time that's 1 hour after the scheduled start
+                        const pwrpEndTime = new Date(pwrpSchedule.getTime() + 60 * 60 * 1000); // 1 hour = 60 mins × 60 sec × 1000 ms
 
-                            // Compare the current time with the exam's schedule time
-                            if (currentTime < pwrpSchedule) {
-                                document.getElementById('pwrp_start').disabled = true;
-                                document.getElementById('pwrp_start').classList.add('disable');
-                            }
-                        </script>
+                        // Disable the button if current time is before the start OR after 1 hour has passed
+                        if (currentTime < pwrpSchedule || currentTime > pwrpEndTime) {
+                            const button = document.getElementById('pwrp_start');
+                            button.disabled = true;
+                            button.classList.add('disable');
+                        }
+                    </script>
                     {% endif %}
                 </div>
                 <div class="subject_card">
@@ -154,23 +167,26 @@
                         of Aeronautical Engineering to include PD 1570, Rules and
                         Regulations with Code of Professional Ethics of the Board of
                         Aeronautical Engineering and others (International Aviation Laws)
+                        <br><br>
+                        schedule {{ eemle_setting.date_time }}
                     </p>
                     {% if eemle_setting %}
                         <button id="eemle_start" onclick="window.location.href = '{% url 'mock_exam' subject='EEMLE' %}'">START</button>
 
                         <script>
-                            // Get the current time
-                            //const currentTime = new Date();
+                        //const currentTime = new Date();
+                        const eemleSchedule = new Date("{{ eemle_setting.date_time|date:'c' }}");
 
-                            // Get the exam's schedule time (convert from string to Date object)
-                            const eemleSchedule = new Date("{{ eemle_setting.date_time|date:'c' }}");
+                        // Create a time that's 1 hour after the scheduled start
+                        const eemleEndTime = new Date(eemleSchedule.getTime() + 60 * 60 * 1000); // 1 hour = 60 mins × 60 sec × 1000 ms
 
-                            // Compare the current time with the exam's schedule time
-                            if (currentTime < eemleSchedule) {
-                                document.getElementById('eemle_start').disabled = true;
-                                document.getElementById('eemle_start').classList.add('disable');
-                            }
-                        </script>
+                        // Disable the button if current time is before the start OR after 1 hour has passed
+                        if (currentTime < eemleSchedule || currentTime > eemleEndTime) {
+                            const button = document.getElementById('eemle_start');
+                            button.disabled = true;
+                            button.classList.add('disable');
+                        }
+                    </script>
                     {% endif %}
                 </div>
             </div>
@@ -178,7 +194,7 @@
 
 
         </div>
-        <p>{{ exam_settings }}</p>
     </div>
 
 {% endblock %}
+{% include 'footer.html' %}

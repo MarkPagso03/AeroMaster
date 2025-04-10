@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'django-insecure-keg7!b$2e@huh3=&vqu-&%lk2%akd9pctsbvi3pijgyopdnxwz
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -58,7 +56,6 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default authentication
 ]
 
-
 ROOT_URLCONF = 'AeroMaster.urls'
 
 TEMPLATES = [
@@ -79,7 +76,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'AeroMaster.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -89,7 +85,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -109,7 +104,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -120,7 +114,6 @@ TIME_ZONE = 'Asia/Manila'  # Set timezone to Philippines
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -141,3 +134,5 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Enforce session to expire after inactivity
 SESSION_SAVE_EVERY_REQUEST = False
+
+LOGIN_URL = ''

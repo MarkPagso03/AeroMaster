@@ -101,7 +101,7 @@ footer{
 
 .footer_div {
     width: max(650px, 80vw);
-    padding: 30px;
+    padding: 15px 30px;
     margin: auto auto;
 }
 
