@@ -17,7 +17,23 @@
                         Fixed/ Rotary Wiring Aircraft Configurations,
                         Performance, Stability and Control; Wind Tunnels and Application
                     </p>
-                    <a href="\mock_exam"><button>START</button></a>
+                    {% if aero_setting %}
+                        <button id="aero_start" onclick="window.location.href = '{% url 'mock_exam' subject='AERO' %}'">START</button>
+
+                        <script>
+                            // Get the current time
+                            const currentTime = new Date();
+
+                            // Get the exam's schedule time (convert from string to Date object)
+                            const aeroSchedule = new Date("{{ aero_setting.date_time|date:'c' }}");
+
+                            // Compare the current time with the exam's schedule time
+                            if (currentTime < aeroSchedule) {
+                                document.getElementById('aero_start').disabled = true;
+                                document.getElementById('aero_start').classList.add('disable');
+                            }
+                        </script>
+                    {% endif %}
                 </div>
 
                 <div class="subject_card">
@@ -26,7 +42,23 @@
                         Calculus and Differential Equation with
                         Aeronautical Engineering Applications
                     </p>
-                    <a href="\mock_exam"><button>START</button></a>
+                    {% if math_setting %}
+                        <button id="math_start" onclick="window.location.href = '{% url 'mock_exam' subject='MATH' %}'">START</button>
+
+                        <script>
+                            // Get the current time
+                            //const currentTime = new Date();
+
+                            // Get the exam's schedule time (convert from string to Date object)
+                            const mathSchedule = new Date("{{ math_setting.date_time|date:'c' }}");
+
+                            // Compare the current time with the exam's schedule time
+                            if (currentTime < mathSchedule) {
+                                document.getElementById('math_start').disabled = true;
+                                document.getElementById('math_start').classList.add('disable');
+                            }
+                        </script>
+                    {% endif %}
                 </div>
             </div>
 
@@ -39,7 +71,23 @@
                         Landing Gears, Engine Mounts and Other Structural Parts;
                         Non-Structural Components Design
                     </p>
-                    <a href="\mock_exam"><button>START</button></a>
+                    {% if struc_setting %}
+                        <button id="struc_start" onclick="window.location.href = '{% url 'mock_exam' subject='STRUC' %}'">START</button>
+
+                        <script>
+                            // Get the current time
+                            //const currentTime = new Date();
+
+                            // Get the exam's schedule time (convert from string to Date object)
+                            const strucSchedule = new Date("{{ struc_setting.date_time|date:'c' }}");
+
+                            // Compare the current time with the exam's schedule time
+                            if (currentTime < strucSchedule) {
+                                document.getElementById('struc_start').disabled = true;
+                                document.getElementById('struc_start').classList.add('disable');
+                            }
+                        </script>
+                    {% endif %}
                 </div>
                 <div class="subject_card">
                     <h5><b>AIRCRAFT CONSTRUCTION, REPAIR AND MODIFICATION</b> - 15%</h5>
@@ -48,7 +96,23 @@
                         Airworthiness Regulations; Manufacturing/Production
                         Processes and Quality Assurance
                     </p>
-                    <a href="\mock_exam"><button>START</button></a>
+                    {% if acrm_setting %}
+                        <button id="acrm_start" onclick="window.location.href = '{% url 'mock_exam' subject='ACRM' %}'">START</button>
+
+                        <script>
+                            // Get the current time
+                            //const currentTime = new Date();
+
+                            // Get the exam's schedule time (convert from string to Date object)
+                            const acrmSchedule = new Date("{{ acrm_setting.date_time|date:'c' }}");
+
+                            // Compare the current time with the exam's schedule time
+                            if (currentTime < acrmSchedule) {
+                                document.getElementById('acrm_start').disabled = true;
+                                document.getElementById('acrm_start').classList.add('disable');
+                            }
+                        </script>
+                    {% endif %}
                 </div>
             </div>
 
@@ -62,8 +126,26 @@
                         Engines Aircraft Gas Turbines, Pulsejet and
                         Ramjet, Rocket Propulsion System and other
                         Aircraft Power Systems
+                        <br><br>
+                        schedule {{ pwrp_setting.date_time }}
                     </p>
-                    <a href="\mock_exam"><button>START</button></a>
+                    {% if pwrp_setting %}
+                        <button id="pwrp_start" onclick="window.location.href = '{% url 'mock_exam' subject='PWRP' %}'">START</button>
+
+                        <script>
+                            // Get the current time
+                            //const currentTime = new Date();
+
+                            // Get the exam's schedule time (convert from string to Date object)
+                            const pwrpSchedule = new Date("{{ pwrp_setting.date_time|date:'c' }}");
+
+                            // Compare the current time with the exam's schedule time
+                            if (currentTime < pwrpSchedule) {
+                                document.getElementById('pwrp_start').disabled = true;
+                                document.getElementById('pwrp_start').classList.add('disable');
+                            }
+                        </script>
+                    {% endif %}
                 </div>
                 <div class="subject_card">
                     <h5><b>ENGINEERING ECONOMICS AND MANAGEMENT LAWS AND ETHICS</b> - 15%</h5>
@@ -73,13 +155,30 @@
                         Regulations with Code of Professional Ethics of the Board of
                         Aeronautical Engineering and others (International Aviation Laws)
                     </p>
-                    <a href="\mock_exam"><button>START</button></a>
+                    {% if eemle_setting %}
+                        <button id="eemle_start" onclick="window.location.href = '{% url 'mock_exam' subject='EEMLE' %}'">START</button>
+
+                        <script>
+                            // Get the current time
+                            //const currentTime = new Date();
+
+                            // Get the exam's schedule time (convert from string to Date object)
+                            const eemleSchedule = new Date("{{ eemle_setting.date_time|date:'c' }}");
+
+                            // Compare the current time with the exam's schedule time
+                            if (currentTime < eemleSchedule) {
+                                document.getElementById('eemle_start').disabled = true;
+                                document.getElementById('eemle_start').classList.add('disable');
+                            }
+                        </script>
+                    {% endif %}
                 </div>
             </div>
 
 
 
         </div>
+        <p>{{ exam_settings }}</p>
     </div>
 
 {% endblock %}

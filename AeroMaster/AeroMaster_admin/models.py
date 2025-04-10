@@ -136,13 +136,5 @@ class ExamSetting(models.Model):
     shuffle = models.BooleanField(default=True, blank=False, null=False)
     duration = models.IntegerField()  # Store duration in minutes
 
-    def save(self, *args, **kwargs):
-        if self.date_time:
-            # Convert to Philippine Time before saving
-            pht = pytz.timezone('Asia/Manila')
-            self.date_time = timezone.localtime(self.date_time, pht)
-
-        super().save(*args, **kwargs)
-
     def __str__(self):
         return f"{self.subject} - {self.date_time} - {self.duration} mins"

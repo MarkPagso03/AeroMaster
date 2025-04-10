@@ -16,8 +16,7 @@ html{
 
 body{
     display: flex;
-    height: 100vh;
-    flex-direction: column; 
+    flex-direction: column;
 }
 
 /* header -------------------------------------*/
@@ -29,6 +28,11 @@ header{
     justify-content: space-between;
     padding: 0 30px;
     z-index: 10;
+
+    position: sticky;
+    top: 0;
+    background: white;
+    box-shadow: 0px 0px 5px black;
 }
 
 header > div:first-child{
@@ -90,7 +94,6 @@ body > div{
 
 /* footer -------------------------------------*/
 footer{
-    height: max(70px, 25h);
     background: #202020;
     color: #D0D0D0;
     z-index: 5;

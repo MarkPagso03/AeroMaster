@@ -1,10 +1,97 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block link %}
-    <link rel="stylesheet" href="{% static 'styles/home_page.css' %}?v={{ timestamp }}">
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'icons/favicon.ico' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block link %} {% endblock %}
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/base.css' %}?v={{ timestamp }}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/exam.css' %}?v={{ timestamp }}">
+    <title>AeroMaster</title>
+</head>
+<body>
+  <header style="position: sticky;  top: 0;">
+    <div>
+        <img src="{% static 'icons/aeromaster_logo.png' %}" alt="brand_logo">
+        <h2>AeroMaster</h2>
+      <nav>
+        <!-- could be button -->
+        <a href="#">Home</a>
+        <a href="#">Mock Examination</a>
+        <a href="#">Results</a>
+      </nav>
+    </div>
 
-{% block content %}
 
+    <!-- if logged in -->
+    {% if user.is_authenticated and user.role == 'user' %}
+    <div class="header_buttons">
+      <h3>{{ user.first_name }}</h3>
+      <button><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#686868"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg></button>
+      <button><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#686868"><path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z"/></svg></button>
+      <button><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#686868"><path d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Zm320-300Zm0 420q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-280h320v-280q0-66-47-113t-113-47q-66 0-113 47t-47 113v280Z"/></svg></button>
+      <button><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#686868"><path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z"/></svg></button>
+      <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button style="background-color: transparent;" type="submit" ><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#686868" height="24px" width="24px"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8.90002 7.55999C9.21002 3.95999 11.06 2.48999 15.11 2.48999H15.24C19.71 2.48999 21.5 4.27999 21.5 8.74999V15.27C21.5 19.74 19.71 21.53 15.24 21.53H15.11C11.09 21.53 9.24002 20.08 8.91002 16.54" stroke="#686868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M15 12H3.62" stroke="#686868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M5.85 8.6499L2.5 11.9999L5.85 15.3499" stroke="#686868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></button>
+      </form>
+    </div>
+    {% endif %}
 
-{% endblock %}
+  </header>
+  <!-- content -->
+        <div class="exam">
+        <h2>
+            {% if subject == 'AERO' %}
+                Aerodynamics (25%)
+            {% elif subject == 'MATH' %}
+                Mathematics (10%)
+            {% elif subject == 'STRUC' %}
+                Aircraft Structures and Design (20%)
+            {% elif subject == 'ACRM' %}
+                Aircraft Construction Repair and Modification (15%)
+            {% elif subject == 'PWRP' %}
+                Aircraft Power Plant (20%)
+            {% elif subject == 'EEMLE' %}
+                Engineering Economics and Management Laws and Ethics (10%)
+            {% endif %}
+        </h2>
+
+        <form method="POST" class="exam_form">
+            {% csrf_token %}
+
+            {% for question in questions %}
+                <div class="exam_question">
+                    <p><strong>{{ forloop.counter }}:</strong> {{ question.text }}</p>
+
+                    <ul>
+                        <li>
+                            <input type="radio" id="option_a_{{ forloop.counter }}" name="question_{{ question.id }}" value="A" class="square-radio">
+                            <label for="option_a_{{ forloop.counter }}">A. {{ question.option_a }}</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="option_b_{{ forloop.counter }}" name="question_{{ question.id }}" value="B" class="square-radio">
+                            <label for="option_b_{{ forloop.counter }}">B. {{ question.option_b }}</label>
+                        </li>
+                        {% if question.option_c %}
+                            <li>
+                                <input type="radio" id="option_c_{{ forloop.counter }}" name="question_{{ question.id }}" value="C" class="square-radio">
+                                <label for="option_c_{{ forloop.counter }}">C. {{ question.option_c }}</label>
+                            </li>
+                        {% endif %}
+                        {% if question.option_d %}
+                            <li>
+                                <input type="radio" id="option_d_{{ forloop.counter }}" name="question_{{ question.id }}" value="D" class="square-radio">
+                                <label for="option_d_{{ forloop.counter }}">D. {{ question.option_d }}</label>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endfor %}
+
+            <button type="submit">Submit Answers</button>
+        </form>
+    </div>
+</body></html>

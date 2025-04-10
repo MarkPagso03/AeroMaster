@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.utils.timezone import localtime
+
 from django.contrib.auth import login
 
 from . import settings
@@ -8,7 +10,7 @@ from django.contrib.auth import authenticate, login
 from .models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout
-from AeroMaster_admin.models import ExamSetting
+from AeroMaster_admin.models import ExamSetting, GeneratedQuestions
 
 
 def user_required(view_func):
@@ -56,12 +58,24 @@ def landing_view(request):
 
 @user_required
 def home_view(request):
-    exam_settings = ExamSetting.objects.all()
-    return render(request, 'home.html', {'exam_settings': exam_settings})
+    def get_exam(subject_code):
+        try:
+            exam = ExamSetting.objects.get(subject=subject_code)
+            exam.date_time = localtime(exam.date_time)
+            return exam
+        except ExamSetting.DoesNotExist:
+            return None
 
-@user_required
-def exam_view(request):
-    return render(request, 'exam.html')
+    context = {
+        'aero_setting': get_exam('AERO'),
+        'eemle_setting': get_exam('EEMLE'),
+        'acrm_setting': get_exam('ACRM'),
+        'math_setting': get_exam('MATH'),
+        'struc_setting': get_exam('STRUC'),
+        'pwrp_setting': get_exam('PWRP'),
+    }
+
+    return render(request, 'home.html', context)
 
 
 def signup_acc(request):
@@ -119,3 +133,12 @@ def logout_view(request):
     """ Logs out the user and redirects to the login page """
     logout(request)
     return redirect('landing')
+
+
+@login_required
+def exam_view(request, subject):
+    # Query the database to get all questions with the specific subject
+    questions = GeneratedQuestions.objects.filter(subject=subject)
+
+    # Render the template and pass the questions data
+    return render(request, 'exam.html', {'subject': subject, 'questions': questions})

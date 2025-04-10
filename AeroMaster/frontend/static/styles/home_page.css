@@ -11,6 +11,10 @@ a{
     font-weight: 600;
 }
 
+body{
+    height: 100vh;
+}
+
 .home{
     height: 100%;
     display: flex;
@@ -23,7 +27,7 @@ a{
 .home h1{
     margin: 10px;
     font-weight: 700;
-    font-size: 2.8rem;
+    font-size: 2.6rem;
 }
 
 .progress{
@@ -35,7 +39,7 @@ a{
 .progress_card{
     display: flex;
     flex-direction: column;
-    width: max(200px, 25%);
+    width: max(250px, 28%);
     min-height: 400px;
     padding: 15px;
     background: none;

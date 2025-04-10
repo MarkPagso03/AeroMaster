@@ -1,0 +1,55 @@
+
+label{
+    color: #595959;
+}
+
+li{
+    list-style-type: none;
+    margin-left: 10px;
+}
+
+.exam{
+    padding: 20px;
+    height: auto;
+}
+
+.exam_form{
+    padding: 20px;
+}
+
+.exam_question{
+    padding: 10px;
+}
+
+
+    .square-radio {
+        width: 16px; /* Adjust the size */
+        height: 16px; /* Adjust the size */
+        border: .5px solid #bfbfbf; /* Border color */
+        border-radius: 0%; /* Make the border square */
+        appearance: none; /* Remove default appearance */
+        background-color: white;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .square-radio:checked {
+        background-color: #4CAF50; /* Green color for checked radio button */
+        border-color: #4CAF50; /* Border color changes on checked */
+    }
+
+    .square-radio:checked::after {
+        content: '';
+        position: absolute;
+        top: 4px; /* Adjust position of the inner dot */
+        left: 4px;
+        width: 10px; /* Size of the inner dot */
+        height: 10px;
+        border-radius: 50%;
+        background-color: white; /* Dot color */
+    }
+
+    .square-radio:hover {
+        border-color: #555; /* Darker border on hover */
+    }
