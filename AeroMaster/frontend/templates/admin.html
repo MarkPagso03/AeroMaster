@@ -28,6 +28,7 @@
                 {% if user.role == 'faculty' %}
                     <a class="dropdown" id="question_link" onclick="highlight(this);" href="{% url 'question_list' %}">Questions</a>
                     <a class="dropdown" id="panel_link" onclick="highlight(this);" href="{% url 'panel' %}">Panel</a>
+                    <a class="dropdown" id="dashboard_link" onclick="highlight(this);" href="{% url 'dashboard' %}">Dashboard</a>
                 {% endif %}
             </nav>
             <hr>
@@ -88,6 +89,10 @@
                 document.getElementById("student_link").classList.add('highlight_nav');
             } else if (currentUrl.includes("faculty")) {
                 document.getElementById("faculty_link").classList.add('highlight_nav');
+            } else if (currentUrl.includes("question")) {
+                document.getElementById("question_link").classList.add('highlight_nav');
+            } else if (currentUrl.includes("dashboard")) {
+                document.getElementById("dashboard_link").classList.add('highlight_nav');
             } else if (currentUrl.includes("panel")) {
                 document.getElementById("panel_link").classList.add('highlight_nav');
             }

@@ -240,6 +240,7 @@ def panel_view(request):
                 exam_setting.subject = value
                 exam_setting.date_time = request.POST.get(f"date_time_{exam_id}")
                 exam_setting.shuffle = request.POST.get(f"shuffle_{exam_id}") == 'on'
+                exam_setting.passing_score = request.POST.get(f"passing_score_{exam_id}")
                 exam_setting.duration = request.POST.get(f"duration_{exam_id}")
                 exam_setting.save()
 

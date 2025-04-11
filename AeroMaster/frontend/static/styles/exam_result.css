@@ -25,6 +25,7 @@
 }
 
 .result_card{
+    width: 220px;
     text-align: left;
     border: 1px solid black;
     border-radius: 20px;
@@ -39,8 +40,8 @@
 }
 
 .feedback{
-    width: 500px;
-    background: rgba(0,150,255,.2);
+    width: 600px;
+    background: rgba(0,150,255,.3);
     padding: 20px;
     border-radius: 10px;
 }
@@ -66,6 +67,7 @@
     border-radius: 5px;
     border: none;
     color; red;
+    margin: 5px;
 }
 
 .detailed_feedback{

@@ -94,3 +94,43 @@ b{
 .progress_card button.disable{
     background: gray;
 }
+
+    .messages {
+        width: 100%;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        z-index: 9999;
+        display: flex;
+        justify-content: right;
+        padding: 10px;
+        color: white;
+    }
+
+    .alert {
+        background-color: #4CAF50; /* Green */
+        color: white;
+        padding: 15px 30px;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        animation: fadeout 0.5s ease-in-out forwards;
+        animation-delay: 5s;
+    }
+
+    .alert.error {
+        background-color: #f44336; /* Red */
+    }
+
+    .alert.warning {
+        background-color: #ff9800; /* Orange */
+    }
+
+    .alert.info {
+        background-color: #2196F3; /* Blue */
+    }
+
+    @keyframes fadeout {
+        0%   { opacity: 1; }
+        90%  { opacity: 1; }
+        100% { opacity: 0; visibility: hidden; }
+    }

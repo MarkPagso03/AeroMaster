@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.utils.timezone import localtime
-
+from django.contrib import messages
 from django.contrib.auth import login
 
 from . import settings
@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login
 from .models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout
-from AeroMaster_admin.models import ExamSetting, GeneratedQuestions, ExamResult
+from AeroMaster_admin.models import ExamSetting, GeneratedQuestions, ExamResult, UserFeedback
 
 
 def user_required(view_func):
@@ -38,7 +38,7 @@ def back_view(request):
 
 
 def dashboard_view(request):
-    return render(request, 'admin_base.html')
+    return render(request, 'dashboard.html')
 
 
 @user_passes_test(lambda user: not user.is_authenticated, login_url='/home')
@@ -137,60 +137,120 @@ def logout_view(request):
 
 @login_required
 def exam_view(request, subject):
+    # Map subject to the result field in the model
+    subject_field_map = {
+        'AERO': 'aero_result',
+        'MATH': 'math_result',
+        'STRUC': 'struc_result',
+        'ACRM': 'acrm_result',
+        'PWRP': 'pwrp_result',
+        'EEMLE': 'eemle_result',
+    }
+
+    # Get student's result
+    student_id = request.user.id_number
+    exam_result, _ = ExamResult.objects.get_or_create(student_id=student_id)
+    exam_setting = ExamSetting.objects.get(subject=subject)
+    passing_score = exam_setting.passing_score
     questions = GeneratedQuestions.objects.filter(subject=subject)
-    if request.method == 'POST':
-        score = 0
-        total = questions.count()
-        results = []
 
-        for question in questions:
-            user_letter = request.POST.get(f'question_{question.id}')
-            user_answer = getattr(question, f'option_{user_letter.lower()}') if user_letter else None
-            is_correct = (user_letter == question.correct_answer)
-            if is_correct:
-                score += 1
+    if subject in subject_field_map:
+        subject_field = subject_field_map[subject]
+        existing_score = getattr(exam_result, subject_field, None)
 
-            results.append({
-                'question': question,
-                'user_answer': user_answer,
-                'user_letter': user_letter,
-                'is_correct': is_correct,
-            })
+        if existing_score is not None:
+            # Questions are needed for rendering the previous results
+            questions = GeneratedQuestions.objects.filter(subject=subject)
+            total = questions.count()
+            percentage = (existing_score / total) * 100 if total > 0 else 0
+            passed = existing_score >= passing_score
 
-        # Save the result
-        student_id = request.user.id_number
+            '''return render(request, 'exam_results.html', {
+                'score': existing_score,
+                'total': total,
+                'results': None,  # You can store user answers if needed
+                'subject': subject,
+                'percentage': round(percentage, 2),
+                'passed': passed,
+            })'''
 
-        # Get or create existing result object
-        exam_result, created = ExamResult.objects.get_or_create(student_id=student_id)
-
-        # Dynamically assign score to the correct subject field
-        subject_field_map = {
-            'AERO': 'aero_result',
-            'MATH': 'math_result',
-            'STRUC': 'struc_result',
-            'ACRM': 'acrm_result',
-            'PWRP': 'pwrp_result',
-            'EEMLE': 'eemle_result',
-        }
-
-        if subject in subject_field_map:
-            setattr(exam_result, subject_field_map[subject], score)
-            exam_result.save()
-        else:
-            # Handle invalid subject case if needed
-            pass
-
-        percentage = (score / total) * 100 if total > 0 else 0
-
-        passing_score = 38
-        passed = score >= passing_score
-        return render(request, 'exam_results.html', {
-            'score': score,
-            'total': total,
-            'results': results,
-            'subject': subject,
-            'percentage': round(percentage, 2),
-            'passed': passed,
-        })
+            return redirect('exam_result', subject=subject)
 
     return render(request, 'exam.html', {'subject': subject, 'questions': questions})
+
+
+@login_required
+def exam_result(request, subject):
+    # If not taken yet, proceed normally
+    student_id = request.user.id_number
+    questions = GeneratedQuestions.objects.filter(subject=subject)
+    exam_setting = ExamSetting.objects.get(subject=subject)
+    passing_score = exam_setting.passing_score
+    exam_result, _ = ExamResult.objects.get_or_create(student_id=student_id)
+
+    subject_field_map = {
+        'AERO': 'aero_result',
+        'MATH': 'math_result',
+        'STRUC': 'struc_result',
+        'ACRM': 'acrm_result',
+        'PWRP': 'pwrp_result',
+        'EEMLE': 'eemle_result',
+    }
+
+    if request.method == 'POST':
+        satisfaction_map = {
+            'Dissatisfied': 1,
+            'Satisfied': 2,
+            'Very Satisfied': 3,
+        }
+
+        satisfaction_text = request.POST.get('satisfaction')
+        satisfaction = satisfaction_map.get(satisfaction_text, 2)  # default to Satisfied
+        comments = request.POST.get('feedback', '')
+        student_id = request.user.id_number
+
+        UserFeedback.objects.create(
+            student_id=student_id,
+            subject=subject,
+            satisfaction=satisfaction,
+            comments=comments
+        )
+
+        messages.success(request, 'Thank you! Your result and feedback has been submitted.')
+        return redirect('home')
+
+    # if request.method == 'POST':
+    score = 0
+    total = questions.count()
+    results = []
+
+    for question in questions:
+        user_letter = request.POST.get(f'question_{question.id}')
+        user_answer = getattr(question, f'option_{user_letter.lower()}') if user_letter else None
+        is_correct = (user_letter == question.correct_answer)
+        if is_correct:
+            score += 1
+
+        results.append({
+            'question': question,
+            'user_answer': user_answer,
+            'user_letter': user_letter,
+            'is_correct': is_correct,
+        })
+
+    # Save the score
+    setattr(exam_result, subject_field_map[subject], score)
+    exam_result.save()
+
+    percentage = (score / total) * 100 if total > 0 else 0
+    passed = score >= passing_score
+
+    return render(request, 'exam_results.html', {
+        'score': score,
+        'total': total,
+        'results': results if results else None,
+        'subject': subject,
+        'percentage': round(percentage, 2),
+        'passed': passed,
+    })
+

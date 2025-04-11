@@ -73,6 +73,7 @@ a  .button {
 
 header .header_buttons{
     display: flex;
+    align-items: center;
     gap: 20px;
 }
 

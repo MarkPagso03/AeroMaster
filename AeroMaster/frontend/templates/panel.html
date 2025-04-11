@@ -17,6 +17,7 @@
                     <thead>
                         <tr>
                             <th>Subject</th>
+                            <th>Passing Score</th>
                             <th>Date and Time</th>
                             <th>Shuffle</th>
                             <th>Duration (minutes)</th>
@@ -28,6 +29,9 @@
                         <tr>
                             <td>
                                 <input type="text" name="subject_{{ exam.id }}" value="{{ exam.subject }}" required>
+                            </td>
+                            <td>
+                                <input type="number" name="passing_score_{{ exam.id }}" value="{{ exam.passing_score }}" required>
                             </td>
                             <td>
                                 <input type="datetime-local" name="date_time_{{ exam.id }}" value="{{ exam.date_time|date:"Y-m-d\TH:i" }}" required>

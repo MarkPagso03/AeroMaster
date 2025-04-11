@@ -133,6 +133,7 @@ class GeneratedQuestions(models.Model):
 class ExamSetting(models.Model):
     subject = models.CharField(max_length=50, blank=False, null=False)
     date_time = models.DateTimeField(blank=False, null=False)
+    passing_score = models.IntegerField(default=38)
     shuffle = models.BooleanField(default=True, blank=False, null=False)
     duration = models.IntegerField()  # Store duration in minutes
 
@@ -151,3 +152,19 @@ class ExamResult(models.Model):
 
     def __str__(self):
         return self.student_id
+
+
+class UserFeedback(models.Model):
+    SATISFACTION_CHOICES = [
+        (1, 'Dissatisfied'),
+        (2, 'Satisfied'),
+        (3, 'Very Satisfied'),
+    ]
+
+    student_id = models.CharField(max_length=50, blank=False, null=False)
+    subject = models.CharField(max_length=100)  # optional, related to exam subject maybe?
+    satisfaction = models.IntegerField(choices=SATISFACTION_CHOICES)
+    comments = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.student_id} - {self.subject} - {self.satisfaction}"

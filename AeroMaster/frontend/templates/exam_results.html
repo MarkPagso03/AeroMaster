@@ -10,7 +10,7 @@
 
 {% block content %}
     <div class="exam_result">
-                        <h2>Exam Result Overview in {% if subject == 'AERO' %}
+        <h2>Exam Result Overview in {% if subject == 'AERO' %}
                 Aerodynamics (25%)
                 {% elif subject == 'MATH' %}
                     Mathematics (10%)
@@ -35,7 +35,7 @@
                     </div>
                     <div class="result_card">
                         <p>Correct Answer</p>
-                        <h1>38/50
+                        <h1>{{ score }}/{{ total }}
                         <canvas id="scoreChart" width="50" height="50"></canvas></h1>
                     </div>
                     <div class="result_card">
@@ -54,7 +54,8 @@
             <div class="feedback">
                     <h3>How was your experience with the exam?</h3>
 
-                    <form method="post">
+                    <form method="POST">
+                         {% csrf_token %}
                       <div class="satisfaction-options">
                         <label><input type="radio" name="satisfaction" value="Very Satisfied" checked> Very Satisfied</label>
                         <label><input type="radio" name="satisfaction" value="Satisfied"> Satisfied</label>
@@ -64,32 +65,37 @@
                       <textarea class="feedback-text" name="feedback" placeholder="What are your thoughts about the mock examination?"></textarea>
 
                       <div class="buttons">
+                          <h6>Submit feedback to save your result!</h6>
                         <button type="button" class="cancel-btn">Cancel</button>
                         <button type="submit" class="submit-btn">Submit</button>
                       </div>
                     </form>
             </div>
         </div>
-            <h2>Detailed Feedback</h2>
+            <h2>Detailed Result</h2>
         <div class="detailed_feedback">
-            {% for result in results %}
-                <div>
-                    <p><strong style="color:{% if result.is_correct %}#00b300{% else %}#b30000{% endif %}">
-                        Question {{ forloop.counter }}:</strong> {{ result.question.text }}</p>
-                    <p>&emsp;
-                        {% if result.is_correct %}
-                            Correct:
-                        {% else %}
-                            Incorrect:
-                        {% endif %}
-                        {% if result.user_letter %}
-                         {{ result.user_letter }}. {{ result.user_answer }}
-                        {% else %}
-                            no answer
-                        {% endif %}
-                    </p>
-                </div>
-            {% endfor %}
+            {% if results %}
+                {% for result in results %}
+                    <div>
+                        <p><strong style="color:{% if result.is_correct %}#00b300{% else %}#b30000{% endif %}">
+                            Question {{ forloop.counter }}:</strong> {{ result.question.text }}</p>
+                        <p>&emsp;
+                            {% if result.is_correct %}
+                                Correct:
+                            {% else %}
+                                Incorrect:
+                            {% endif %}
+                            {% if result.user_letter %}
+                             {{ result.user_letter }}. {{ result.user_answer }}
+                            {% else %}
+                                no answer
+                            {% endif %}
+                        </p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                Detailed Results Already Viewed!
+            {% endif %}
         </div>
     </div>
     <script>

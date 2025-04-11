@@ -29,6 +29,7 @@ urlpatterns = [
     path('', views.landing_view, name="landing"),
     path('home/', views.home_view, name="home"),
     path('mock_exam/<str:subject>', views.exam_view, name="mock_exam"),
+    path('result/<str:subject>', views.exam_result, name="exam_result"),
     path('login_acc/', views.login_acc, name='login_acc'),
     path('logout/', views.logout_view, name='logout'),
     path('unavailable_page/', views.unavailable_view, name='unavailable'),
