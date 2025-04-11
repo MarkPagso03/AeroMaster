@@ -1,0 +1,77 @@
+.exam_result{
+    padding: 30px;
+}
+
+.exam_result .upper{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 20ox;
+}
+
+.result_overview{
+    flex: 1;
+    margin-right: 50px;
+}
+
+.result_overview>p{
+    color: #595959;
+}
+
+.result_overview>div{
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+}
+
+.result_card{
+    text-align: left;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.result_card h1{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    font-size: 35px;
+}
+
+.feedback{
+    width: 500px;
+    background: rgba(0,150,255,.2);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.feedback form{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.feedback-text{
+    width: 100%;
+    height: 100px;
+}
+
+.feedback .buttons{
+    text-align: right;
+}
+
+.feedback .buttons button{
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    color; red;
+}
+
+.detailed_feedback{
+    padding: 20px;
+}
+
+.detailed_feedback > div{
+    padding: 10px;
+}

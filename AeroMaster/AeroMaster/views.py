@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login
 from .models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout
-from AeroMaster_admin.models import ExamSetting, GeneratedQuestions
+from AeroMaster_admin.models import ExamSetting, GeneratedQuestions, ExamResult
 
 
 def user_required(view_func):
@@ -137,7 +137,6 @@ def logout_view(request):
 
 @login_required
 def exam_view(request, subject):
-    # Query the database to get all questions with the specific subject
     questions = GeneratedQuestions.objects.filter(subject=subject)
     if request.method == 'POST':
         score = 0
@@ -145,23 +144,53 @@ def exam_view(request, subject):
         results = []
 
         for question in questions:
-            user_answer = request.POST.get(f'question_{question.id}')
-            is_correct = (user_answer == question.correct_answer)
+            user_letter = request.POST.get(f'question_{question.id}')
+            user_answer = getattr(question, f'option_{user_letter.lower()}') if user_letter else None
+            is_correct = (user_letter == question.correct_answer)
             if is_correct:
                 score += 1
 
             results.append({
                 'question': question,
                 'user_answer': user_answer,
+                'user_letter': user_letter,
                 'is_correct': is_correct,
             })
 
+        # Save the result
+        student_id = request.user.id_number
+
+        # Get or create existing result object
+        exam_result, created = ExamResult.objects.get_or_create(student_id=student_id)
+
+        # Dynamically assign score to the correct subject field
+        subject_field_map = {
+            'AERO': 'aero_result',
+            'MATH': 'math_result',
+            'STRUC': 'struc_result',
+            'ACRM': 'acrm_result',
+            'PWRP': 'pwrp_result',
+            'EEMLE': 'eemle_result',
+        }
+
+        if subject in subject_field_map:
+            setattr(exam_result, subject_field_map[subject], score)
+            exam_result.save()
+        else:
+            # Handle invalid subject case if needed
+            pass
+
+        percentage = (score / total) * 100 if total > 0 else 0
+
+        passing_score = 38
+        passed = score >= passing_score
         return render(request, 'exam_results.html', {
             'score': score,
             'total': total,
             'results': results,
             'subject': subject,
+            'percentage': round(percentage, 2),
+            'passed': passed,
         })
 
-    # Render the template and pass the questions data
     return render(request, 'exam.html', {'subject': subject, 'questions': questions})

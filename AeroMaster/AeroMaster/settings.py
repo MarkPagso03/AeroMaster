@@ -135,4 +135,4 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # Enforce session to expire after inactivity
 SESSION_SAVE_EVERY_REQUEST = False
 
-LOGIN_URL = ''
+LOGIN_URL = 'landing'

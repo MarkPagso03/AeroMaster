@@ -138,3 +138,16 @@ class ExamSetting(models.Model):
 
     def __str__(self):
         return f"{self.subject} - {self.date_time} - {self.duration} mins"
+
+
+class ExamResult(models.Model):
+    student_id = models.CharField(max_length=50, blank=False, null=False)
+    aero_result = models.IntegerField(null=True, blank=True)
+    math_result = models.IntegerField(null=True, blank=True)
+    struc_result = models.IntegerField(null=True, blank=True)
+    acrm_result = models.IntegerField(null=True, blank=True)
+    pwrp_result = models.IntegerField(null=True, blank=True)
+    eemle_result = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return self.student_id
