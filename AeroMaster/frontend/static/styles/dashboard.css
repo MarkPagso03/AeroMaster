@@ -1,7 +1,13 @@
+.dashboard{
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
 
 .report{
     padding: 30px;
     display: flex;
+    gap: 10px;
 }
 
 .report_card{
@@ -10,4 +16,43 @@
 
 .report_card h1{
     font-size: 40px;
+}
+
+.comment_card{
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.comment_card .table{
+    overflow: auto;
+    height: 200px;
+    margin: 0;
+    padding: 0;
+    border-radius: 10px;
+}
+
+.comment_card table{
+    padding: 0;
+    margin: 0;
+}
+
+.graph{
+    flex: 1;
+    display: flex;
+    gap: 20px;
+}
+
+.subject_graph, .feedback_graph{
+    width: 90%;
+    max-width: 700px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.subject_graph canvas, .feedback_graph canvas{
+    max-height: 420px;
+    padding: 30px;
 }

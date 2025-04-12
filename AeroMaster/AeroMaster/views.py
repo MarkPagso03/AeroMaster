@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from django.utils.timezone import localtime
+from django.utils import timezone
+from django.utils.timezone import localtime, now
 from django.contrib import messages
 from django.contrib.auth import login
 
@@ -35,10 +36,6 @@ def unavailable_view(request):
 @login_required(login_url='/')
 def back_view(request):
     return render(request, 'home.html')
-
-
-def dashboard_view(request):
-    return render(request, 'dashboard.html')
 
 
 @user_passes_test(lambda user: not user.is_authenticated, login_url='/home')
@@ -154,6 +151,14 @@ def exam_view(request, subject):
     passing_score = exam_setting.passing_score
     questions = GeneratedQuestions.objects.filter(subject=subject)
 
+    current_time = now()
+    exam_start_time = exam_setting.date_time
+    exam_end_time = exam_start_time + timezone.timedelta(hours=1)
+
+    if not (exam_start_time <= current_time <= exam_end_time):
+        messages.success(request, 'Not scheduled right now.')
+        return redirect('home')
+
     if subject in subject_field_map:
         subject_field = subject_field_map[subject]
         existing_score = getattr(exam_result, subject_field, None)
@@ -181,7 +186,6 @@ def exam_view(request, subject):
 
 @login_required
 def exam_result(request, subject):
-    # If not taken yet, proceed normally
     student_id = request.user.id_number
     questions = GeneratedQuestions.objects.filter(subject=subject)
     exam_setting = ExamSetting.objects.get(subject=subject)
@@ -197,29 +201,6 @@ def exam_result(request, subject):
         'EEMLE': 'eemle_result',
     }
 
-    if request.method == 'POST':
-        satisfaction_map = {
-            'Dissatisfied': 1,
-            'Satisfied': 2,
-            'Very Satisfied': 3,
-        }
-
-        satisfaction_text = request.POST.get('satisfaction')
-        satisfaction = satisfaction_map.get(satisfaction_text, 2)  # default to Satisfied
-        comments = request.POST.get('feedback', '')
-        student_id = request.user.id_number
-
-        UserFeedback.objects.create(
-            student_id=student_id,
-            subject=subject,
-            satisfaction=satisfaction,
-            comments=comments
-        )
-
-        messages.success(request, 'Thank you! Your result and feedback has been submitted.')
-        return redirect('home')
-
-    # if request.method == 'POST':
     score = 0
     total = questions.count()
     results = []
@@ -230,7 +211,6 @@ def exam_result(request, subject):
         is_correct = (user_letter == question.correct_answer)
         if is_correct:
             score += 1
-
         results.append({
             'question': question,
             'user_answer': user_answer,
@@ -238,17 +218,38 @@ def exam_result(request, subject):
             'is_correct': is_correct,
         })
 
-    # Save the score
+    # Save the subject-specific score
     setattr(exam_result, subject_field_map[subject], score)
     exam_result.save()
 
     percentage = (score / total) * 100 if total > 0 else 0
     passed = score >= passing_score
 
+    # Handle feedback form
+    if request.method == 'POST' and request.POST.get('satisfaction'):
+        satisfaction_map = {
+            'Dissatisfied': 1,
+            'Satisfied': 2,
+            'Very Satisfied': 3,
+        }
+        satisfaction_text = request.POST.get('satisfaction')
+        satisfaction = satisfaction_map.get(satisfaction_text, 2)
+        comments = request.POST.get('feedback', '')
+
+        # Try to update existing feedback or create new one
+        feedback, created = UserFeedback.objects.get_or_create(student_id=student_id)
+
+        setattr(feedback, f'{subject.lower()}_satisfaction', satisfaction)
+        setattr(feedback, f'{subject.lower()}_comments', comments)
+        feedback.save()
+
+        messages.success(request, 'Thank you! Your result and feedback has been submitted.')
+        return redirect('home')
+
     return render(request, 'exam_results.html', {
         'score': score,
         'total': total,
-        'results': results if results else None,
+        'results': results,
         'subject': subject,
         'percentage': round(percentage, 2),
         'passed': passed,

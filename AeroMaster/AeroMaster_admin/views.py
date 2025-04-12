@@ -2,11 +2,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import faculty, ArchiveFaculty, ArchiveStudent, ArchiveQuestion, GeneratedQuestions, ExamSetting
+from .models import (faculty, ArchiveFaculty, ArchiveStudent, ArchiveQuestion, GeneratedQuestions, ExamSetting,
+                     ExamResult, UserFeedback)
 from .forms import FacultyForm, StudentForm, AeroMasterAdminForm, QuestionForm
 from AeroMaster.models import User, Question
 import random
 import json
+from collections import Counter
+from itertools import zip_longest
+
 
 
 # from AeroMaster.decorators import role_required
@@ -289,3 +293,90 @@ def generate_questions(request):
         GeneratedQuestions.objects.all().values('text', 'option_a', 'option_b', 'option_c', 'option_d',
                                                 'correct_answer', 'subject'))
     return JsonResponse({'questions': questions_list})
+
+
+@faculty_required
+def dashboard_view(request):
+    exam_settings = ExamSetting.objects.all()
+    passing_scores = {setting.subject.upper(): setting.passing_score for setting in exam_settings}
+
+    participants = ExamResult.objects.count()
+    total_passed = ExamResult.objects.filter(total_result='Passed').count()
+    pass_percentage = (total_passed / participants) * 100 if participants > 0 else 0
+
+    passed_per_subject = {
+        'AERO': ExamResult.objects.filter(aero_result__gte=passing_scores.get('AERO', 38)).count(),
+        'MATH': ExamResult.objects.filter(math_result__gte=passing_scores.get('MATH', 38)).count(),
+        'STRUC': ExamResult.objects.filter(struc_result__gte=passing_scores.get('STRUC', 38)).count(),
+        'ACRM': ExamResult.objects.filter(acrm_result__gte=passing_scores.get('ACRM', 38)).count(),
+        'PWRP': ExamResult.objects.filter(pwrp_result__gte=passing_scores.get('PWRP', 38)).count(),
+        'EEMLE': ExamResult.objects.filter(eemle_result__gte=passing_scores.get('EEMLE', 38)).count(),
+    }
+
+    failed_per_subject = {
+        subject: participants - passed_per_subject[subject]
+        for subject in passed_per_subject
+    }
+
+    comment_fields = {
+        'AERO': UserFeedback.objects.exclude(aero_comments__isnull=True).exclude(aero_comments__exact='').values_list(
+            'aero_comments', flat=True),
+        'MATH': UserFeedback.objects.exclude(math_comments__isnull=True).exclude(math_comments__exact='').values_list(
+            'math_comments', flat=True),
+        'STRUC': UserFeedback.objects.exclude(struc_comments__isnull=True).exclude(
+            struc_comments__exact='').values_list('struc_comments', flat=True),
+        'ACRM': UserFeedback.objects.exclude(acrm_comments__isnull=True).exclude(acrm_comments__exact='').values_list(
+            'acrm_comments', flat=True),
+        'PWRP': UserFeedback.objects.exclude(pwrp_comments__isnull=True).exclude(pwrp_comments__exact='').values_list(
+            'pwrp_comments', flat=True),
+        'EEMLE': UserFeedback.objects.exclude(eemle_comments__isnull=True).exclude(
+            eemle_comments__exact='').values_list('eemle_comments', flat=True),
+    }
+
+    # Combine by rows using zip_longest
+    comment_rows = list(zip_longest(
+        comment_fields['AERO'],
+        comment_fields['MATH'],
+        comment_fields['STRUC'],
+        comment_fields['ACRM'],
+        comment_fields['PWRP'],
+        comment_fields['EEMLE'],
+        fillvalue=""
+    ))
+
+    # Satisfaction stats per subject
+    def get_satisfaction_data(subject_prefix):
+        feedbacks = UserFeedback.objects.all()
+        sat_field = f'{subject_prefix.lower()}_satisfaction'
+
+        satisfaction_counter = Counter(
+            getattr(fb, sat_field) for fb in feedbacks if getattr(fb, sat_field) is not None
+        )
+        return {
+            'counts': {
+                1: satisfaction_counter.get(1, 0),
+                2: satisfaction_counter.get(2, 0),
+                3: satisfaction_counter.get(3, 0),
+            }
+        }
+
+    satisfaction_data = {
+        'AERO': get_satisfaction_data('AERO'),
+        'MATH': get_satisfaction_data('MATH'),
+        'STRUC': get_satisfaction_data('STRUC'),
+        'ACRM': get_satisfaction_data('ACRM'),
+        'PWRP': get_satisfaction_data('PWRP'),
+        'EEMLE': get_satisfaction_data('EEMLE'),
+    }
+
+    context = {
+        'participants': participants,
+        'pass_percentage': round(pass_percentage, 2),
+        'passed_per_subject': passed_per_subject,
+        'failed_per_subject': failed_per_subject,
+        'satisfaction_data': satisfaction_data,
+        'comment_headers': list(comment_fields.keys()),
+        'comment_rows': comment_rows
+    }
+
+    return render(request, 'dashboard.html', context)

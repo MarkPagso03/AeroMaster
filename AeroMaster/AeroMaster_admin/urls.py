@@ -3,7 +3,7 @@ from .views import (admin_view, faculty_list, edit_faculty, archive_faculty, add
                     student_list, edit_student, archive_student, add_student,
                     login_admin_view, login_acc, logout_view,
                     question_list, edit_question, add_question, archive_question,
-                    panel_view, generate_questions)
+                    panel_view, generate_questions, dashboard_view)
 
 urlpatterns = [
     path('', admin_view, name='AeroMaster_admin'),
@@ -24,5 +24,6 @@ urlpatterns = [
     path('question/delete/<str:id>/', archive_question, name='archive_question'),
     path('panel', panel_view, name='panel'),
     path('panel/generate/', generate_questions, name='generate'),
+    path('dashboard/', dashboard_view, name='dashboard'),
     #path('panel/setting/', edit_exam_settings, name='exam_settings'),
 ]

@@ -1,10 +1,11 @@
 {% extends 'admin.html' %}
+{% load static %}
 {% block link %}
     <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}?v={{ timestamp }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
 {% block content %}
-    <div>
+    <div class="dashboard">
         <div id="view">
             <h2 class="page_name">Report</h2>
         </div>
@@ -13,20 +14,218 @@
             <div class="report_card">
                 <svg viewBox="0 0 24 24" width="50" height="50" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Iconly/Curved/Profile"> <g id="Profile"> <path id="Stroke 1" fill-rule="evenodd" clip-rule="evenodd" d="M11.8445 21.6618C8.15273 21.6618 5 21.0873 5 18.7865C5 16.4858 8.13273 14.3618 11.8445 14.3618C15.5364 14.3618 18.6891 16.4652 18.6891 18.766C18.6891 21.0658 15.5564 21.6618 11.8445 21.6618Z" stroke="#130F26" stroke-width="0.9600000000000002" stroke-linecap="round" stroke-linejoin="round"></path> <path id="Stroke 3" fill-rule="evenodd" clip-rule="evenodd" d="M11.8372 11.1735C14.26 11.1735 16.2236 9.2099 16.2236 6.78718C16.2236 4.36445 14.26 2.3999 11.8372 2.3999C9.41452 2.3999 7.44998 4.36445 7.44998 6.78718C7.4418 9.20172 9.3918 11.1654 11.8063 11.1735C11.8172 11.1735 11.8272 11.1735 11.8372 11.1735Z" stroke="#130F26" stroke-width="0.9600000000000002" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g> </g></svg>
                 <h3>participants</h3>
-                <h1>50</h1>
+                <h1>{{ participants }}</h1>
             </div>
             <div class="report_card">
                 <svg viewBox="0 0 24 24" width="50" height="50" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#001F4D" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M5 5C5 4.44772 4.55228 4 4 4C3.44772 4 3 4.44772 3 5L3 13.9998C3 13.9999 3 14.0001 3 14.0002V19C3 19.5523 3.44772 20 4 20H20C20.5523 20 21 19.5523 21 19C21 18.4477 20.5523 18 20 18H5V14.4142L9 10.4142L12.2929 13.7071C12.6834 14.0976 13.3166 14.0976 13.7071 13.7071L19 8.41421V11C19 11.5523 19.4477 12 20 12C20.5523 12 21 11.5523 21 11V6C21 5.44772 20.5523 5 20 5H15C14.4477 5 14 5.44772 14 6C14 6.55228 14.4477 7 15 7H17.5858L13 11.5858L9.70711 8.29289C9.31658 7.90237 8.68342 7.90237 8.29289 8.29289L5 11.5858V5Z" fill="#001F4D"></path> </g></svg>
                 <h3>Passing Rate</h3>
-                <h1>60%</h1>
+                <h1>{{ pass_percentage }}%</h1>
             </div>
-            <div class="feedback_card">
-
+            <div class="comment_card">
+                <h2 class="text-xl font-bold mt-8 mb-4">All Feedback Comments</h2>
+                <div class="table">
+                <table class="table-auto w-full border-collapse border border-gray-300 text-sm text-left">
+                    <thead class="bg-gray-100 text-gray-700">
+                        <tr>
+                            {% for header in comment_headers %}
+                                <th class="border border-gray-300 px-4 py-2">{{ header }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in comment_rows %}
+                            <tr>
+                                {% for comment in row %}
+                                    <td class="border border-gray-300 px-4 py-2 align-top">
+                                        {{ comment|default:"" }}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
             </div>
         </div>
-        <div class="performance_graph">
-
+        <div class="graph">
+            <div class="subject_graph" >
+                    <h3 style="margin-bottom: 10px;">Performance Overview</h3>
+                <canvas id="performanceChart" height="220"></canvas>
+            </div>
+            <div class="feedback_graph">
+                <h3 style="margin-bottom: 10px;">Feedback</h3>
+                <canvas id="feedbackChart" height="200"></canvas>
+            </div>
         </div>
-
     </div>
+        <script>
+            const ctxf = document.getElementById('performanceChart').getContext('2d');
+            new Chart(ctxf, {
+                type: 'bar',
+                data: {
+                    labels: ['Aerodynamics', 'Mathematics', 'A/C Stuctures', 'ACRM', 'A/C Powerplant', 'EEMLE'],
+                    datasets: [
+                        {
+                            label: 'PASSED',
+                            data: [
+                                {{ passed_per_subject.AERO }},
+                                {{ passed_per_subject.MATH }},
+                                {{ passed_per_subject.STRUC }},
+                                {{ passed_per_subject.ACRM }},
+                                {{ passed_per_subject.PWRP }},
+                                {{ passed_per_subject.EEMLE }}
+                            ],
+                            backgroundColor: '#001f4d',
+                            barThickness: 60
+                        },
+                        {
+                            label: 'FAILED',
+                            data: [
+                                {{ failed_per_subject.AERO }},
+                                {{ failed_per_subject.MATH }},
+                                {{ failed_per_subject.STRUC }},
+                                {{ failed_per_subject.ACRM }},
+                                {{ failed_per_subject.PWRP }},
+                                {{ failed_per_subject.EEMLE }}
+                            ],
+                            backgroundColor: '#d3d3d3',
+                            barThickness: 60
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'x',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                padding: 20,
+                                color: '#000',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            ticks: {
+                                color: '#000',
+                                font: {
+                                    weight: 'bold'
+                                }
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true,
+                            max: {{ participants }},
+                            ticks: {
+                                color: '#000'
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+        <script>
+  const ctx = document.getElementById('feedbackChart').getContext('2d');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Aerodynamics', 'Mathematics', 'A/C Stuctures', 'ACRM', 'A/C Powerplant', 'EEMLE'],
+      datasets: [
+        {
+          label: 'Very Satisfied',
+          data: [{{ satisfaction_data.AERO.counts.3 }},
+                 {{ satisfaction_data.MATH.counts.3 }},
+                 {{ satisfaction_data.STRUC.counts.3 }},
+                 {{ satisfaction_data.ACRM.counts.3 }},
+                 {{ satisfaction_data.PWRP.counts.3 }},
+                 {{ satisfaction_data.EEMLE.counts.3 }},],
+          backgroundColor: '#001f4d',
+          barThickness: 20
+        },
+        {
+          label: 'Satisfied',
+          data: [{{ satisfaction_data.AERO.counts.2 }},
+                 {{ satisfaction_data.MATH.counts.2 }},
+                 {{ satisfaction_data.STRUC.counts.2 }},
+                 {{ satisfaction_data.ACRM.counts.2 }},
+                 {{ satisfaction_data.PWRP.counts.2 }},
+                 {{ satisfaction_data.EEMLE.counts.2 }},],
+          backgroundColor: '#3daaf2',
+          barThickness: 20
+        },
+        {
+          label: 'Dissatisfied',
+          data: [{{ satisfaction_data.AERO.counts.1 }},
+                 {{ satisfaction_data.MATH.counts.1 }},
+                 {{ satisfaction_data.STRUC.counts.1 }},
+                 {{ satisfaction_data.ACRM.counts.1 }},
+                 {{ satisfaction_data.PWRP.counts.1 }},
+                 {{ satisfaction_data.EEMLE.counts.1 }},],
+          backgroundColor: '#cdd1d6',
+          barThickness: 20
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          stacked: false,
+          grid: {
+            display: false
+          },
+          ticks: {
+            font: {
+              weight: '600'
+            }
+          }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 10
+          },
+          grid: {
+            color: '#eee'
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: {
+            usePointStyle: true,
+            pointStyle: 'circle',
+            padding: 20,
+            font: {
+              size: 12
+            }
+          }
+        },
+        tooltip: {
+          mode: 'index',
+          intersect: false
+        }
+      }
+    }
+  });
+</script>
+
+
 {% endblock %}

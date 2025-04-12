@@ -149,9 +149,40 @@ class ExamResult(models.Model):
     acrm_result = models.IntegerField(null=True, blank=True)
     pwrp_result = models.IntegerField(null=True, blank=True)
     eemle_result = models.IntegerField(null=True, blank=True)
+    percent_result = models.FloatField(null=True, blank=True)
+    total_result = models.CharField(max_length=10, null=True, blank=True)  # now stores 'Passed' or 'Failed'
+
+    def save(self, *args, **kwargs):
+        scores = {
+            'aero_result': self.aero_result or 0,
+            'math_result': self.math_result or 0,
+            'struc_result': self.struc_result or 0,
+            'acrm_result': self.acrm_result or 0,
+            'pwrp_result': self.pwrp_result or 0,
+            'eemle_result': self.eemle_result or 0,
+        }
+
+        weights = {
+            'aero_result': 0.25,
+            'math_result': 0.10,
+            'struc_result': 0.20,
+            'acrm_result': 0.15,
+            'pwrp_result': 0.20,
+            'eemle_result': 0.10,
+        }
+
+        max_score = 50
+
+        self.percent_result = round(
+            sum((scores[subj] / max_score) * weight * 100 for subj, weight in weights.items()),
+            2
+        )
+        self.total_result = 'Passed' if self.percent_result >= 75 else 'Failed'
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.student_id
+        return f"{self.student_id} ({self.total_result})"
 
 
 class UserFeedback(models.Model):
@@ -162,9 +193,18 @@ class UserFeedback(models.Model):
     ]
 
     student_id = models.CharField(max_length=50, blank=False, null=False)
-    subject = models.CharField(max_length=100)  # optional, related to exam subject maybe?
-    satisfaction = models.IntegerField(choices=SATISFACTION_CHOICES)
-    comments = models.TextField(blank=True, null=True)
+    aero_satisfaction = models.IntegerField(choices=SATISFACTION_CHOICES, blank=True, null=True)
+    aero_comments = models.TextField(blank=True, null=True)
+    math_satisfaction = models.IntegerField(choices=SATISFACTION_CHOICES, blank=True, null=True)
+    math_comments = models.TextField(blank=True, null=True)
+    struc_satisfaction = models.IntegerField(choices=SATISFACTION_CHOICES, blank=True, null=True)
+    struc_comments = models.TextField(blank=True, null=True)
+    acrm_satisfaction = models.IntegerField(choices=SATISFACTION_CHOICES, blank=True, null=True)
+    acrm_comments = models.TextField(blank=True, null=True)
+    pwrp_satisfaction = models.IntegerField(choices=SATISFACTION_CHOICES, blank=True, null=True)
+    pwrp_comments = models.TextField(blank=True, null=True)
+    eemle_satisfaction = models.IntegerField(choices=SATISFACTION_CHOICES, blank=True, null=True)
+    eemle_comments = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.student_id} - {self.subject} - {self.satisfaction}"
+        return f"{self.student_id} - {self.aero_satisfaction}"
