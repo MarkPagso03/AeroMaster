@@ -253,4 +253,3 @@ def exam_result(request, subject):
         'percentage': round(percentage, 2),
         'passed': passed,
     })
-

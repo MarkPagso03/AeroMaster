@@ -1,0 +1,13 @@
+
+.report{
+    padding: 30px;
+    display: flex;
+}
+
+.report_card{
+    padding: 30px;
+}
+
+.report_card h1{
+    font-size: 40px;
+}
