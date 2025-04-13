@@ -1,8 +1,8 @@
 from django.contrib import admin
 from .models import Question, User  # Import your model
-from AeroMaster_admin.models import ExamResult, UserFeedback
+from AeroMaster_admin.models import ExamResult, UserFeedback, faculty
 from import_export.admin import ImportExportModelAdmin
-from .resources import QuestionResource, UserResource, ExamResultResource, UserFeedbackResource
+from .resources import QuestionResource, UserResource, ExamResultResource, UserFeedbackResource, FacultyResource
 
 
 # admin.site.register(Question)  # Register the model
@@ -19,6 +19,7 @@ class Question(ImportExportModelAdmin):
 @admin.register(User)
 class User(ImportExportModelAdmin):
     resource_class = UserResource
+    search_fields = ('first_name', 'last_name', 'email')
     list_display = ('first_name', 'middle_initial', 'last_name', 'id_number', 'email',
                     'password')  # List the fields you want to display
 
@@ -36,3 +37,10 @@ class UserFeedback(ImportExportModelAdmin):
     list_display = ('student_id', 'aero_satisfaction', 'aero_comments', 'math_satisfaction', 'math_comments',
                     'struc_satisfaction', 'struc_comments', 'acrm_satisfaction', 'acrm_comments',
                     'pwrp_satisfaction', 'pwrp_comments', 'eemle_satisfaction', 'eemle_comments')
+
+
+@admin.register(faculty)
+class FacultyAdmin(ImportExportModelAdmin):
+    resource_class = FacultyResource
+    list_display = ('first_name', 'last_name', 'emp_id', 'email', 'role', 'is_active', 'is_staff')
+    search_fields = ('first_name', 'last_name', 'emp_id', 'email')

@@ -13,7 +13,11 @@
             <div id="view">
                 <div>
                     <h2 class="page_name">View</h2>
-                    <button onclick="add_page()">Add</button>
+                    <div>
+                        <button onclick="add_page()">Add</button>
+                        <a href="{% url 'import_faculty' %}"><button>Import CSV</button></a>
+                        <a href="{% url 'export_faculty' %}"><button>Export CSV</button></a>
+                    </div>
                 </div>
                 <table>
                     <thead>

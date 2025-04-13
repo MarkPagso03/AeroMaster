@@ -219,8 +219,9 @@ def exam_result(request, subject):
         })
 
     # Save the subject-specific score
-    setattr(exam_result, subject_field_map[subject], score)
-    exam_result.save()
+    if getattr(exam_result, subject_field_map[subject], None) is None:
+        setattr(exam_result, subject_field_map[subject], score)
+        exam_result.save()
 
     percentage = (score / total) * 100 if total > 0 else 0
     passed = score >= passing_score

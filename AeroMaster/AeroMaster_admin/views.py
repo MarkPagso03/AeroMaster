@@ -1,16 +1,19 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.core.serializers.json import DjangoJSONEncoder
-from django.http import JsonResponse, HttpResponseForbidden
+from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import (faculty, ArchiveFaculty, ArchiveStudent, ArchiveQuestion, GeneratedQuestions, ExamSetting,
                      ExamResult, UserFeedback)
 from .forms import FacultyForm, StudentForm, AeroMasterAdminForm, QuestionForm
 from AeroMaster.models import User, Question
+from AeroMaster.resources import UserResource, QuestionResource, FacultyResource
 import random
 import json
 from collections import Counter
 from itertools import zip_longest
-
+from datetime import datetime
+from tablib import Dataset
 
 
 # from AeroMaster.decorators import role_required
@@ -380,3 +383,111 @@ def dashboard_view(request):
     }
 
     return render(request, 'dashboard.html', context)
+
+
+def export_user(request):
+    resource = UserResource()
+    dataset = resource.export()
+
+    timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    filename = f"user_{timestamp}.csv"
+
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    return response
+
+
+def import_user(request):
+    if request.method == 'POST' and request.FILES.get('csv_file'):
+        try:
+            dataset = Dataset()
+            new_data = request.FILES['csv_file'].read().decode('utf-8')
+            imported_data = dataset.load(new_data, format='csv')
+
+            resource = UserResource()
+            result = resource.import_data(imported_data, dry_run=True)  # preview
+
+            if result.has_errors():
+                messages.error(request, 'Import failed due to errors in the CSV file.')
+                for row in result.invalid_rows:
+                    messages.error(request, f"Row error: {row.error}")
+            else:
+                resource.import_data(imported_data, dry_run=False)  # actually save
+                messages.success(request, 'Students imported successfully!')
+
+        except Exception as e:
+            messages.error(request, f"An error occurred while importing: {e}")
+
+    return render(request, 'import_user.html')
+
+
+def export_question(request):
+    resource = QuestionResource()
+    dataset = resource.export()
+
+    timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    filename = f"question_{timestamp}.csv"
+
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    return response
+
+
+def import_question(request):
+    if request.method == 'POST' and request.FILES.get('csv_file'):
+        try:
+            dataset = Dataset()
+            new_data = request.FILES['csv_file'].read().decode('utf-8')
+            imported_data = dataset.load(new_data, format='csv')
+
+            resource = QuestionResource()
+            result = resource.import_data(imported_data, dry_run=True)  # preview
+
+            if result.has_errors():
+                messages.error(request, 'Import failed due to errors in the CSV file.')
+                for row in result.invalid_rows:
+                    messages.error(request, f"Row error: {row.error}")
+            else:
+                resource.import_data(imported_data, dry_run=False)  # actually save
+                messages.success(request, 'Questions imported successfully!')
+
+        except Exception as e:
+            messages.error(request, f"An error occurred while importing: {e}")
+
+    return render(request, 'import_question.html')
+
+
+def export_faculty(request):
+    resource = FacultyResource()
+    dataset = resource.export()
+
+    timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    filename = f"faculty_{timestamp}.csv"
+
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    return response
+
+
+def import_faculty(request):
+    if request.method == 'POST' and request.FILES.get('csv_file'):
+        try:
+            dataset = Dataset()
+            new_data = request.FILES['csv_file'].read().decode('utf-8')
+            imported_data = dataset.load(new_data, format='csv')
+
+            resource = FacultyResource()
+            result = resource.import_data(imported_data, dry_run=True)  # preview
+
+            if result.has_errors():
+                messages.error(request, 'Import failed due to errors in the CSV file.')
+                for row in result.invalid_rows:
+                    messages.error(request, f"Row error: {row.error}")
+            else:
+                resource.import_data(imported_data, dry_run=False)  # actually save
+                messages.success(request, 'Faculties imported successfully!')
+
+        except Exception as e:
+            messages.error(request, f"An error occurred while importing: {e}")
+
+    return render(request, 'import_faculty.html')
