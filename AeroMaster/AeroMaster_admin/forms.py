@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.hashers import make_password
 
 from .models import faculty, AeroMaster_admin, ExamSetting
-from AeroMaster.models import User, Question
+from AeroMaster.models import Student, Question
 
 
 class FacultyForm(forms.ModelForm):
@@ -25,7 +25,7 @@ class StudentForm(forms.ModelForm):
     password = forms.CharField(required=False, widget=forms.PasswordInput)
 
     class Meta:
-        model = User
+        model = Student
         fields = ['first_name', 'last_name', 'id_number', 'email', 'password']
 
     def save(self, commit=True):

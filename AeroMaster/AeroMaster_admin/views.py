@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import (faculty, ArchiveFaculty, ArchiveStudent, ArchiveQuestion, GeneratedQuestions, ExamSetting,
                      ExamResult, UserFeedback)
 from .forms import FacultyForm, StudentForm, AeroMasterAdminForm, QuestionForm
-from AeroMaster.models import User, Question
+from AeroMaster.models import Student, Question
 from AeroMaster.resources import UserResource, QuestionResource, FacultyResource
 import random
 import json
@@ -26,6 +26,7 @@ def login_admin_view(request):
 
 def login_acc(request):
     if request.method == 'POST':
+        logout(request)
         form = AeroMasterAdminForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
@@ -144,7 +145,7 @@ def add_student(request):
 
 @adminfaculty_required
 def edit_student(request, student_id):
-    student_member = get_object_or_404(User, id_number=student_id)
+    student_member = get_object_or_404(Student, id_number=student_id)
     if request.method == 'POST':
         form = StudentForm(request.POST, instance=student_member)
         if form.is_valid():
@@ -159,13 +160,13 @@ def edit_student(request, student_id):
 
 @adminfaculty_required
 def student_list(request):
-    students = User.objects.values('first_name', 'last_name', 'id_number', 'email')
+    students = Student.objects.values('first_name', 'last_name', 'id_number', 'email')
     return render(request, 'view_student.html', {'students': students})
 
 
 @adminfaculty_required
 def archive_student(request, student_id):
-    student_member = get_object_or_404(User, pk=student_id)
+    student_member = get_object_or_404(Student, pk=student_id)
     ArchiveStudent.objects.create(
         first_name=student_member.first_name,
         last_name=student_member.last_name,

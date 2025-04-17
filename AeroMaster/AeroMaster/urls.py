@@ -32,6 +32,6 @@ urlpatterns = [
     path('login_acc/', views.login_acc, name='login_acc'),
     path('logout/', views.logout_view, name='logout'),
     path('unavailable_page/', views.unavailable_view, name='unavailable'),
-    path('back/', views.back_view, name='back'),
+    #path('back/', views.back_view, name='back'),
     path('administrator/', include('AeroMaster_admin.urls')),
 ]

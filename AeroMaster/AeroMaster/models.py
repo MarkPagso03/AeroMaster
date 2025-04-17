@@ -5,6 +5,7 @@ from django.utils.timezone import now
 from django.contrib.auth.hashers import make_password, check_password
 
 
+
 def current_time_utc_plus_8():
     local_timezone = pytz.timezone("Asia/Manila")  # Change to your local timezone
     local_time = now().astimezone(local_timezone)
@@ -12,7 +13,7 @@ def current_time_utc_plus_8():
     return clean_local_time
 
 
-class User(models.Model):
+class Student(models.Model):
     first_name = models.CharField(max_length=50, blank=False, null=False)
     middle_initial = models.CharField(max_length=3, blank=True, null=True)
     last_name = models.CharField(max_length=50, blank=False, null=False)
@@ -23,7 +24,7 @@ class User(models.Model):
     last_login = models.DateTimeField(default=now, blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        existing = User.objects.filter(pk=self.pk).first()
+        existing = Student.objects.filter(pk=self.pk).first()
         if not existing or existing.password != self.password:
             self.password = make_password(self.password)
         super().save(*args, **kwargs)
@@ -56,3 +57,4 @@ class Question(models.Model):
 
     def __str__(self):
         return self.text
+

@@ -148,8 +148,7 @@ footer{
 .footer_div div:first-child div:last-child{
     display: flex;
     justify-content: space-between;
-    min-width: 500px;
-    width: 800px;
+    gap: 50px;
 }
 
 .footer_div div:first-child button{

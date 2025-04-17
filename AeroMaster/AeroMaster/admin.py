@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, User  # Import your model
+from .models import Question, Student  # Import your model
 from AeroMaster_admin.models import ExamResult, UserFeedback, faculty
 from import_export.admin import ImportExportModelAdmin
 from .resources import QuestionResource, UserResource, ExamResultResource, UserFeedbackResource, FacultyResource
@@ -16,7 +16,7 @@ class Question(ImportExportModelAdmin):
                     'subject')  # List the fields you want to display
 
 
-@admin.register(User)
+@admin.register(Student)
 class User(ImportExportModelAdmin):
     resource_class = UserResource
     search_fields = ('first_name', 'last_name', 'email')

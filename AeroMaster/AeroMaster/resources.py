@@ -1,5 +1,5 @@
 from import_export import resources
-from .models import Question, User
+from .models import Question, Student
 from AeroMaster_admin.models import ExamResult, UserFeedback, faculty
 
 
@@ -16,7 +16,7 @@ class QuestionResource(resources.ModelResource):
 
 class UserResource(resources.ModelResource):
     class Meta:
-        model = User
+        model = Student
         exclude = ('id',)  # 💡 This tells Django NOT to expect 'id'
         import_id_fields = ('email',)
         search_fields = ('first_name', 'last_name', 'email')

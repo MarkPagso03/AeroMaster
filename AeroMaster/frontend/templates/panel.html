@@ -60,7 +60,11 @@
                             <div class="spinner"></div>
                         </div>
                     </div>
-                    <button onclick="generate_questions()">Generate Questions</button>
+                    <div>
+
+                    <button id="generate_question" onclick="generate_questions()">Generate Questions</button>
+                    <button id="reset_exam" onclick="generate_questions()">Reset Exam</button>
+                    </div>
                 </div>
                 <table id="aero-table">
                     <thead onclick="toggleTable('aero-table-body')">

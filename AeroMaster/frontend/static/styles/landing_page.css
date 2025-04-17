@@ -178,7 +178,7 @@ body{
 .header-class {
     display: grid;
     place-items: center;
-    font-size: .8rem;
+    font-size: .9rem;
     height: clamp(50px,4rem,10vh);
     color:black;
     margin-bottom: 50px;

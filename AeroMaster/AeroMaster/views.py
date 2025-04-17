@@ -8,7 +8,7 @@ from . import settings
 from .forms import SignUpForm
 from .forms import LoginForm
 from django.contrib.auth import authenticate, login
-from .models import User
+from .models import Student
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout
 from AeroMaster_admin.models import ExamSetting, GeneratedQuestions, ExamResult, UserFeedback
@@ -98,6 +98,7 @@ def signup_acc(request):
 
 def login_acc(request):
     if request.method == 'POST':
+        logout(request)
         form = LoginForm(request.POST)
         print('logged in1')
         if form.is_valid():

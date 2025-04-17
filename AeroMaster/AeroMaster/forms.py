@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.hashers import make_password
-from .models import User
+from .models import Student
 
 
 class SignUpForm(forms.ModelForm):
@@ -12,18 +12,18 @@ class SignUpForm(forms.ModelForm):
     )
 
     class Meta:
-        model = User
+        model = Student
         fields = ['first_name', 'last_name', 'id_number', 'email', 'password', 'last_login']
 
     def clean_id_number(self):
         id_number = self.cleaned_data.get('id_number')
-        if User.objects.filter(id_number=id_number).exists():
+        if Student.objects.filter(id_number=id_number).exists():
             raise forms.ValidationError("This ID Number is already in use.")
         return id_number
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exists():
+        if Student.objects.filter(email=email).exists():
             raise forms.ValidationError("This email is already registered.")
         return email
 
