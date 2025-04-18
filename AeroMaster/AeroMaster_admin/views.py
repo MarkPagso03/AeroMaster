@@ -7,7 +7,7 @@ from .models import (faculty, ArchiveFaculty, ArchiveStudent, ArchiveQuestion, G
                      ExamResult, UserFeedback)
 from .forms import FacultyForm, StudentForm, AeroMasterAdminForm, QuestionForm
 from AeroMaster.models import Student, Question
-from AeroMaster.resources import UserResource, QuestionResource, FacultyResource
+from AeroMaster.resources import UserResource, QuestionResource, FacultyResource, UserFeedbackResource, ExamResultResource
 import random
 import json
 from collections import Counter
@@ -15,6 +15,8 @@ from itertools import zip_longest
 from datetime import datetime
 from tablib import Dataset
 
+import io
+import zipfile
 
 # from AeroMaster.decorators import role_required
 
@@ -322,31 +324,27 @@ def dashboard_view(request):
         for subject in passed_per_subject
     }
 
-    comment_fields = {
-        'AERO': UserFeedback.objects.exclude(aero_comments__isnull=True).exclude(aero_comments__exact='').values_list(
-            'aero_comments', flat=True),
-        'MATH': UserFeedback.objects.exclude(math_comments__isnull=True).exclude(math_comments__exact='').values_list(
-            'math_comments', flat=True),
-        'STRUC': UserFeedback.objects.exclude(struc_comments__isnull=True).exclude(
-            struc_comments__exact='').values_list('struc_comments', flat=True),
-        'ACRM': UserFeedback.objects.exclude(acrm_comments__isnull=True).exclude(acrm_comments__exact='').values_list(
-            'acrm_comments', flat=True),
-        'PWRP': UserFeedback.objects.exclude(pwrp_comments__isnull=True).exclude(pwrp_comments__exact='').values_list(
-            'pwrp_comments', flat=True),
-        'EEMLE': UserFeedback.objects.exclude(eemle_comments__isnull=True).exclude(
-            eemle_comments__exact='').values_list('eemle_comments', flat=True),
-    }
+    feedbacks = UserFeedback.objects.all()
 
-    # Combine by rows using zip_longest
-    comment_rows = list(zip_longest(
-        comment_fields['AERO'],
-        comment_fields['MATH'],
-        comment_fields['STRUC'],
-        comment_fields['ACRM'],
-        comment_fields['PWRP'],
-        comment_fields['EEMLE'],
-        fillvalue=""
-    ))
+    # Prepare rows: [Student ID, AERO, MATH, STRUC, ACRM, PWRP, EEMLE]
+    comment_rows = []
+    for fb in feedbacks:
+        if any([
+            fb.aero_comments, fb.math_comments, fb.struc_comments,
+            fb.acrm_comments, fb.pwrp_comments, fb.eemle_comments
+        ]):
+            comment_rows.append([
+                fb.student_id or "",  # Student ID
+                fb.aero_comments or "",
+                fb.math_comments or "",
+                fb.struc_comments or "",
+                fb.acrm_comments or "",
+                fb.pwrp_comments or "",
+                fb.eemle_comments or "",
+            ])
+
+    # Define headers for display
+    comment_headers = ['Student ID', 'AERO', 'MATH', 'STRUC', 'ACRM', 'PWRP', 'EEMLE']
 
     # Satisfaction stats per subject
     def get_satisfaction_data(subject_prefix):
@@ -379,8 +377,8 @@ def dashboard_view(request):
         'passed_per_subject': passed_per_subject,
         'failed_per_subject': failed_per_subject,
         'satisfaction_data': satisfaction_data,
-        'comment_headers': list(comment_fields.keys()),
-        'comment_rows': comment_rows
+        'comment_headers': comment_headers,
+        'comment_rows': comment_rows,
     }
 
     return render(request, 'dashboard.html', context)
@@ -492,3 +490,55 @@ def import_faculty(request):
             messages.error(request, f"An error occurred while importing: {e}")
 
     return render(request, 'import_faculty.html')
+
+
+def export_feedback(request):
+    resource = UserFeedbackResource()
+    dataset = resource.export()
+
+    timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    filename = f"Feedback_{timestamp}.csv"
+
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    return response
+
+
+def reset_exam(request):
+    # Create resource instances
+    feedback_resource = UserFeedbackResource()
+    result_resource = ExamResultResource()
+    question_resource = QuestionResource()
+
+    # Export datasets
+    feedback_data = feedback_resource.export(UserFeedback.objects.all())
+    result_data = result_resource.export(ExamResult.objects.all())
+    question_data = question_resource.export(GeneratedQuestions.objects.all())
+
+    timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+
+    # Create in-memory ZIP file
+    zip_buffer = io.BytesIO()
+    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+        # Write feedback.csv
+        zip_file.writestr(f"user_feedback_{timestamp}.csv", feedback_data.csv)
+
+        # Write exam_result.csv
+        zip_file.writestr(f"exam_result_{timestamp}.csv", result_data.csv)
+
+        zip_file.writestr(f"question_used_{timestamp}.csv", question_data.csv)
+
+    # Reset file pointer
+    zip_buffer.seek(0)
+
+    # Prepare HTTP response
+    filename = f"exam_output_{timestamp}.zip"
+    response = HttpResponse(zip_buffer, content_type='application/zip')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    UserFeedback.objects.all().delete()
+    ExamResult.objects.all().delete()
+    GeneratedQuestions.objects.all().delete()
+
+    return response
+

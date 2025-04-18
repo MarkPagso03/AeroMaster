@@ -11,11 +11,11 @@
 }
 
 .report_card{
-    padding: 30px;
+    padding: 20px;
 }
 
 .report_card h1{
-    font-size: 40px;
+    font-size: 30px;
 }
 
 .comment_card{
@@ -55,4 +55,10 @@
 .subject_graph canvas, .feedback_graph canvas{
     max-height: 420px;
     padding: 30px;
+}
+
+.feedback{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

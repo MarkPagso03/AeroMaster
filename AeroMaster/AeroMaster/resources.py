@@ -3,8 +3,6 @@ from .models import Question, Student
 from AeroMaster_admin.models import ExamResult, UserFeedback, faculty
 
 
-
-
 class QuestionResource(resources.ModelResource):
     class Meta:
         model = Question

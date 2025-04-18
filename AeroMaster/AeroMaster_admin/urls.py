@@ -4,7 +4,8 @@ from .views import (admin_view, faculty_list, edit_faculty, archive_faculty, add
                     login_admin_view, login_acc, logout_view,
                     question_list, edit_question, add_question, archive_question,
                     panel_view, generate_questions, dashboard_view,
-                    export_user, import_user, export_question, import_question, export_faculty, import_faculty)
+                    export_user, import_user, export_question, import_question, export_faculty, import_faculty,
+                    export_feedback, reset_exam)
 
 urlpatterns = [
     path('', admin_view, name='AeroMaster_admin'),
@@ -25,12 +26,14 @@ urlpatterns = [
     path('question/delete/<str:id>/', archive_question, name='archive_question'),
     path('panel', panel_view, name='panel'),
     path('panel/generate/', generate_questions, name='generate'),
+    path('panel/reset/', reset_exam, name='reset_exam'),
     path('dashboard/', dashboard_view, name='dashboard'),
     path('export_user/', export_user, name='export_user'),
     path('student/import/', import_user, name='import_user'),
     path('export_question/', export_question, name='export_question'),
     path('question/import/', import_question, name='import_question'),
     path('export_faculty/', export_faculty, name='export_faculty'),
+    path('export_feedback/', export_feedback, name='export_feedback'),
     path('faculty/import/', import_faculty, name='import_faculty'),
     #path('panel/setting/', edit_exam_settings, name='exam_settings'),
 ]

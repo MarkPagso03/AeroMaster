@@ -537,3 +537,8 @@ label{
 #reset_exam{
     border-color: red;
 }
+
+#generate_question.disable{
+    border: 1px solid gray;
+    color: gray;
+}

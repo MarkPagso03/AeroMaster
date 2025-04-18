@@ -63,7 +63,7 @@
                     <div>
 
                     <button id="generate_question" onclick="generate_questions()">Generate Questions</button>
-                    <button id="reset_exam" onclick="generate_questions()">Reset Exam</button>
+                    <button id="reset_exam">Reset Exam</button>
                     </div>
                 </div>
                 <table id="aero-table">
@@ -228,17 +228,26 @@
                                 renderTable('pwrp');
 
                                 hideLoading();  // Hide the spinner after data is fetched and tables are rendered
+
+                                location.reload();
                             })
                             .catch(error => {
                                 console.error("Error fetching questions:", error);
                                 hideLoading();  // Hide the spinner even if there's an error
                             });
+
+
                     }
 
                 </script>
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         const questions = {{ questions_json|safe }};
+                        if(questions.length != 0){
+                            button = document.getElementById('generate_question');
+                            button.classList.add('disable');
+                            button.disabled = true;
+                        }
 
                         function renderTable(subject) {
                             const tableBody = document.getElementById(subject + '-table-body');
@@ -271,6 +280,24 @@
                         ['aero', 'acrm', 'eemle', 'math', 'struc', 'pwrp'].forEach(renderTable);
                     });
                 </script>
+                <script>
+                  document.addEventListener("DOMContentLoaded", function () {
+                    // Get the button element by its ID
+                    const button = document.getElementById("reset_exam");
+
+                    button.addEventListener("click", function (e) {
+                      const confirmed = confirm("This will also download Exam and Feedback Data.\nAre you sure you want to reset exam?");
+                      if (confirmed) {
+                        window.location.href = "{% url 'reset_exam' %}";
+                            setTimeout(() => {
+                                console.log('refreshed');
+                                location.reload();
+                            }, 5000);
+                      }
+                    });
+                  });
+                </script>
+
             </div>
         </div>
     </div>
