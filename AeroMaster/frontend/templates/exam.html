@@ -29,39 +29,72 @@
 
         <form method="POST" class="exam_form" action="{% url 'exam_result' subject=subject %}">
             {% csrf_token %}
+            {% if questions %}
+                {% for question in questions %}
+                    <div class="exam_question">
+                        <p><strong>{{ forloop.counter }}:</strong> {{ question.text }}</p>
 
-            {% for question in questions %}
+                        <ul>
+                            <li>
+                                <input type="radio" id="option_a_{{ forloop.counter }}" name="question_{{ question.id }}" value="A" class="square-radio">
+                                <label for="option_a_{{ forloop.counter }}">A. {{ question.option_a }}</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="option_b_{{ forloop.counter }}" name="question_{{ question.id }}" value="B" class="square-radio">
+                                <label for="option_b_{{ forloop.counter }}">B. {{ question.option_b }}</label>
+                            </li>
+                            {% if question.option_c %}
+                                <li>
+                                    <input type="radio" id="option_c_{{ forloop.counter }}" name="question_{{ question.id }}" value="C" class="square-radio">
+                                    <label for="option_c_{{ forloop.counter }}">C. {{ question.option_c }}</label>
+                                </li>
+                            {% endif %}
+                            {% if question.option_d %}
+                                <li>
+                                    <input type="radio" id="option_d_{{ forloop.counter }}" name="question_{{ question.id }}" value="D" class="square-radio">
+                                    <label for="option_d_{{ forloop.counter }}">D. {{ question.option_d }}</label>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            {% else %}
                 <div class="exam_question">
-                    <p><strong>{{ forloop.counter }}:</strong> {{ question.text }}</p>
-
-                    <ul>
-                        <li>
-                            <input type="radio" id="option_a_{{ forloop.counter }}" name="question_{{ question.id }}" value="A" class="square-radio">
-                            <label for="option_a_{{ forloop.counter }}">A. {{ question.option_a }}</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="option_b_{{ forloop.counter }}" name="question_{{ question.id }}" value="B" class="square-radio">
-                            <label for="option_b_{{ forloop.counter }}">B. {{ question.option_b }}</label>
-                        </li>
-                        {% if question.option_c %}
-                            <li>
-                                <input type="radio" id="option_c_{{ forloop.counter }}" name="question_{{ question.id }}" value="C" class="square-radio">
-                                <label for="option_c_{{ forloop.counter }}">C. {{ question.option_c }}</label>
-                            </li>
-                        {% endif %}
-                        {% if question.option_d %}
-                            <li>
-                                <input type="radio" id="option_d_{{ forloop.counter }}" name="question_{{ question.id }}" value="D" class="square-radio">
-                                <label for="option_d_{{ forloop.counter }}">D. {{ question.option_d }}</label>
-                            </li>
-                        {% endif %}
-                    </ul>
+                    <p><strong>No Generated Questions, Contact your faculty.</strong></p>
                 </div>
-            {% endfor %}
+            {% endif %}
 
             <button class="submit_exam" type="submit">Submit Answers</button>
         </form>
+        <p id="countdown"></p>
+
     </div>
+        <script>
+          const countdownElement = document.getElementById("countdown");
+          const examEndTime = new Date("{{ exam_end_time|date:'Y-m-d H:i:s' }}");
+
+          function updateCountdown() {
+            console.log(examEndTime);
+            const now = new Date();
+            const distance = examEndTime - now;
+
+            if (distance <= 0) {
+              countdownElement.innerHTML = "Exam ended";
+              clearInterval(timerInterval);
+              return;
+            }
+
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            countdownElement.innerHTML = `${hours}h ${minutes}m ${seconds}s remaining`;
+          }
+
+          // Update every second
+          const timerInterval = setInterval(updateCountdown, 1000);
+          updateCountdown(); // Initial call
+        </script>
         <script>
           document.addEventListener("DOMContentLoaded", function () {
             const form = document.querySelector(".exam_form");

@@ -26,7 +26,7 @@
                         Fixed/ Rotary Wiring Aircraft Configurations,
                         Performance, Stability and Control; Wind Tunnels and Application
                         <br><br>
-                        schedule {{ aero_setting.date_time }}
+                        {{ aero_setting.date_time }} - {{ aero_setting.end_time }}
                     </p>
                     {% if aero_setting %}
                         <button id="aero_start" onclick="window.location.href = '{% url 'mock_exam' subject='AERO' %}'">START</button>
@@ -35,8 +35,7 @@
                         const currentTime = new Date();
                         const aeroSchedule = new Date("{{ aero_setting.date_time|date:'c' }}");
 
-                        // Create a time that's 1 hour after the scheduled start
-                        const aeroEndTime = new Date(aeroSchedule.getTime() + 60 * 60 * 1000); // 1 hour = 60 mins × 60 sec × 1000 ms
+                        const aeroEndTime = new Date("{{ aero_setting.end_time|date:'c' }}");
 
                         // Disable the button if current time is before the start OR after 1 hour has passed
                         if (currentTime < aeroSchedule || currentTime > aeroEndTime) {
@@ -54,7 +53,7 @@
                         Calculus and Differential Equation with
                         Aeronautical Engineering Applications
                         <br><br>
-                        schedule {{ math_setting.date_time }}
+                        {{ math_setting.date_time }} - {{ math_setting.end_time }}
                     </p>
                     {% if math_setting %}
                         <button id="math_start" onclick="window.location.href = '{% url 'mock_exam' subject='MATH' %}'">START</button>
@@ -63,8 +62,7 @@
                         //const currentTime = new Date();
                         const mathSchedule = new Date("{{ math_setting.date_time|date:'c' }}");
 
-                        // Create a time that's 1 hour after the scheduled start
-                        const mathEndTime = new Date(mathSchedule.getTime() + 60 * 60 * 1000); // 1 hour = 60 mins × 60 sec × 1000 ms
+                        const mathEndTime = new Date("{{ math_setting.end_time|date:'c' }}");
 
                         // Disable the button if current time is before the start OR after 1 hour has passed
                         if (currentTime < mathSchedule || currentTime > mathEndTime) {
@@ -86,7 +84,7 @@
                         Landing Gears, Engine Mounts and Other Structural Parts;
                         Non-Structural Components Design
                         <br><br>
-                        schedule {{ struc_setting.date_time }}
+                        {{ struc_setting.date_time }} - {{ struc_setting.end_time }}
                     </p>
                     {% if struc_setting %}
                         <button id="struc_start" onclick="window.location.href = '{% url 'mock_exam' subject='STRUC' %}'">START</button>
@@ -95,8 +93,7 @@
                         //const currentTime = new Date();
                         const strucSchedule = new Date("{{ struc_setting.date_time|date:'c' }}");
 
-                        // Create a time that's 1 hour after the scheduled start
-                        const strucEndTime = new Date(strucSchedule.getTime() + 60 * 60 * 1000); // 1 hour = 60 mins × 60 sec × 1000 ms
+                        const strucEndTime = new Date("{{ struc_setting.end_time|date:'c' }}");
 
                         // Disable the button if current time is before the start OR after 1 hour has passed
                         if (currentTime < strucSchedule || currentTime > strucEndTime) {
@@ -114,7 +111,7 @@
                         Airworthiness Regulations; Manufacturing/Production
                         Processes and Quality Assurance
                         <br><br>
-                        schedule {{ acrm_setting.date_time }}
+                        {{ acrm_setting.date_time }} - {{ acrm_setting.end_time }}
                     </p>
                     {% if acrm_setting %}
                         <button id="acrm_start" onclick="window.location.href = '{% url 'mock_exam' subject='ACRM' %}'">START</button>
@@ -123,8 +120,7 @@
                         //const currentTime = new Date();
                         const acrmSchedule = new Date("{{ acrm_setting.date_time|date:'c' }}");
 
-                        // Create a time that's 1 hour after the scheduled start
-                        const acrmEndTime = new Date(acrmSchedule.getTime() + 60 * 60 * 1000); // 1 hour = 60 mins × 60 sec × 1000 ms
+                        const acrmEndTime = new Date("{{ acrm_setting.end_time|date:'c' }}");
 
                         // Disable the button if current time is before the start OR after 1 hour has passed
                         if (currentTime < acrmSchedule || currentTime > acrmEndTime) {
@@ -148,7 +144,7 @@
                         Ramjet, Rocket Propulsion System and other
                         Aircraft Power Systems
                         <br><br>
-                        schedule {{ pwrp_setting.date_time }}
+                        {{ pwrp_setting.date_time }} - {{ pwrp_setting.end_time }}
                     </p>
                     {% if pwrp_setting %}
                         <button id="pwrp_start" onclick="window.location.href = '{% url 'mock_exam' subject='PWRP' %}'">START</button>
@@ -157,8 +153,7 @@
                         //const currentTime = new Date();
                         const pwrpSchedule = new Date("{{ pwrp_setting.date_time|date:'c' }}");
 
-                        // Create a time that's 1 hour after the scheduled start
-                        const pwrpEndTime = new Date(pwrpSchedule.getTime() + 60 * 60 * 1000); // 1 hour = 60 mins × 60 sec × 1000 ms
+                        const pwrpEndTime = new Date("{{ pwrp_setting.end_time|date:'c' }}");
 
                         // Disable the button if current time is before the start OR after 1 hour has passed
                         if (currentTime < pwrpSchedule || currentTime > pwrpEndTime) {
@@ -177,7 +172,7 @@
                         Regulations with Code of Professional Ethics of the Board of
                         Aeronautical Engineering and others (International Aviation Laws)
                         <br><br>
-                        schedule {{ eemle_setting.date_time }}
+                        {{ eemle_setting.date_time }} - {{ eemle_setting.end_time }}
                     </p>
                     {% if eemle_setting %}
                         <button id="eemle_start" onclick="window.location.href = '{% url 'mock_exam' subject='EEMLE' %}'">START</button>
@@ -186,8 +181,7 @@
                         //const currentTime = new Date();
                         const eemleSchedule = new Date("{{ eemle_setting.date_time|date:'c' }}");
 
-                        // Create a time that's 1 hour after the scheduled start
-                        const eemleEndTime = new Date(eemleSchedule.getTime() + 60 * 60 * 1000); // 1 hour = 60 mins × 60 sec × 1000 ms
+                        const eemleEndTime = new Date("{{ eemle_setting.end_time|date:'c' }}");
 
                         // Disable the button if current time is before the start OR after 1 hour has passed
                         if (currentTime < eemleSchedule || currentTime > eemleEndTime) {

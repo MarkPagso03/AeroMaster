@@ -59,6 +59,8 @@ def home_view(request):
         try:
             exam = ExamSetting.objects.get(subject=subject_code)
             exam.date_time = localtime(exam.date_time)
+            exam.end_time = exam.date_time + timezone.timedelta(minutes=exam.duration)
+
             return exam
         except ExamSetting.DoesNotExist:
             return None
@@ -153,8 +155,8 @@ def exam_view(request, subject):
     questions = GeneratedQuestions.objects.filter(subject=subject)
 
     current_time = now()
-    exam_start_time = exam_setting.date_time
-    exam_end_time = exam_start_time + timezone.timedelta(hours=1)
+    exam_start_time = localtime(exam_setting.date_time)
+    exam_end_time = exam_start_time + timezone.timedelta(minutes=exam_setting.duration)
 
     if not (exam_start_time <= current_time <= exam_end_time):
         messages.success(request, 'Not scheduled right now.')
@@ -182,7 +184,7 @@ def exam_view(request, subject):
 
             return redirect('exam_result', subject=subject)
 
-    return render(request, 'exam.html', {'subject': subject, 'questions': questions})
+    return render(request, 'exam.html', {'subject': subject, 'questions': questions, 'exam_end_time': exam_end_time})
 
 
 @login_required
