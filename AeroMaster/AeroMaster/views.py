@@ -195,13 +195,22 @@ def exam_result(request, subject):
     passing_score = exam_setting.passing_score
     exam_result, _ = ExamResult.objects.get_or_create(student_id=student_id)
 
-    subject_field_map = {
+    subject_field_map_result = {
         'AERO': 'aero_result',
         'MATH': 'math_result',
         'STRUC': 'struc_result',
         'ACRM': 'acrm_result',
         'PWRP': 'pwrp_result',
         'EEMLE': 'eemle_result',
+    }
+
+    subject_field_map_time = {
+        'AERO': 'aero_time',
+        'MATH': 'math_time',
+        'STRUC': 'struc_time',
+        'ACRM': 'acrm_time',
+        'PWRP': 'pwrp_time',
+        'EEMLE': 'eemle_time',
     }
 
     score = 0
@@ -221,10 +230,23 @@ def exam_result(request, subject):
             'is_correct': is_correct,
         })
 
+    current_time = now()
+    time_spent = current_time - localtime(exam_setting.date_time)
+
+    total_seconds = int(time_spent.total_seconds())
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+    seconds = total_seconds % 60
+
+    formatted_time_spent = f"{hours:02d}:{minutes:02d}"
+
     # Save the subject-specific score
-    if getattr(exam_result, subject_field_map[subject], None) is None:
-        setattr(exam_result, subject_field_map[subject], score)
+    if getattr(exam_result, subject_field_map_result[subject], None) is None:
+        setattr(exam_result, subject_field_map_result[subject], score)
+        setattr(exam_result, subject_field_map_time[subject], formatted_time_spent)
         exam_result.save()
+
+    formatted_time_spent = getattr(exam_result, subject_field_map_time[subject])
 
     percentage = (score / total) * 100 if total > 0 else 0
     passed = score >= passing_score
@@ -257,4 +279,5 @@ def exam_result(request, subject):
         'subject': subject,
         'percentage': round(percentage, 2),
         'passed': passed,
+        'time_spent': formatted_time_spent,
     })

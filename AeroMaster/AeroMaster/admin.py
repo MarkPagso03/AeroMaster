@@ -27,8 +27,9 @@ class User(ImportExportModelAdmin):
 @admin.register(ExamResult)
 class ExamResult(ImportExportModelAdmin):
     resource_class = ExamResultResource
-    list_display = ('student_id', 'aero_result', 'math_result', 'struc_result', 'acrm_result', 'pwrp_result',
-                    'eemle_result', 'percent_result', 'total_result')
+    list_display = ('student_id', 'aero_result', 'aero_time', 'math_result', 'math_time', 'struc_result',
+                    'struc_time', 'acrm_result', 'acrm_time', 'pwrp_result', 'pwrp_time',
+                    'eemle_result', 'eemle_time', 'percent_result', 'total_result')
 
 
 @admin.register(UserFeedback)

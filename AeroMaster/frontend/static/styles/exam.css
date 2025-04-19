@@ -57,9 +57,28 @@ li{
 
 button.submit_exam{
     margin: 20px;
-    padding: 5px;
-    font-size: 16px;
+    padding: 10px;
+    font-size: 18px;
     border-radius: 5px;
     border: 1px solid green;
     color: #002500;
+}
+
+.timer{
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 20px;
+    width: 230px;
+}
+
+.exam_subject{
+    position: fixed;
+    top: 100px;
+    right: 50px;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 20px;
 }

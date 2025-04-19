@@ -10,24 +10,32 @@
 
 {% block content %}
   <!-- content -->
+        <div class="exam_subject">
+            <h2>
+                {% if subject == 'AERO' %}
+                    Day 1:
+                    Aerodynamics (25%)
+                {% elif subject == 'MATH' %}
+                    Day 1:
+                    Mathematics (10%)
+                {% elif subject == 'STRUC' %}
+                    Day 2:
+                    Aircraft Structures and Design (20%)
+                {% elif subject == 'ACRM' %}
+                    Day 2:
+                    Aircraft Construction Repair and Modification (15%)
+                {% elif subject == 'PWRP' %}
+                    Day 3:
+                    Aircraft Power Plant (20%)
+                {% elif subject == 'EEMLE' %}
+                    Day 3:
+                    Engineering Economics and Management Laws and Ethics (10%)
+                {% endif %}
+            </h2>
+        </div>
         <div class="exam">
-        <h2>
-            {% if subject == 'AERO' %}
-                Aerodynamics (25%)
-            {% elif subject == 'MATH' %}
-                Mathematics (10%)
-            {% elif subject == 'STRUC' %}
-                Aircraft Structures and Design (20%)
-            {% elif subject == 'ACRM' %}
-                Aircraft Construction Repair and Modification (15%)
-            {% elif subject == 'PWRP' %}
-                Aircraft Power Plant (20%)
-            {% elif subject == 'EEMLE' %}
-                Engineering Economics and Management Laws and Ethics (10%)
-            {% endif %}
-        </h2>
 
-        <form method="POST" class="exam_form" action="{% url 'exam_result' subject=subject %}">
+        <form id="examForm" method="POST" class="exam_form" action="{% url 'exam_result' subject=subject %}">
             {% csrf_token %}
             {% if questions %}
                 {% for question in questions %}
@@ -66,10 +74,37 @@
 
             <button class="submit_exam" type="submit">Submit Answers</button>
         </form>
-        <p id="countdown"></p>
+        <div class="timer">
+            <h2 id="countdown"></h2>
+            <p>remaining</p>
+        </div>
 
     </div>
         <script>
+          function beep(duration = 200, frequency = 440, volume = 1, type = "sine") {
+              const context = new (window.AudioContext || window.webkitAudioContext)();
+              const oscillator = context.createOscillator();
+              const gainNode = context.createGain();
+
+              oscillator.frequency.value = frequency;
+              oscillator.type = type;
+
+              gainNode.gain.value = volume;
+
+              oscillator.connect(gainNode);
+              gainNode.connect(context.destination);
+
+              oscillator.start();
+
+              setTimeout(() => {
+                oscillator.stop();
+                context.close();
+              }, duration);
+            }
+
+
+          const examForm = document.getElementById("examForm");
+
           const countdownElement = document.getElementById("countdown");
           const examEndTime = new Date("{{ exam_end_time|date:'Y-m-d H:i:s' }}");
 
@@ -81,6 +116,10 @@
             if (distance <= 0) {
               countdownElement.innerHTML = "Exam ended";
               clearInterval(timerInterval);
+              beep(2000);
+              setTimeout(function () {
+                    examForm.submit();
+                }, 3000);
               return;
             }
 
@@ -88,7 +127,8 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            countdownElement.innerHTML = `${hours}h ${minutes}m ${seconds}s remaining`;
+            countdownElement.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+
           }
 
           // Update every second

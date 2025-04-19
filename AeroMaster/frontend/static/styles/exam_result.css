@@ -39,6 +39,10 @@
     font-size: 35px;
 }
 
+.result_card p{
+    color: rgba(0,0,0,.75);
+}
+
 .feedback{
     width: 600px;
     background: rgba(0,150,255,.3);

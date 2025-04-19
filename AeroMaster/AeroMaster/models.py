@@ -5,7 +5,6 @@ from django.utils.timezone import now
 from django.contrib.auth.hashers import make_password, check_password
 
 
-
 def current_time_utc_plus_8():
     local_timezone = pytz.timezone("Asia/Manila")  # Change to your local timezone
     local_time = now().astimezone(local_timezone)
@@ -57,4 +56,3 @@ class Question(models.Model):
 
     def __str__(self):
         return self.text
-

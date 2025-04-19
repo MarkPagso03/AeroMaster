@@ -144,11 +144,17 @@ class ExamSetting(models.Model):
 class ExamResult(models.Model):
     student_id = models.CharField(max_length=50, blank=False, null=False)
     aero_result = models.IntegerField(null=True, blank=True)
+    aero_time = models.CharField(max_length=5, null=True, blank=True)
     math_result = models.IntegerField(null=True, blank=True)
+    math_time = models.CharField(max_length=5, null=True, blank=True)
     struc_result = models.IntegerField(null=True, blank=True)
+    struc_time = models.CharField(max_length=5, null=True, blank=True)
     acrm_result = models.IntegerField(null=True, blank=True)
+    acrm_time = models.CharField(max_length=5, null=True, blank=True)
     pwrp_result = models.IntegerField(null=True, blank=True)
+    pwrp_time = models.CharField(max_length=5, null=True, blank=True)
     eemle_result = models.IntegerField(null=True, blank=True)
+    eemle_time = models.CharField(max_length=5, null=True, blank=True)
     percent_result = models.FloatField(null=True, blank=True)
     total_result = models.CharField(max_length=10, null=True, blank=True)  # now stores 'Passed' or 'Failed'
 
