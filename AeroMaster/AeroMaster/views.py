@@ -1,3 +1,5 @@
+import random
+
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.utils.timezone import localtime, now
@@ -152,7 +154,10 @@ def exam_view(request, subject):
     exam_result, _ = ExamResult.objects.get_or_create(student_id=student_id)
     exam_setting = ExamSetting.objects.get(subject=subject)
     passing_score = exam_setting.passing_score
-    questions = GeneratedQuestions.objects.filter(subject=subject)
+    questions = list(GeneratedQuestions.objects.filter(subject=subject))
+
+    if exam_setting.shuffle is True:
+        random.shuffle(questions)
 
     current_time = now()
     exam_start_time = localtime(exam_setting.date_time)
@@ -246,6 +251,7 @@ def exam_result(request, subject):
         setattr(exam_result, subject_field_map_time[subject], formatted_time_spent)
         exam_result.save()
 
+    score = getattr(exam_result, subject_field_map_result[subject])
     formatted_time_spent = getattr(exam_result, subject_field_map_time[subject])
 
     percentage = (score / total) * 100 if total > 0 else 0
