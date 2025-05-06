@@ -34,4 +34,5 @@ urlpatterns = [
     path('unavailable_page/', views.unavailable_view, name='unavailable'),
     #path('back/', views.back_view, name='back'),
     path('administrator/', include('AeroMaster_admin.urls')),
+    path('about_us/', views.about_us_view, name='about_us')
 ]

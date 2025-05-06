@@ -219,6 +219,7 @@ def exam_result(request, subject):
     }
 
     score = 0
+    T_none = 0
     total = questions.count()
     results = []
 
@@ -228,12 +229,19 @@ def exam_result(request, subject):
         is_correct = (user_letter == question.correct_answer)
         if is_correct:
             score += 1
+
+        if user_letter is None:
+            T_none += 1
+
         results.append({
             'question': question,
             'user_answer': user_answer,
             'user_letter': user_letter,
             'is_correct': is_correct,
         })
+
+    if T_none is 50:
+        results = []
 
     current_time = now()
     time_spent = current_time - localtime(exam_setting.date_time)
@@ -287,3 +295,7 @@ def exam_result(request, subject):
         'passed': passed,
         'time_spent': formatted_time_spent,
     })
+
+
+def about_us_view(request):
+    return render(request, 'about_us_template.html')
